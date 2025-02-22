@@ -1,0 +1,1202 @@
+x <- "Hello Charles, I hope you're working hard to become who you are destined to be by God's purpose? "
+x
+class(x) # checking the class of variable x
+
+y <- pi^2 # 
+y
+class(y) # checking the class of variable y
+
+z <- 15L
+z
+class(z) # checking the class of variable z
+
+a <- (5 + 2i)^2
+a
+class(a) # checking the class of variable a
+
+l <- TRUE
+class(l) # checking the class of variable l
+
+x <- list(age=c(10,21,22), weight=c(30,33,32))
+x
+names(x) # Calling the names of the list x
+
+length(x) # checking the length of the list x
+
+xk <- data.frame(age=c(10,21,22), weight=c(30,33,32))
+xk
+
+d <- c("Charles Kwame Appiah is my name")
+d
+class(d) # checking the class of variable d
+length(d)
+
+
+f<- c(1,3,4,6,7) 
+f
+class(f) # checking the class of variable f
+
+
+fo<- c(1L,3L,4L,6L,7L)
+fo
+class(fo) # checking the class of variable fo
+
+# Initilization
+x <- vector(mode = "logical", length = 5)
+x
+class(x)
+
+x[1:3] <- TRUE # indexing the first to third element with TRUE
+x
+
+s <- c(TRUE, FALSE,TRUE, 1)
+s
+as.logical(s) # Default 
+
+q <- list("Hello World",2015L, TRUE, 32.1)
+q
+class(q[[2]]) # Checking the class of list 2
+class(q[[4]])
+class(q[[1]])
+
+mat <- c(2,4,5,7)
+dim(mat) <- c(2,2) # creating a matrix with 2 rows and 2 columns
+mat
+
+temp <- c(3,4,5,5.6,6,7)
+mati <- matrix(temp, nrow = 2, ncol = 3,byrow = TRUE) # creating a matrix with 2 rows and 3 columns
+mati
+
+temp <- c(3,4,5,5.6,6,7, 8, 9, 10)
+mato <- matrix(temp, nrow=3, ncol=3,byrow=TRUE) # creating a matrix with 3 rows and 3 columns
+mato
+
+# Default byrow = FALSE
+temp <- c(3,4,5,5.6,6,7)
+mati <- matrix(temp, nrow=2, ncol=3,byrow=FALSE)
+mati
+
+t1 <- c(23, 55)
+t2 <- c(34, 45)
+
+# By rows
+rbind(t1,t2) # binding them by their rows
+
+
+t3 <- c(32, 50)
+t4 <- c(43, 54)
+
+# By columns
+cbind(t3,t4) # binding them by their columns
+
+factor <- c("Yes","No","No","Yes")
+factor # use to encode vectors
+
+f <- factor(c("Yes","No","No","Yes"), levels= c("Yes","No"))
+f
+
+x <- NA # Missing number
+x
+
+is.na(x) # checking if it is a missing number 
+
+u <- 0/0
+u
+class(u) # checking for the class of variable u
+
+#Dataframe
+c <- c("Charles","Richmond","Nicholas")
+d <- c(12, 23, 45)
+s <- c(FALSE,TRUE,TRUE)
+
+dfr <- data.frame(Username = c,Age = d, Adult = s)
+dfr # creating a dataframe
+
+# First Row
+dfr[1,] # accessing row 1 of the dataframe
+
+# First Column
+dfr[,1] # accessing column 1 [Username] of the dataframe
+
+# Age Column
+dfr$Age
+
+# Username Column
+dfr$Username
+
+# Adult Column
+dfr$Adult
+
+# Importing Datasets
+dat <- read.csv("C:/Users/HP/Desktop/Data Science/Machine learning/Training r.csv")
+print(dat, na.rm = TRUE)
+dat <- head()
+
+plot( dat,c(itching ~ skin_rash), color="red")
+
+
+data <- read.excel("C:/Users/HP/Downloads/Copy of V1- UN Data on Refugees (AiCE __ Dataset).xlsx")
+
+# Sequence
+v <- (10:20)
+v # start from 10 and end at 20
+
+w <- (-5:9)
+w # start from -5 and end at 9
+
+qw <- seq(2,34,2)
+qw # start from 2 and end at 34 with a moving step of 2
+
+iqw <- seq(2,34,length=6)
+iqw # start from  2 and end at 34 with a length of 6
+
+repe <- rep(1:4,4) 
+repe # repeat 1 to 4, 4 times
+
+eq <- rep("Hello Ann", 5) 
+eq # repeat Hello Ann 5 times
+
+we <- seq(1,15, 2) 
+we  # start from 1 and end at 15 with a step of 2
+
+we[1:5] # slicing from index 1 to 5
+
+class(we) # checking the class of we
+
+fo <- list("Hello","Hi","Hey")
+fo
+fo[c(1,2)]
+fo[c(1,2,3)] # for several elements
+fo[[2]] # for only one element
+
+class(fo[[3]])
+
+
+wi <- list(age=c(12,23,45), height=c(12.3,45.4, 34.5))
+wi
+class(wi)
+
+woo <- data.frame(age=c(12,23,45), height=c(12.3,45.4, 34.5))
+woo
+class(woo)
+
+wi$age # accessing only the age list
+wi$height # accessing only the height list
+
+wi[["age"]] # accessing only the age list
+wi[['h',exact=FALSE]] # partial matching
+
+class(wi$age) # checking the class of age list
+class(wi$height) # checking the class of height list
+
+wr <- matrix(1:9, nrow = 3, ncol = 3, by = TRUE)
+wr # creating a matrix with 3 rows and 3 columns
+class(wr)
+
+class(wr[1,1]) # checking the class of row 1 column 1
+
+class(wr[1,1, drop=FALSE]) # checking the class of row 1 column 1
+
+ch <- c(1:9,NA,NA,NA)
+ch
+i<- is.na(ch) # Locating missing numbers
+i
+ch[!i] # filtering non missing numbers or is not missing numbers
+
+# Vectorization
+ew <- rnorm(1000)
+#ew
+er <- rnorm(1000)
+#er
+cv <- vector(mode="numeric", length=1000)
+#cv
+# Iteration
+start <- proc.time()
+for (i in 1:1000){ 
+cv[i] <- ew[i] + er[i] 
+}
+proc.time()-start
+
+
+# Vectorization
+start <- proc.time()
+cv <- ew + er
+proc.time()-start
+
+
+# Control Structures
+x <- 20
+if (x < 0) {
+print("Negative!")
+}else if (x < 10) {
+print("Positive, less than 10!")
+}else {
+print("Number greater than 10!")
+}
+
+x <- -20
+if (x < 0) {
+print("Negative!")
+}else if (x < 10) {
+print("Positive, less than 10!")
+}else {
+print("Number greater than 10!")
+}
+
+x <- 6
+if (x < 0) {
+print("Negative!")
+}else if (x < 10) {
+print("Positive, less than 10!")
+}else {
+print("Number greater than 10!")
+}
+
+# for loop
+for (i in 1:100){
+cat(i)
+cat(" ") # inserting spaces between the numbers
+}
+
+letters # lower case 
+
+LETTERS # upper case
+
+class(letters)
+
+for (x in letters){
+cat(x)
+cat(" ") # inserting spaces between the letters
+}
+
+# while loop
+x <- -1
+while (x < 5){
+print(x)
+x <- x+1
+}
+
+x<- 1
+repeat{
+print(x)
+if (x > 7){
+break
+}
+x <- x+1
+}
+
+for (i in 1:100){
+# Over ride the first 20 iterations
+if (i <= 20){
+next 
+}
+}
+
+# Functions
+myPrinter <- function(x){
+  for (i in seq(x)){
+       print("Hello, Charles")
+  }
+}
+myPrinter(3)
+
+volume <- function(x=3, y=3, z=3){
+  print(x*y*z)
+}
+volume(y=3,z=5,x=11)
+
+volume()
+
+myPrinter <- function(..., mes){
+print(sum(...))
+print(mes)
+}
+myPrinter (3, 5, 11, mes= "Hi! Richmond")
+
+ls() # displaying objects stored in R currently
+
+# Iterated Functions
+# lapply
+str(lapply)
+
+x <- list(a=rnorm(10), b=rnorm(20), c=rnorm(30))
+lapply(x, mean) # checking the mean of x
+lapply(x, var)# checking the variance of x
+lapply(x, sd) # checking the standard deviation of x
+
+
+# sapply
+str(sapply)
+
+xi <- list(a=rnorm(10), b=rnorm(20), c=rnorm(30))
+sapply(xi, mean) # checking the mean of xi
+sapply(xi, var) # checking the variance of xi
+sapply(xi, sd) # checking the standard deviation of xi
+
+
+# Split
+dat <- data.frame(subject = 1:6,age = c(15, 17, 16,20,21,23),
+adult = c(FALSE,FALSE,FALSE,TRUE,TRUE,TRUE))
+s <- split(dat, dat$adult)
+s # split them according to True and False
+
+
+sapply(s, function(x){
+mean(x[["age"]])
+})
+
+sapply(s, function(x){
+var(x[["age"]])
+})
+
+sapply(s, function(x){
+sd(x[["age"]])
+})
+
+
+# tapply
+str(tapply)
+
+x <- c(rnorm(10),rnorm(10),rnorm(10),rnorm(10))
+f <- gl(4, 10)
+f
+tapply(x, f, mean)
+tapply(x, f, var)
+tapply(x, f, sd)
+
+
+# Help 
+?c
+?vector
+?sapply
+?lapply
+?tapply
+
+
+# Types, Quality and Data preprocessing
+wi
+
+# finding each column maximum
+m <- sapply(wi,max)
+m
+
+# finding each column minimum
+n <- sapply(wi,min)
+n
+
+# Regualization ith range [0,1]
+wi$age <- ( (wi$age - n[1])/(m[1] - n[1]))*(1 - 0) + 0
+wi$height <- ( (wi$height - n[2])/(m[2] - n[2]))*(1 - 0)  
+
+wi
+
+
+# DPLYR AND TIDYR PACKAGES
+# install.packages("dplyr")
+#library(dplyr)
+data(airquality)
+class(airquality)
+airquality <- tibble(airquality)
+class(airquality)
+airquality
+select(airquality, Ozone, Solar.R, Day)
+select(airquality, -(Wind:Month)) # offsetting Wind and Month from the airquality dataset
+filter(airquality, Month > 5, Month < 9, Day < 3) # values in Month greater than 5 and less than 9, Day values less than 3
+filter(airquality, Day==1 | Day == 2) # Values of Day = 1 or 2
+arrange(airquality,Ozone, desc(Solar.R))
+mutate(airquality, Temp.C = round((Temp - 32) * 5/9)) # creating a new column for Temp.C
+# Removing rows with missing values on the Ozone and Solar.R features
+airquality <- filter(airquality, !is.na(Ozone),!is.na(Solar.R))
+airquality
+# print(airquality, n=143)
+
+#Grouping by month
+by_month <- group_by (airquality, Month)
+by_month
+
+#Finding the minimum, average and maximum value per Month
+summarize (by_month, min(Ozone), mean(Ozone), max(Ozone))
+
+#install.packages ("tidyr")
+#library (tidyr)
+
+#dat
+#gather(dat, sex, count, -subject)
+
+
+#dat <- gather(dat, sex, class, count, -subject)
+#dat
+
+#dat
+#separate(dat, sex, class, c("sex", "class"))
+
+#dat 
+#dat <- gather(dat, lesson, grade, lesson1:lesson4, na.rm = TRUE)
+#dat
+
+#dat <- spread(dat, quarter, grade)
+#dat 
+
+#mutate(dat, lesson = extract_numeric(lesson))
+
+# Statistical Summary and Visualization
+
+# Mean
+internet_usage = c(22,0, 7,12,5, 33, 14, 8, 0, 9)
+internet_usage
+mean(internet_usage) # finding the mean of internet_usage
+
+net_usage = c(22,0,7,12,5,NA,33,14,8,NA,0,9)
+net_usage
+mean(net_usage, na.rm = TRUE) # finding the mean of net_usage with missing numbers 
+
+# Median
+median(net_usage, na.rm=TRUE)
+
+# Minimum, Maximum and Range
+A = c(49,33,63,48,54,62,52,64,71,68)
+min(A)
+max(A)
+which.min(A)
+which.max(A)
+
+print(max(A) - min(A))
+range(A)
+print(range(A)[2] - range(A)[1]) 
+summary(A)
+
+
+# Percentile Values
+X = c(3,4,5,6,7,8,10,10,11,12,14,14,14,15,16,17,21,25,27,32)
+quantile(X,0.80)
+quantile(X,0.50,type = 7)
+quantile(X,0.25,type = 7)
+quantile(X,0.75,type = 7)
+median(X)
+summary(X)
+sd(X)
+#cv(X)
+
+
+# Interquantile Range
+irq = function(X) (quantile(X,0.75) - quantile(X,0.25))
+irq(X)
+
+
+# Variance and Standard Deviation
+course = c(6, 2, 1, 9, 17, 4, 3, 2, 1, 5, 11 ,4, 3, 1, 2, 2, 5, 4, 3, 6)
+1 / course 
+cf = c(course, 0, course)
+cf
+
+vw <- 2 * course + cf + 1
+vw
+
+var(course)
+sum((course - mean(course)) ^ 2 / (length(course) - 1))
+
+sd(course)
+sqrt(var(course))
+std = function(x) sqrt(var(x))
+std(course)
+sqrt(course)
+sum(course)
+prod(course)
+sort(course)
+order(course)
+sqrt(-14 + 9i)
+
+# Coefficient of Variation
+cv = function(x) ( sd(x) / mean(x) )
+cv(course)
+
+
+# Visulaization of Qualitative Data
+mo = c("car","car","bus", "metro","metro","car","metro","metro","foot","car","foot","bus","bus","metro","metro","car","car","car","metro","car") # dataset of employee's 
+mo
+
+table(mo)
+prop.table(table(mo))
+data.frame(mo)
+
+# Bar Charts
+barplot(table(mo))
+hist(table(mo))
+
+barplot(prop.table(table(mo)))
+hist(prop.table(table(mo)))
+
+# Pie Chart
+pie(table(mo), col = c ("red", "green", "blue", "black"))
+
+pie(prop.table(table(mo)), col = c("purple", "green", "red", "blue"))
+
+
+# Contingency Matrix
+g = c(rep("Male",8), rep("Female",12))
+g
+
+mg = table(mo,g)
+mg
+
+gm = data.frame(mo,g)
+gm
+
+
+margin.table(mg, 1)
+margin.table(mg,2)
+prop.table(mg)
+prop.table(mg,1)
+prop.table(mg,2)
+
+# Stacked Bar Charts and Grouped Bar Charts
+barplot(mg, col = c("red","blue", "pink","green"))
+
+
+barplot(mg,xlim=c(0,2), xlab="Gender", length=levels(mo), col = c("red","blue", "pink","green"))
+
+barplot(mg,xlim=c(0,2), xlab="Transportation", length=levels(g), col = c("red","blue", "pink","green"))
+
+barplot(prop.table(mg,1), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Gender", legend=levels(mo), beside=T, col = c("red","blue", "pink","green"))
+
+mg = table(g,mo)
+barplot(prop.table(mg,2), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Transportation", legend=levels(g), beside=T, col= c("red", "green"))
+
+xo = c(10, 10, 5, 9, 7, 6,8,6,5,8, 10, 7, 7,8, 5, 6,4,7,9,7, 4,8, 10,10, 7,4,9,5,8,9)
+table(xo)
+data.frame(xo)
+
+prop.table(table(xo))
+?prop.table
+
+
+# Histograms
+hist(xo, col = c("red","blue", "pink","green"))
+hist(xo, nclass=3, col = c("red","blue", "pink","green"))
+
+
+wo = c (1950, 2090, 2700, 3350, 4200, 3720, 4400, 2980, 3850, 4550, 3050, 2350, 1850, 2820, 3670, 2950, 3750, 1850, 2420, 3150, 3000, 3470, 3920, 3100, 2400, 2900, 2650, 3450, 3650, 4020, 4450, 3120, 3660, 3070, 3550, 2020, 3500, 2500, 3780, 3940, 3540, 2800, 4450, 1950, 3020, 2800, 3500, 1480, 4495,2850, 3100, 2250,3300, 4100, 3220, 3600,2130, 4020, 4075)
+hist(wo, col = c("red","blue", "pink","green"))
+hist(wo, nclass=4, col = c("red","blue", "pink","green"))
+hist(wo, breaks= seq(from = 1000, to=5000, by=300), col = c("red","blue", "pink","green"))
+hist(wo, probability=T, col = c("red","blue", "pink","green"))
+rug(jitter(wo))
+
+
+# Frequency Polygon
+temp = hist(wo, col = c("red","blue", "purple","green"))
+temp
+
+lines(c(min(temp$breaks), (temp$mids),max(temp$breaks)), c(0,temp$counts,0),type="l")
+
+boxplot(wo, horizontal = T, col = c("red"))
+boxplot(wo, vertical = T, col = c("red"))
+fivenum(wo)
+summary(wo)
+
+?fivenum
+
+w1 = c(1950, 2090, 2700, 3350, 4200, 3720, 4400, 2980, 3850, 4550, 3050, 2350,1850, 2820, 3670, 2950, 3750, 1850, 2420,3150, 3000, 3470, 3920, 3100, 2400, 2900, 2650, 3450, 3650, 4020)
+fivenum(w1)
+
+w2 = c(4450, 3120, 3660, 3070, 3550, 2020, 3500, 2500, 3780, 3940, 3340, 2800, 2850, 4450, 1950,3020,2800,3500,1480,4495,2850,3100,2250,3300,4100,3220,3600,2130,4020,4075)
+fivenum(w2)
+
+boxplot(w1, w2, names=c("sample 1", "sample 2"), col = c("purple", "yellow" ))
+
+
+# Classification and Prediction
+grad_desc <- function(X, y, theta,alpha, lambda, num_iters){
+m <- length(y)
+F_history <- c(rep(0, num_iters))
+
+for (iter in c(1:num_iters)){
+  temp <- vector()
+  temp <- theta * (1 - ((alpha*lambda)/m)) - alpha*(1/m) *   (t(X) %*% (X %*% theta - y))
+  theta <- temp
+  F_history[iter] <- computeCost(X, y, theta)
+}
+print(F_history[num_iters])
+return(list("theta" = theta, "F_history" = F_history))
+}
+
+grad_desc(2,3,5,0.1,7.5,2)
+
+
+computeCost <- function(X, y, th){
+m <- length(y)
+return(1/(2*m) * sum((X%*%th - y)^2))
+}
+
+computeCost(5,6,7)
+
+
+# Clustering
+iris_new <- iris
+#iris_new
+iris_new$Species <- NULL
+kc <- kmeans(iris_new, 3)
+table(iris$Species, kc$cluster)
+
+plot(iris_new[c("Sepal.Length", "Sepal.Width")], col = kc$cluster)
+points(kc$centers[,c("Sepal.Length","Sepal.Width")], col = 1:3, pch=8, cex=2)
+
+
+plot(iris_new[c("Petal.Length", "Petal.Width")], col = kc$cluster)
+points(kc$centers[,c("Petal.Length","Petal.Width")], col=1:3, pch=8, cex=2)
+
+
+data(iris)
+set.seed(500)
+idx <- sample(1:dim(iris)[1], 40)
+iris_Sample <- iris[idx,]
+iris_Sample$Species <- NULL
+hc <- hclust(dist(iris_Sample), method = "single")
+plot(hc, hang = -1, labels = iris$Species[idx], xlab = "Clusters")
+rect.hclust(hc, 3)
+hc <- hclust(dist(iris_Sample),method = "complete")
+plot(hc, hang = -1, labels = iris$Species[idx], xlab = "Clusters")
+rect.hclust(hc, 3)
+
+
+data(iris)
+set.seed(500)
+idx <- sample(1:dim(iris)[1], 40)
+iris_Sample <- iris[idx,]
+iris_Sample$Species <- NULL
+hc <- hclust(dist(iris_Sample), method = "complete")
+plot(hc, hang = -1, labels = iris$Species[idx], xlab = "Clusters")
+rect.hclust(hc, 3)
+hc <- hclust(dist(iris_Sample),method = "complete")
+plot(hc, hang = -1, labels = iris$Species[idx], xlab = "Clusters")
+rect.hclust(hc, 3)
+
+tr = trees
+tr
+
+plot(tr[c("Volume","Height")], col = "red")
+
+plot(tr[c("Girth","Height")], col = "blue" )
+
+plot(tr[c("Volume","Girth")], col = "black" )
+
+
+ca = cars
+ca
+plot(ca[c("speed","dist")])
+
+
+pre = pressure
+pre
+plot(pre[c("temperature","pressure")], type="l")
+
+
+cab = CO2
+cab
+plot(cab[c("conc","uptake")])
+
+oran = Orange
+oran
+plot(oran[c("Tree","circumference")])
+plot(oran[c("Tree","age")])
+plot(oran[c("age","circumference")])
+
+# MINING OF FREQUENT ITEMSETS AND ASSOCIATION RULES
+# Arules algorithm 
+#install.packages('arules')
+library(arules)
+
+db <- list(c("A", "B", "D", "E"), c("B", "C", "E"), c("A", "B", "D", "E"), c("A", "B", "C", "E"), c("A", "B", "C", "D", "E"), c("B", "C", "D"))
+
+frequent <- apriori(db, parameter=list(supp=0.5, conf=1, target="frequent itemsets"))
+
+inspect(frequent)
+
+
+cl <- apriori(db, parameter=list(supp=0.5, conf=1, target="closed"))
+inspect(cl)
+
+
+mx <- apriori(db, parameter=list(supp=0.5, conf=1, target="maximal"))
+inspect(mx)
+
+
+rules <- apriori(db, parameter=list(supp=0.5, conf=1, target="rules"))
+inspect(rules)
+
+data(Adult)
+inspect(apriori(Adult, parameter=list(supp=0.75)))
+
+
+inspect(apriori(Adult, parameter=list(supp=0.75), appearance=list(rhs="capital-gain=None", default="lhs")))
+
+
+### **Project 1**
+
+URL = "C:/Users/HP/Desktop/Data Science/Learning R Language/wine+quality/winequality-red.csv"
+wines <- read.table(URL, header=TRUE, sep=';')
+
+ 
+summary(wines)
+
+ggplot(wines) +
+ geom_bar(aes(x = factor(quality)),
+ position = 'dodge') +
+ xlab('Quality') + ylab('Frequency')
+ 
+random_group <- function(n, probs) {
+ probs <- probs / sum(probs)
+ g <- findInterval(seq(0, 1, length = n), c(0, cumsum(probs)),
+ rightmost.closed = TRUE)
+ names(probs)[sample(g)]
+}
+
+partition <- function(df, n, probs) {
+ replicate(n, split(df, random_group(nrow(df), probs)), FALSE)
+}
+
+accuracy <- function(confusion_matrix)
+ sum(diag(confusion_matrix))/sum(confusion_matrix)
+ 
+prediction_accuracy_wines <- function(test_and_training) {
+ result <- vector(mode = "numeric",
+ length = length(test_and_training))
+ for (i in seq_along(test_and_training)) {
+ training <- test_and_training[[i]]$training
+ test <- test_and_training[[i]]$test
+ model <- training %>% naiveBayes( quality ~ ., data = .)
+ predictions <- test %>% predict(model, newdata = .)
+ targets <- test$type
+ confusion_matrix <- table(targets, predictions)
+ result[i] <- accuracy(confusion_matrix)
+ }
+ result
+}
+
+random_wines <- wines %>%
+ partition(4, c(training = 0.5, test = 0.5))
+random_wines %>% prediction_accuracy_wines
+
+tree <- ctree(quality ~ ., data = wines,
+ control = ctree_control(minsplit = 4420))
+ 
+wines %>%
+ group_by(quality) %>%
+ summarise(total.mean = mean(total.sulfur.dioxide),
+ total.sd = sd(total.sulfur.dioxide),
+ free.mean = mean(free.sulfur.dioxide),
+ free.sd = sd(free.sulfur.dioxide))
+ 
+qplot(total.sulfur.dioxide, volatile.acidity, data=wines,
+ xlab = 'Total sulfur dioxide',
+ ylab = 'Volatile acidity (VA)')
+ 
+wines %>%
+ group_by(quality) %>%
+ summarise(mean.volatile = mean(volatile.acidity),
+ sd.volatile = sd(volatile.acidity))
+ 
+rmse <- function(x,t) sqrt(mean(sum((t - x)^2)))
+null_prediction <- function(df) {
+ rep(mean(wines$quality), each = nrow(df))
+}
+rmse(null_prediction(wines), wines$quality)
+
+prediction_accuracy_wines <- function(test_and_training,
+ model_function) {
+ result <- vector(mode = "numeric",
+ length = length(test_and_training))
+ for (i in seq_along(test_and_training)) {
+ training <- test_and_training[[i]]$training
+ test <- test_and_training[[i]]$test
+ model <- training %>% model_function(quality ~ ., data = .)
+ predictions <- test %>% predict(model, newdata = .)
+ targets <- test$quality
+ result[i] <- rmse(predictions, targets)
+ }
+ result
+}
+
+null_model <- function(formula, data) {
+ structure(list(mean = mean(data$quality)),
+ class = "null_model")
+}
+predict.null_model <- function(model, newdata) {
+ rep(model$mean, each = nrow(newdata))
+}
+
+test_and_training <- wines %>%
+ partition(4, c(training = 0.5, test = 0.5))
+test_and_training %>% prediction_accuracy_wines(null_model)
+
+test_and_training %>% prediction_accuracy_wines(lm)
+
+model <- wines %>% randomForest(fixed.acidity ~ volatile.acidity, data = .)
+rmse(predict(model, wines), wines$fixed.acidity) # root mean square
+ 
+model <- wines %>% randomForest(density ~ pH, data = .)
+ 
+predict(model, wines) %>% head 
+
+table(wines$density, predict(model, wines))
+
+
+model <- wines %>% nnet(density ~ quality, data = ., size = 5)
+rmse(predict(model, wines), wines$density)
+
+wines %>% head()
+wines %>% ggplot(aes(x = density, y = quality)) + geom_point() + geom_smooth(method = "lm") 
+wines %>% lm(density ~ quality, data = .) %>% summary 
+wines %>% lm(density ~ quality, data = .) %>% coefficients 
+wines %>% lm(density ~ quality, data = .) %>% confint 
+
+wines %>% lm(density ~ quality - 1, data = .) %>% coefficients
+
+
+data(wines)
+wines %>% head
+wines %>% ggplot(aes(x = quality, y = density)) +
+geom_jitter(height = 0.05, width = .3, alpha = 0.4)
+
+wines %>%model.matrix(density ~ quality, data = .) %>% head(5)
+
+wines %>%model.matrix(density ~ quality - 1, data = .) %>% head(5)
+
+
+model <- wines %>% ksvm(density ~ quality, data = .)
+rmse(predict(model, wines), wines$density)
+
+
+
+
+
+## **Project 2**
+
+URL = "C:/Users/HP/Desktop/Data Science/Learning R Language/wine+quality/winequality-white.csv"
+wines <- read.table(URL, header=TRUE, sep=';')
+
+ 
+summary(wines)
+
+ggplot(wines) +
+ geom_bar(aes(x = factor(quality)),
+ position = 'dodge') +
+ xlab('Quality') + ylab('Frequency')
+ 
+random_group <- function(n, probs) {
+ probs <- probs / sum(probs)
+ g <- findInterval(seq(0, 1, length = n), c(0, cumsum(probs)),
+ rightmost.closed = TRUE)
+ names(probs)[sample(g)]
+}
+
+partition <- function(df, n, probs) {
+ replicate(n, split(df, random_group(nrow(df), probs)), FALSE)
+}
+
+accuracy <- function(confusion_matrix)
+ sum(diag(confusion_matrix))/sum(confusion_matrix)
+ 
+prediction_accuracy_wines <- function(test_and_training) {
+ result <- vector(mode = "numeric",
+ length = length(test_and_training))
+ for (i in seq_along(test_and_training)) {
+ training <- test_and_training[[i]]$training
+ test <- test_and_training[[i]]$test
+ model <- training %>% naiveBayes( quality ~ ., data = .)
+ predictions <- test %>% predict(model, newdata = .)
+ targets <- test$type
+ confusion_matrix <- table(targets, predictions)
+ result[i] <- accuracy(confusion_matrix)
+ }
+ result
+}
+
+random_wines <- wines %>%
+ partition(4, c(training = 0.5, test = 0.5))
+random_wines %>% prediction_accuracy_wines
+
+tree <- ctree(quality ~ ., data = wines,
+ control = ctree_control(minsplit = 4420))
+ 
+wines %>%
+ group_by(quality) %>%
+ summarise(total.mean = mean(total.sulfur.dioxide),
+ total.sd = sd(total.sulfur.dioxide),
+ free.mean = mean(free.sulfur.dioxide),
+ free.sd = sd(free.sulfur.dioxide))
+ 
+qplot(total.sulfur.dioxide, volatile.acidity, data=wines,
+ color = quality,
+ xlab = 'Total sulfur dioxide',
+ ylab = 'Volatile acidity (VA)')
+ 
+wines %>%
+ group_by(quality) %>%
+ summarise(mean.acidity = mean(volatile.acidity),
+ sd.acidity = sd(volatile.acidity))
+ 
+rmse <- function(x,t) sqrt(mean(sum((t - x)^2)))
+null_prediction <- function(df) {
+ rep(mean(wines$quality), each = nrow(df))
+}
+rmse(null_prediction(wines), wines$quality)
+
+prediction_accuracy_wines <- function(test_and_training,
+ model_function) {
+ result <- vector(mode = "numeric",
+ length = length(test_and_training))
+ for (i in seq_along(test_and_training)) {
+ training <- test_and_training[[i]]$training
+ test <- test_and_training[[i]]$test
+ model <- training %>% model_function(quality ~ ., data = .)
+ predictions <- test %>% predict(model, newdata = .)
+ targets <- test$quality
+ result[i] <- rmse(predictions, targets)
+ }
+ result
+}
+
+null_model <- function(formula, data) {
+ structure(list(mean = mean(data$quality)),
+ class = "null_model")
+}
+predict.null_model <- function(model, newdata) {
+ rep(model$mean, each = nrow(newdata))
+}
+
+test_and_training <- wines %>%
+ partition(4, c(training = 0.5, test = 0.5))
+test_and_training %>% prediction_accuracy_wines(null_model)
+
+test_and_training %>% prediction_accuracy_wines(lm)
+
+model <- wines %>%
+ rpart(alcohol ~ quality, data = .) 
+predict(model, wines) %>% head 
+
+#wines
+
+model <- wines %>% randomForest(fixed.acidity ~ volatile.acidity, data = .)
+rmse(predict(model, wines), wines$fixed.acidity) # root mean square
+ 
+model <- wines %>% randomForest(density ~ pH, data = .)
+ 
+predict(model, wines) %>% head 
+
+table(wines$density, predict(model, wines))
+
+
+model <- wines %>% nnet(density ~ quality, data = ., size = 5)
+rmse(predict(model, wines), wines$density)
+
+wines %>% head()
+wines %>% ggplot(aes(x = density, y = quality)) + geom_point() + geom_smooth(method = "lm") 
+wines %>% lm(density ~ quality, data = .) %>% summary 
+wines %>% lm(density ~ quality, data = .) %>% coefficients 
+wines %>% lm(density ~ quality, data = .) %>% confint 
+
+wines %>% lm(density ~ quality - 1, data = .) %>% coefficients
+
+
+data(wines)
+wines %>% head
+wines %>% ggplot(aes(x = quality, y = density)) +
+geom_jitter(height = 0.05, width = .3, alpha = 0.4)
+
+wines %>%model.matrix(density ~ quality, data = .) %>% head(5)
+
+wines %>%model.matrix(density ~ quality - 1, data = .) %>% head(5)
+
+
+model <- wines %>% ksvm(density ~ quality, data = .)
+rmse(predict(model, wines), wines$density)
+
+#library(help = "datasets")
+
+
+### **Exercise**
+replace_outliers <- function(x, lower, upper) {
+  x[x < lower | x > upper] <- NA
+  return(x)
+}
+
+# Example usage
+x <- c(1, 5, 10, 15, 20)
+lower <- 5
+upper <- 15
+
+replace_outliers(x, lower, upper)
+
+
+apply_if <- function(v, condition, transformation) {
+  Map(function(x) if (condition(x)) transformation(x) else x, v)
+}
+
+# Example usage
+v <- c(1, 2, 3, 4, 5, 6)
+apply_if(v, function(x) x %% 2 == 0, function(x) x^2)
+
+v <- c(1, 2, 3, 4, 5, 6)
+v * ifelse(v %% 2 == 0, v, 1)  # Squares even numbers, leaves odd numbers unchanged
+
+power <- function(x, n) x^n
+square <- function(x) power(x, 2)
+cube <- function(x) power(x, 3)
+
+square(4)  # Returns 16
+cube(3)    # Returns 27
+
+library(purrr)
+
+square <- partial(power, n = 2)
+cube <- partial(power, n = 3)
+
+
+### **Exercise 4**
+# Define the generic Shape class with default methods that raise errors
+circumference <- function(shape) {
+  stop("circumference() is not implemented for generic Shape")
+}
+
+area <- function(shape) {
+  stop("area() is not implemented for generic Shape")
+}
+
+# Define a Circle class
+Circle <- function(radius) {
+  if (radius <= 0) stop("Radius must be positive")
+  structure(list(radius = radius), class = "Circle")
+}
+
+# Implement circumference for Circle
+circumference.Circle <- function(shape) {
+  return(2 * pi * shape$radius)
+}
+
+# Implement area for Circle
+area.Circle <- function(shape) {
+  return(pi * shape$radius^2)
+}
+
+# Define a Rectangle class
+Rectangle <- function(width, height) {
+  if (width <= 0 || height <= 0) stop("Width and height must be positive")
+  structure(list(width = width, height = height), class = "Rectangle")
+}
+
+# Implement circumference for Rectangle
+circumference.Rectangle <- function(shape) {
+  return(2 * (shape$width + shape$height))
+}
+
+# Implement area for Rectangle
+area.Rectangle <- function(shape) {
+  return(shape$width * shape$height)
+}
+
+# Example usage
+circle <- Circle(5)
+cat("Circle circumference:", circumference(circle), "\n")
+cat("Circle area:", area(circle), "\n")
+
+rectangle <- Rectangle(4, 6)
+cat("Rectangle circumference:", circumference(rectangle), "\n")
+cat("Rectangle area:", area(rectangle), "\n")
+
+
+# Define a Polynomial class
+Polynomial <- function(coefficients) {
+  structure(list(coefficients = coefficients), class = "Polynomial")
+}
+
+# Evaluate the polynomial at a given point x
+evaluate_polynomial <- function(poly, x) {
+  if (!inherits(poly, "Polynomial")) stop("Input must be a Polynomial object")
+  coefs <- poly$coefficients
+  n <- length(coefs) - 1
+  sum(coefs * x^(0:n))
+}
+
+# Find the roots of the polynomial
+find_roots <- function(poly) {
+  if (!inherits(poly, "Polynomial")) stop("Input must be a Polynomial object")
+  coefs <- poly$coefficients
+  degree <- length(coefs) - 1
+  
+  if (degree == 1) {
+    # Linear case: ax + b = 0 => x = -b/a
+    return(-coefs[1] / coefs[2])
+  } else if (degree == 2) {
+    # Quadratic case: ax^2 + bx + c = 0
+    a <- coefs[3]
+    b <- coefs[2]
+    c <- coefs[1]
+    discriminant <- b^2 - 4 * a * c
+    
+  if (discriminant < 0) {
+      return(NULL)  # No real roots
+    } else {
+      return(c((-b + sqrt(discriminant)) / (2 * a), (-b - sqrt(discriminant)) / (2 * a)))
+    }
+  } else {
+    # General case: Use uniroot on a function representing the polynomial
+    poly_func <- function(x) evaluate_polynomial(poly, x)
+    root <- tryCatch({
+      uniroot(poly_func, lower = -100, upper = 100)$root
+    }, error = function(e) NULL)
+    return(root)
+  }
+}
+
+# Example usage
+poly1 <- Polynomial(c(2, -3, 1))  # x^2 - 3x + 2
+cat("Polynomial evaluated at x = 2:", evaluate_polynomial(poly1, 2), "\n")
+cat("Polynomial roots:", find_roots(poly1), "\n")
+
+context("Testing area and circumference")
+test_that("we compute the correct area and circumference", {
+ r <- rectangle(width = 2, height = 4)
+ expect_equal(area(r), 2*4)
+ expect_equal(circumference(r), 2*2 + 2*4)
+})
+
+
+circle <- function(radius) {
+ structure(list(r = radius),
+ class = c("circle", "shape"))
+}
+area.circle <- function(x) pi * x$r**2
+circumference.circle <- function(x) 2 * pi * x$r
+test_that("we compute the correct area and circumference", {
+ radius <- 2
+ circ <- circle(radius = radius)
+ expect_equal(area(circ), pi * radius^2)
+ expect_equal(circumference(circ), 2 * radius * pi)
+})
+
+
+test_that("Dimensions are positive", {
+ expect_error(rectangle(width = -1, height = 4))
+ expect_error(rectangle(width = 2, height = -1))
+ expect_error(rectangle(width = -1, height = -1))
+ expect_error(rectangle(width = 0, height = 4))
+ expect_error(rectangle(width = 2, height = 0))
+ expect_error(rectangle(width = 0, height = 0))
+})
+
+
+seed <- as.integer(1000 * rnorm(1))
+test_that(paste("The test works with seed", seed), {
+ set.seed(seed)
+ # test code that uses random numbers
+})
+
+seed()
+
+pi
+cos(90)
+cos(1)
+
+
+
