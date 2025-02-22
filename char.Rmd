@@ -20,3 +20,6 @@ The preview shows you a rendered HTML copy of the contents of the editor. Conseq
 cars
 plot(cars,c("speed", "dist"))
 
+```{r}
+plot(iris)
+```
