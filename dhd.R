@@ -8,4 +8,4 @@ seq(12)
 
 seq(150)
 
-fhfh
+rep(1,4)
