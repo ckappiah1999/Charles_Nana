@@ -1,6 +1,9 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
 ---
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code.
@@ -27,3 +30,71 @@ plot(cars,c("speed", "dist"))
 ```{r}
 plot(iris)
 ```
+
+# **Chapter Two**
+
+
+### R Markdown Format 
+
+* This is the first line
+   * This is a sub-line
+   * This is another sub-line
+* This actually goes to the outer level
+* This is definitely at the outer level
+
+- First line
+* Second line
+ - nested line
+
+1. This is a
+2. numbered
+3. list
+
+
+| Name                  | Gender        | Occupation         |
+| :------------         | :-----------: | --------------:    |
+| Charles Kwame Appiah  | Male          | Renewable Engineer |
+| Richmond Amoah        | *Male*        | *Fashion*          |
+| Ann Amoah             | *Female*      | *Doctor*           |
+
+
+*this*
+
+
+**this**
+
+[Gmail](https://mail.google.com/mail/u/0/?q=francis+#inbox)
+ 
+ 
+ 
+![Image description](URL to image) 
+ 
+ 
+This is some text [with a link]
+
+
+This is some text [with a link][interesting].
+
+> this is a
+> block quote
+
+
+```{r}
+f <- function(x) ifelse(x %% 2 == 0, x**2, x**3)
+f(2:20)
+```
+
+[this section][Cross referencing]
+
+[@ckappiah1999.com]
+
+<sc>Charles</sc>
+
+
+```{r}
+summary(cars)
+sum(cars)
+mean(cars)
+```
+
+
