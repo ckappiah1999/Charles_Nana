@@ -224,13 +224,14 @@ sum(v, na.rm = TRUE)
 #install.packages("magrittr")
 #library(magrittr)
 ```
-```{r}
+```{r data}
 ### Data Pipeline
 subsample_rows <- function(d, n) {
  rows <- sample(nrow(d), n)
  d[rows,]
 }
-
+```
+```{r}
 d <- data.frame(x = rnorm(100), y = rnorm(100))
 d %>% subsample_rows(n = 3)
 ```
