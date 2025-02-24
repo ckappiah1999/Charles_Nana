@@ -211,9 +211,9 @@ df4
 ```{r}
 ### Missing Values
 NA + 5
-is.na(NA)
 
 is.na(NA) # checking for a missing number
+
 is.na(4) # checking if 4 is a missing number
 
 v <- c(1:10,NA)
@@ -260,7 +260,7 @@ f <- function(x, y) {
 
 f(2,4)
 ```
-``` {r}
+```{r}
 plot_and_fit <- function(d) {
  plot(y ~ x, data = d)
  abline(lm(y ~ x, data = d))
@@ -276,7 +276,7 @@ data.frame(x, y) %>% (function(d) {
  abline(lm(y ~ x, data = d))
 })
 ```
-``` {r}
+```{r}
 data.frame(x, y) %>% {
  plot(y ~ x, data = .)
  abline(lm(y ~ x, data = .))
@@ -290,7 +290,7 @@ d %$% data.frame(mean_x = mean(x), mean_y = mean(y))
 d <- data.frame(x = rnorm(10), y = rnorm(10))
 d %T>% plot(y ~ x, data = .) %>% lm(y ~ x, data = .)
 ```
-
+```{r warning=FALSE}
 ## **Chapter Three**
 
 ### Data Manipulation
@@ -303,59 +303,56 @@ cars %>% head(3) ### First 3 rows of the cars datasets
 cars %>% tail(3) ### Last 3 rows of the cars datasets
 cars %>% summary ### Summary of the cars datasets
 cars %>% qplot(speed, dist, data = .)
-
+```
 #install.packages("mlbench")
 #library(mlbench)
 #library(help = "mlbench")
 
-
+```{r}
 data(iris)
 head(iris)
 iris %>% head(5)
 iris %>% summary ### Summary of the iris datasets
 iris %>% qplot(Sepal.Length, Sepal.Width, data = ., color = Species)
 iris %>% qplot(Petal.Length, Petal.Width, data = ., color = Species)
-
+```
 ?read.table
-
+```{r}
 #### **Breast Cancer**
 data(BreastCancer)
 BreastCancer %>% head(3)
 data_url = "http://tinyurl.com/kw4xtts"
 lines <- readLines(data_url)
 lines[1:5]
-
+```
 #writeLines(lines, con = "C:/Users/HP/Desktop/Data Science/Machine learning/Testing r.csv")
 #writeLines
 
-
-raw <- read.csv("C:/Users/HP/Desktop/Data Science/Machine learning/Testing r.csv")
-raw %>% head(3)
-
+```{r}
 raw_breast_cancer = read.csv("C:/Users/HP/Desktop/Data Science/Machine learning/breast+cancer+wisconsin+original/breast-cancer-wisconsin.data")
 raw_breast_cancer  %>% head(3)
-
+```
+```{r}
 raw_breast_cancer <- read.csv(data_url)
-raw_breast_cancer %>% head(3)
-
+raw_breast_cancer %>% head()
+```
+```{r}
 raw_breast_cancer <- read.csv(data_url, header = FALSE)
-raw_breast_cancer %>% head(3)
-
+raw_breast_cancer %>% head()
+```
+```{r}
 names(raw_breast_cancer) <- names(BreastCancer)
-raw_breast_cancer %>% head(3)
-
+raw_breast_cancer %>% head()
+```
+```{r}
 raw_breast_cancer <- read.csv(data_url, header = FALSE,
  col.names = names(BreastCancer))
-raw_breast_cancer %>% head(3)
-
-
+raw_breast_cancer %>% head()
+```
+```{r}
 formatted_breast_cancer <- raw_breast_cancer
 
-#map_class <- function(x) {
- ifelse(x == 2, "bening",
- ifelse(x == 4, "malignant",
- NA))
-}
+
 #mapped <- formatted_breast_cancer$Class %>% map_class
 #mapped %>% table
 
@@ -365,20 +362,18 @@ map_class <- function(x) {
 mapped <- formatted_breast_cancer$Class %>% map_class
 mapped %>% table
 
-
 formatted_breast_cancer$Class %>% unique
-
+```
 #dict <- c("2" = "benign", "4" = "malignant")
 #map_class <- function(x) dict[as.character(x)]
 
 #mapped <- formatted_breast_cancer$Class %>% map_class
 #mapped %>% table
-
+```{r}
 mapped[1:20]
 
-mapped %<>% unname
-mapped[1:20]
-
+#mapped %<>% unname
+#mapped[1:20]
 
 read = read.csv(data_url, header = FALSE,
  col.names = names(BreastCancer)) ->
@@ -401,23 +396,27 @@ raw_breast_cancer$Class %>%
  unname %>%
  factor(levels = c("benign", "malignant")) %>%
  table
-
+```
+```{r}
+### Saving a file
 formatted_breast_cancer %>%
-save(file = "C:/Users/HP/Desktop/Data Science/Learning R Language/formatted-breast-cancer.rda")### Saving a file
+save(file = "C:/Users/HP/Desktop/Data Science/Learning R Language/formatted-breast-cancer.rda")
 
- 
-load("C:/Users/HP/Desktop/Data Science/Learning R Language/formatted-breast-cancer.rda") ### loading a saved file 
-
+### loading a saved file  
+load("C:/Users/HP/Desktop/Data Science/Learning R Language/formatted-breast-cancer.rda") 
+```
 
 #data(DNA)
 #str(DNA)
 
+```{r}
 ### Boston Housing Datasets
 data(BostonHousing)
 str(BostonHousing)
 
 boston <- "http://tinyurl.com/zq2u8vx"
-
+```
+```{r}
 boston_housing <- read.table(boston)
 str(boston_housing)
 
@@ -426,39 +425,42 @@ col_classes[which("chas" == names(BostonHousing))] <- "factor"
 
 boston_housing <- read.table(boston,col.names = names(BostonHousing),colClasses = col_classes)
 str(boston_housing)
-
+```
+```{r warning=FALSE}
 ### Readr Package
-library(readr)
-raw_breast_cancer <- read_csv("C:/Users/HP/Desktop/Data Science/Machine learning/breast+cancer+wisconsin+original/breast-cancer-wisconsin.data")
-raw_breast_cancer %>% head(3)
 
-
+raw_breast_cancer <- read_csv("C:/Users/HP/Desktop/Data Science/Machine learning/breast+cancer+wisconsin+original/breast-cancer-wisconsin.data",show_col_types = "TRUE", col_names = names(BreastCancer))
+raw_breast_cancer %>% head()
+```
+```{r}
 raw_breast_cancer <- read_csv("C:/Users/HP/Desktop/Data Science/Machine learning/breast+cancer+wisconsin+original/breast-cancer-wisconsin.data",
- col_names = names(BreastCancer))
-raw_breast_cancer %>% head(3)
-
+ col_names = names(BreastCancer), show_col_types = "TRUE")
+raw_breast_cancer %>% head()
+```
+```{r warning=FALSE}
 ### Manipulating Data with dplyr
 iris %>% tibble::as_tibble()
-iris %>% tbl_df %>% select(Species,Petal.Width) %>% head(3)
-iris %>% tbl_df %>% select(Species,Sepal.Width) %>% head(3)
-iris %>% tbl_df %>% select(Species,Petal.Length) %>% head(3)
-iris %>% tbl_df %>% select(Species,Sepal.Length) %>% head(3)
+iris %>% tbl_df %>% select(Species,Petal.Width) %>% head()
+iris %>% tbl_df %>% select(Species,Sepal.Width) %>% head()
+iris %>% tbl_df %>% select(Species,Petal.Length) %>% head()
+iris %>% tbl_df %>% select(Species,Sepal.Length) %>% head()
+```
+```{r warning=FALSE}
+iris %>% tbl_df %>%
+select(Sepal.Width, Petal.Width) %>% head() ## Select from Sepal.Width and Petal.Width
 
 iris %>% tbl_df %>%
-select(Sepal.Width, Petal.Width) %>% head(3)
+select(Sepal.Length:Petal.Length) %>% head() ## Select from Sepal.Width to Petal.length
 
 iris %>% tbl_df %>%
-select(Sepal.Length:Petal.Length) %>% head(3)
-
-iris %>% tbl_df %>%
-select(starts_with("Petal")) %>% head(3)
+select(starts_with("Petal")) %>% head() ## Select Petal.Width and Length only
 
 iris %>% tbl_df %>%
 select(ends_with("Length")) %>% head(3)
 
 iris %>% tbl_df %>%
 select(contains("etal")) %>% head(3)
-
+```
 iris %>% tbl_df %>%
 select(matches(".t.")) %>% head(3)
 
