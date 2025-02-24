@@ -461,93 +461,118 @@ select(ends_with("Length")) %>% head(3)
 iris %>% tbl_df %>%
 select(contains("etal")) %>% head(3)
 ```
+```{r warning=FALSE}
 iris %>% tbl_df %>%
 select(matches(".t.")) %>% head(3)
 
 iris %>% tbl_df %>%
  select(-starts_with("Petal")) %>% head(3) ### inverse selection
-
+```
+```{r warning=FALSE}
 iris %>% tbl_df %>%
- mutate(Petal.Width.plus.Length = Petal.Width + Petal.Length) %>%
- select(Species, Petal.Width.plus.Length) %>%
- head(3)
-
-iris %>% tbl_df %>%
- mutate(Sepal.Width.plus.Length = Sepal.Width + Sepal.Length) %>%
- select(Species, Sepal.Width.plus.Length) %>%
- head(3)
-
-iris %>% tbl_df %>%
- mutate(Petal.Width.plus.Length = Petal.Width + Petal.Length,
- Sepal.Width.plus.Length = Sepal.Width + Sepal.Length) %>%
- select(Species,Petal.Width.plus.Length, Sepal.Width.plus.Length) %>% head(3)
-
-iris %>% tbl_df %>%
- transmute(Species ,Petal.Width.plus.Length = Petal.Width + Petal.Length) %>%
+ mutate(Petal.Width.plus.Length = Petal.Width + Petal.Length) %>%select(Species, Petal.Width.plus.Length) %>%
  head()
-
+```
+```{r warning=FALSE}
+iris %>% tbl_df %>%
+ mutate(Sepal.Width.plus.Length = Sepal.Width + Sepal.Length) %>%select(Species, Sepal.Width.plus.Length) %>%
+ head()
+```
+```{r warning=FALSE}
+iris %>% tbl_df %>%mutate(Petal.Width.plus.Length = Petal.Width + Petal.Length,Sepal.Width.plus.Length = Sepal.Width + Sepal.Length) %>%select(Species,Petal.Width.plus.Length, Sepal.Width.plus.Length) %>% head()
+```
+```{r warning=FALSE}
+iris %>% tbl_df %>%transmute(Species ,Petal.Width.plus.Length = Petal.Width + Petal.Length) %>%
+ head()
+```
+```{r warning=FALSE}
 iris %>% tbl_df %>%
  arrange(Sepal.Length) %>%
- head(3) ### from smallest to largest in Sepal.Length column
- 
+ head() ### from smallest to largest in Sepal.Length column
+```
+```{r warning=FALSE}
 iris %>% tbl_df %>%
  arrange(desc(Sepal.Length)) %>%
- head(3) ### from largest to smallest in Sepal.Length column
- 
+ head() ### from largest to smallest in Sepal.Length column
+``` 
+```{r warning=FALSE}
 iris %>% tbl_df %>%
  filter(Sepal.Length >= 5) %>%
- head(4)
-
+ head()
+```
+```{r warning=FALSE}
 iris %>% tbl_df %>%
  filter(Petal.Length <= 1.4) %>%
- head(4)
- 
+ head()
+``` 
+```{r warning=FALSE}
 iris %>% tbl_df %>%
  filter(Sepal.Length > 5 & Species == "virginica") %>%
  select(Species, Sepal.Length) %>%
- head(3) 
- 
-iris %>% tbl_df %>% group_by(Species) %>% head(3)
- 
+ head() 
+``` 
+```{r warning=FALSE}
+iris %>% tbl_df %>% group_by(Species) %>% head()
+``` 
+```{r warning=FALSE}
 iris %>%
  summarise(Mean.Petal.Length = mean(Petal.Length),
  Mean.Sepal.Length = mean(Sepal.Length))
- 
+```
+```{r warning=FALSE}
+iris %>% summarise(Std.Petal.Length=sd(Petal.Length), Std.Sepal.Length=sd(Sepal.Length))
+```
+```{r}
 iris %>%
  summarise(Mean.Petal.Width = mean(Petal.Width),
  Mean.Sepal.Width = mean(Sepal.Width))
-
+```
+```{r}
+iris %>% summarise(Var.Petal.Width = var(Petal.Width), Var.Seapl.Width= var(Sepal.Width)) 
+```
+```{r}
 iris %>%
  group_by(Species) %>%
  summarise(Mean.Petal.Length = mean(Petal.Length)) 
-
+```
+```{r}
+iris %>% group_by(Species) %>% summarise(Var.Petal.Length = var(Petal.Length))
+```
+```{r}
 iris %>%
  group_by(Species) %>%
  summarise(Mean.Sepal.Length = mean(Sepal.Length)) 
- 
+``` 
+```{r}
 iris %>% group_by(Species)%>%
  summarize(Median.Petal.Width = median(Petal.Width))
- 
+``` 
+```{r}
 iris %>% group_by(Species)%>%
  summarize(Median.Sepal.Width = median(Sepal.Width))
- 
+``` 
+```{r}
 iris %>%
  summarise(Observations = n())
- 
+``` 
+```{r}
 iris %>%
  group_by(Species) %>%
  summarise(Number.Of.Species = n())
-
+```
+```{r}
 iris %>%
  group_by(Species) %>%
  summarise(Number.Of.Samples = n(),
  Mean.Petal.Length = mean(Petal.Length))
- 
+``` 
+```{r}
 iris %>%
  group_by(Species) %>%
  summarise(Number.Of.Samples = n(),
  Mean.Sepal.Length = mean(Sepal.Length))
- 
+```
+```{r}
 format_class <- . %>% {
  dict <- c("2" = "benign", "4" = "malignant")
  dict[as.character(.)]
@@ -558,12 +583,13 @@ formatted_breast_cancer <-
  
 formatted_breast_cancer %>%
  group_by(Class) %>%
- summarise(mean.thickness = mean(Cl.thickness)) 
+ summarise(mean.Cl.thickness = mean(Cl.thickness)) 
  
 formatted_breast_cancer %>%
  group_by(Class) %>%
- summarise(mean.size = mean(Cell.size))
-
+ summarise(mean.Cell.size = mean(Cell.size))
+```
+```{r message=FALSE, warning=FALSE}
 formatted_breast_cancer %>%
  arrange(Cell.size) %>%
  group_by(Cell.size, Class) %>%
@@ -576,12 +602,13 @@ formatted_breast_cancer %>%
 formatted_breast_cancer %>%
  group_by(as.factor(Cell.size), Class) %>%
  summarise(mean.thickness = mean(Cl.thickness)) 
-
+```
+```{r message=FALSE}
 iris %>% select(Species, Petal.Length) %>% head(3) 
  
 iris %>% select(Species, Petal.Length) %>%
  qplot(Species, Petal.Length, geom = "boxplot", data = .) 
-
+```
 #library(tidyr) 
 iris %>%
  gather(key = Attribute, value = Measurement,
