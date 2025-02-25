@@ -609,13 +609,15 @@ iris %>% select(Species, Petal.Length) %>% head(3)
 iris %>% select(Species, Petal.Length) %>%
  qplot(Species, Petal.Length, geom = "boxplot", data = .) 
 ```
+```{r}
 #library(tidyr) 
 iris %>%
  gather(key = Attribute, value = Measurement,
  Sepal.Length, Sepal.Width) %>%
  select(Species, Attribute, Measurement) %>%
- head(3) 
-
+ head() 
+```
+```{r warning=FALSE}
 iris %>%
  gather(key = Attribute, value = Measurement,
  Sepal.Length, Sepal.Width) %>%
@@ -623,13 +625,15 @@ iris %>%
  qplot(Attribute, Measurement,
  geom = "boxplot",
  facets = . ~ Species, data = .)
- 
+``` 
+```{r}
 iris %>%
  gather(key = Attribute, value = Measurement,
  Petal.Length, Petal.Width) %>%
  select(Species, Attribute, Measurement) %>%
- head(3) 
-
+ head() 
+```
+```{r}
 iris %>%
  gather(key = Attribute, value = Measurement,
  Petal.Length, Petal.Width) %>%
@@ -637,21 +641,24 @@ iris %>%
  qplot(Attribute, Measurement,
  geom = "boxplot",
  facets = . ~ Species, data = .)
- 
+```
 
+```{r}
 ## **Chapter 4** 
 ### Visualizing Data
 library(graphics)
 x = rnorm(100)
 y = rnorm(100)
-plot(x,y, type="p", main ="X against Y")
-
+plot(x,y, type="p", main ="X against Y", col = "red")
+```
+```{r}
 data(cars)
-cars %$% plot(speed, dist, main="Cars data",
+cars %$% plot(speed, dist, main = "Cars data",
  xlab="Speed", ylab="Stopping distance")
 
 cars %>% plot(dist ~ speed, data = ., main="Cars data", col="red")
-
+```
+```{r}
 cars %$% plot(speed, dist, main="Cars data", type="h",
  xlab="Speed", ylab="Stopping Distance")
 
@@ -662,7 +669,8 @@ cars %$% hist(speed, col ="orange")
 cars %$% hist(dist, col="blue")
 
 cars %>% lm(dist ~ speed, data = .) %>% plot ### Plotting Linear Models
-
+```
+```{r}
 data = longley
 data
 longley %>% plot(Unemployed ~ Year, data = ., type = 'l')
@@ -671,30 +679,37 @@ longley %>% lines(Armed.Forces ~ Year, data = ., col = "blue")
 longley %$% plot(Unemployed ~ Year, type = 'l',
  ylim = range(c(Unemployed, Armed.Forces)))
 longley %>% lines(Armed.Forces ~ Year, data = ., col = "blue")
-
+```
+```{r}
 cars %>% plot(dist ~ speed, data = ., xlab="Speed", ylab="Stopping Distance")
-cars %>% lm(dist ~ speed, data = .) %>% abline(col = "red")
-
+cars %>% lm(dist ~ speed, data = .) %>% abline(col = "green")
+```
+```{r}
 shape_map <- c("setosa" = 1,
  "versicolor" = 2,
- "virginica" = 3)
+ "virginica" = 3) 
 iris %$% plot(Petal.Length ~ Petal.Width,
  pch = shape_map[Species], col = Species)
- 
- cars %>% qplot(speed, dist, data = .)
 
-iris %>% qplot(Petal.Width, Petal.Length ,
- color = Species, data = .)
+shape_map = c("setosa" =1, "versicolor" = 2, "virginica" = 3)
+iris %$% plot(Sepal.Length ~ Sepal.Width, pch = shape_map[Species], col= Species)
+
+ cars %>% qplot(speed, dist, data = .)
+```
+```{r}
+iris %>% qplot(Petal.Width, Petal.Length, color = Species, data = .)
+
+iris %>% qplot(Sepal.Width, Sepal.Length, color = Species, data = .)
 
 cars %>% qplot(speed, data = ., bins = 10) 
-
- 
-### Geometeries
+```
+```{r} 
+### Geometries
 cars %>% qplot(speed, data = ., geom = "density")
 
 cars %>% qplot(speed, dist, data = .)
 ggplot(cars) + geom_point(aes(x = speed, y = dist))
-
+```
 #ggplot(cars, aes(x = speed, y = dist)) + geom_point()
 
 #cars %>% ggplot(aes(x = speed, y = dist)) + geom_point()
@@ -2666,4 +2681,152 @@ smooth_weights <- function(graph, node_weights,
  }
  new_weights
 }
+```
+
+```{r}
+### Increasing Speed
+mysum <- function(sequence) {
+ s <- 0
+ for (x in sequence) s <- s + x
+ s
+}
+microbenchmark(
+ sum(1:10),
+ mysum(1:10)
+)
+
+microbenchmark(
+ sum(1:10),
+ mysum(1:10),
+ Reduce(`+`, 1:10, 0)
+)
+```
+```{r}
+x <- sample(LETTERS, 1000, replace = TRUE)
+microbenchmark(
+ factor(x, levels = LETTERS),
+ factor(x)
+)
+```
+```{r}
+x <- rnorm(1000)
+names(x) <- paste("n", 1:1000)
+microbenchmark(
+ unlist(Map(function(x) x**2, x), use.names = FALSE),
+ unlist(Map(function(x) x**2, x))
+)
+```
+```{r}
+smooth_weights_iteration_map <- function(graph, node_weights, alpha) {
+ if (length(node_weights) != length(graph))
+ stop("Incorrect number of nodes")
+handle_i <- function(i) {
+ neighbour_weights <- 0
+ n <- 0
+ for (j in graph[[i]]) {
+ if (i != j) {
+ neighbour_weights <- neighbour_weights + node_weights[j]
+ n <- n + 1
+ }
+ }
+ if (n > 0) {
+ alpha * node_weights[i] + (1 - alpha) * neighbour_weights / n
+ } else {
+ node_weights[i]
+ }
+ }
+ unlist(Map(handle_i, 1:length(node_weights)))
+}
+```
+
+```{r}
+test_rmse <- function(data) {
+ model <- data$training %>% lm(dist ~ speed, data = .)
+ predictions <- data$test %>% predict(model, data = .)
+ rmse(data$test$dist, predictions)
+}
+sample_rmse <- function (n) {
+ random_cars <- cars %>%
+ partition(n, c(training = 0.5, test = 0.5))
+ unlist(Map(test_rmse, random_cars))
+}
+sample_rmse_parallel <- function (n) {
+ random_cars <- cars %>%
+ partition(n, c(training = 0.5, test = 0.5))
+ unlist(clusterMap(cl, test_rmse, random_cars))
+}
+
+microbenchmark(
+ sample_rmse(10),
+ sample_rmse_parallel(10),
+ times = 5
+)
+
+microbenchmark(
+ sample_rmse(1000),
+ sample_rmse_parallel(1000),
+ times = 5
+)
+```
+```{r}
+NumericVector
+smooth_weights_iteration_cpp(List g,
+ NumericVector node_weights,
+double alpha)
+{
+ NumericVector new_weights(g.length());
+ for (int i = 0; i < g.length(); ++i) {
+IntegerVector neighbours = g[i];
+ double neighbour_sum = 0.0;
+ int n = 0;
+ for (int j = 0; j < neighbours.length(); ++j) {
+ neighbour_sum += node_weights[j];
+ ++n;
+ }
+ if (n > 0) {
+ new_weights[i] = alpha * node_weights[i] +
+ (1-alpha) * (neighbour_sum / n);
+ } else {
+ new_weights[i] = node_weights[i];
+ }
+ }
+ return new_weights;
+}
+```
+
+```{r}
+cppFunction("
+NumericVector
+smooth_weights_iteration_cpp(List g,
+ NumericVector node_weights,
+double alpha)
+{
+ NumericVector new_weights(g.length());
+ for (int i = 0; i < g.length(); ++i) {
+ // The body here is just the C++ code
+ // shown above...
+ }
+ return new_weights;
+}
+")
+```
+
+```{r}
+smooth_weights_cpp <- function(graph, node_weights,
+ alpha, no_iterations) {
+ new_weights <- node_weights
+ for (i in 1:no_iterations) {
+new_weights <-
+ smooth_weights_iteration_cpp(graph, new_weights, alpha)
+ }
+ new_weights
+}
+```
+
+```{r}
+microbenchmark(
+ smooth_weights(g, weights, 0.8, 10),
+ smooth_weights_cpp(g, weights, 0.8, 10),
+ times = 5
+)
 ```
