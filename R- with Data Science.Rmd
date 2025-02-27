@@ -713,74 +713,85 @@ ggplot(cars) + geom_point(aes(x = speed, y = dist))
 #ggplot(cars, aes(x = speed, y = dist)) + geom_point()
 
 #cars %>% ggplot(aes(x = speed, y = dist)) + geom_point()
- 
+```{r} 
 iris %>% ggplot +
  geom_point(aes(x = Petal.Width, y = Petal.Length,
  color = Species))
- 
+```
+```{r}
 iris %>% ggplot +
  geom_point(aes(x = Sepal.Width, y = Sepal.Length,
  color = Species))
-
+```
+```{r}
 iris %>% ggplot +
  geom_point(aes(x = Petal.Width, y = Petal.Length),
- color = "red") 
-
+ color = "black") 
+```
+```{r}
 cars %>% ggplot + geom_histogram(aes(x = speed), bins = 10)
 cars %>% ggplot + geom_density(aes(x = speed))
 cars %>% ggplot + geom_histogram(aes(x=dist), bins = 10)
 cars %>% ggplot + geom_density(aes(x=dist))
-
+```
+```{r}
 cars %>% ggplot(aes(x = speed, y = ..count..)) +
- geom_histogram(bins = 10) +
- geom_density() 
+ geom_histogram(bins = 10) + geom_density() 
+```
+```{r}
+cars %>% ggplot(aes(x = speed, y = dist)) +
+ geom_point() + geom_smooth(method = "lm", formula =  y ~ x)
 
 cars %>% ggplot(aes(x = speed, y = dist)) +
- geom_point() + geom_smooth(method = "lm")
-
-cars %>% ggplot(aes(x = speed, y = dist)) +
- geom_point() + geom_smooth() 
-
+ geom_point() + geom_smooth( method= "loess",formula =  y ~ x) 
+```
+```{r}
 longley %>% ggplot(aes(x = Year)) +
  geom_line(aes(y = Unemployed)) +
  geom_line(aes(y = Armed.Forces), color = "blue") 
-
+```
+```{r}
 longley %>% ggplot(aes(x = Year)) +
  geom_point(aes(y = Unemployed)) +
  geom_point(aes(y = Armed.Forces), color = "blue") +
  geom_line(aes(y = Unemployed)) +
  geom_line(aes(y = Armed.Forces), color = "blue") 
-
+```
+```{r}
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value, color = key)) + geom_line() + geom_point()
 
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value)) + geom_line() +
- facet_grid(key ~ .)  #### Facet row-wise
+ facet_grid(key ~ .)  #### Facet row-wise with lines
 
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value)) + geom_point() +
- facet_grid(key ~ .)
+ facet_grid(key ~ .) #### Facet row-wise with points
 
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value)) + geom_line() +
  facet_grid(. ~ key  ) #### Facet column-wise
- 
+
+
+longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
+ ggplot(aes(x = Year, y = value)) + geom_point() +
+ facet_grid(. ~ key)
+```
+```{r}
 iris %>% gather(Measurement, Value, -Species) %>%
- ggplot(aes(x = Species, y = Value)) +
- geom_boxplot() +
- facet_grid(Measurement ~ .)
+ ggplot(aes(x = Species, y = Value)) + geom_boxplot() +
+ facet_grid(Measurement ~ .) # row-wise 
 
 iris %>% gather(Measurement, Value, -Species) %>%
- ggplot(aes(x = Species, y = Value)) +
- geom_boxplot() +
- facet_grid(. ~ Measurement ) ### Column wise
-
+ ggplot(aes(x = Species, y = Value)) + geom_boxplot() +
+ facet_grid(. ~ Measurement ) # Column wise
+```
+```{r}
 iris %>% gather(Measurement, Value, -Species) %>%
- ggplot(aes(x = Species, y = Value)) +
- geom_boxplot() +
+ ggplot(aes(x = Species, y = Value)) +geom_boxplot() +
  facet_grid(Measurement ~ ., scale = "free_y") 
- 
+
 label_map <- c(Petal.Width = "Petal Width",
  Petal.Length = "Petal Length",
  Sepal.Width = "Sepal Width",
@@ -791,10 +802,11 @@ iris %>% gather(Measurement, Value, -Species) %>%
  geom_boxplot() +
  facet_grid(Measurement ~ ., scale = "free_y",
  labeller = labeller(Measurement = label_map))
-
+```
+```{r}
 ### Scaling 
 cars %>% ggplot(aes(x = speed, y = dist)) +
- geom_point() + geom_smooth(method = "lm") +
+ geom_point() + geom_smooth(method = "lm", formula =  y ~ x) +
  scale_x_continuous("Speed") +
  scale_y_continuous("Stopping Distance") 
  
@@ -802,12 +814,14 @@ longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value)) + geom_line() + geom_point() +
  scale_x_continuous(breaks = 1947:1962) +
  facet_grid(key ~ .)
-
+```
+```{r}
 cars %>% ggplot(aes(x = speed, y = dist)) +
- geom_point() + geom_smooth(method = "lm") +
+ geom_point() + geom_smooth(method = "lm", formula =  y ~ x) +
  scale_x_reverse("Speed") +
  scale_y_continuous("Stopping Distance") 
-
+```
+```{r}
 iris %>% ggplot(aes(x = Species, y = Petal.Length)) +
  geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) 
 
@@ -816,7 +830,8 @@ iris %>% ggplot(aes(x = Species, y = Petal.Length)) +
  scale_x_discrete(labels = c("setosa" = "Setosa",
  "versicolor" = "Versicolor",
 "virginica" = "Virginica")) 
- 
+``` 
+```{r}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
  geom_boxplot() +
@@ -829,7 +844,8 @@ iris %>% gather(Measurement, Value, -Species) %>%
  scale_fill_manual(values = c("red", "green", "blue")) +
  facet_grid(Measurement ~ ., scale = "free_y",
  labeller = labeller(Measurement = label_map)) 
-
+```
+```{r}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
  geom_boxplot() +
@@ -837,12 +853,14 @@ iris %>% gather(Measurement, Value, -Species) %>%
  facet_grid(Measurement ~ ., scale = "free_y",
  labeller = labeller(Measurement = label_map)) 
 
-theme_set(theme_bw(2)) 
+#theme_set(theme_bw(2)) 
 
-#old <- theme_set(theme_bw())
+old <- theme_set(theme_bw())
 #theme_set(old)
 #theme_replace(panel.grid.minor = element_line(colour = "red"))
+```
 
+```{r}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
  geom_boxplot() +
@@ -853,7 +871,8 @@ iris %>% gather(Measurement, Value, -Species) %>%
  facet_grid(Measurement ~ ., switch = "y",
  labeller = labeller(Measurement = label_map)) +
  coord_flip() 
- 
+``` 
+```{r}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
  geom_boxplot() +
@@ -862,9 +881,9 @@ iris %>% gather(Measurement, Value, -Species) %>%
 "virginica" = "Virginica")) +
  scale_fill_brewer(palette = "Blues") +
  facet_grid(Measurement ~ ., switch = "y",
- labeller = labeller(Measurement = label_map)) +
- coord_flip()
- 
+ labeller = labeller(Measurement = label_map)) + coord_flip()
+```
+```{r}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
  geom_boxplot() +
@@ -877,7 +896,8 @@ iris %>% gather(Measurement, Value, -Species) %>%
  coord_flip() +
  theme(strip.background = element_blank()) +
  theme(legend.position="top")
-
+```
+```{r}
 label_map <- c(Petal.Width = "Petal Width",
  Petal.Length = "Petal Length",
  Sepal.Width = "Sepal Width",
@@ -897,8 +917,8 @@ iris %>% gather(Measurement, Value, -Species) %>%
  coord_flip() +
  theme(strip.background = element_blank()) +
  theme(legend.position="top") 
- 
- 
+``` 
+```{r} 
 ### Figures with Multiple Plots
 petal <- iris %>% ggplot() +
  geom_point(aes(x = Petal.Width, y = Petal.Length,
@@ -919,7 +939,8 @@ grid.arrange(petal, sepal, ncol=2)
 #install.packages("cowplot")
 #library(cowplot)
 plot_grid(petal, sepal, labels = c("A", "B"))
- 
+``` 
+```{r}
 ## **Chapter 5** 
 ### Working With Larges Data sets
 iris %>% sample_n(size=5)
@@ -931,7 +952,7 @@ mem_change(x <- rnorm(10000))
 mem_change(x[1] <- 0) 
 mem_change(y <- x) 
 mem_change(x[1] <- 0) 
-
+```
 d <- data.frame(x = rnorm(10000), y = rnorm(10000))
 d %>% ggplot(aes(x = x, y = y)) +
  geom_point(alpha = 0.2)
