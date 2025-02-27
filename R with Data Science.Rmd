@@ -1199,4 +1199,45 @@ cos(90)
 cos(1)
 
 
+```{r}
+# Exercises
 
+mvrnorm(n = 5, mu = c(0,0), Sigma = diag(1, nrow = 2))
+```
+```{r}
+w0 <- 0.3 ; w1 <- 1.1 ; beta <- 1.3
+x <- rnorm(50)
+y <- rnorm(50, w1 * x + w0, 1/beta)
+```
+
+```{r}
+predictors <- data.frame(x = rnorm(5), z = rnorm(5))
+y <- with(predictors, rnorm(5, mean = 3*x + 5*z + 2))
+model <- y ~ x + z
+model.frame(model,data = predictors)
+```
+
+```{r}
+x <- runif(10)
+model.frame(~ x + I(x^2))
+```
+
+```{r}
+x <- runif(10)
+y <- rnorm(10, mean=x)
+model.no.intercept <- y ~ x + 0
+(frame.no.intercept <- model.frame(model.no.intercept))
+```
+
+```{r}
+model.matrix(model.no.intercept, frame.no.intercept)
+```
+
+```{r}
+model.with.intercept <- y ~ x
+(frame.with.intercept <- model.frame(model.with.intercept))
+
+model.matrix(model.with.intercept, frame.with.intercept)
+
+model.response(frame.with.intercept)
+```

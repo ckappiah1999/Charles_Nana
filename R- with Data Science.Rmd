@@ -953,19 +953,22 @@ mem_change(x[1] <- 0)
 mem_change(y <- x) 
 mem_change(x[1] <- 0) 
 ```
+```{r}
 d <- data.frame(x = rnorm(10000), y = rnorm(10000))
 d %>% ggplot(aes(x = x, y = y)) +
  geom_point(alpha = 0.2)
 
-mem_change(d) 
+mem_change(d)
+
 d %>% ggplot(aes(x = x, y = y)) +
  geom_density_2d()
- 
+``` 
+```{r}
 #install.packages("hexbin")
 d %>% ggplot(aes(x = x, y = y)) +
  geom_hex() + scale_fill_gradient(low = "lightgray", high = "red") + geom_density2d(color = "black")
- 
- 
+``` 
+```{r} 
 #install.packages("biglm")
 slice_size <- 10
 n <- nrow(cars)
@@ -976,7 +979,8 @@ for (i in 1:(n/slice_size-1)) {
  model <- update(model, moredata = slice)
 }
 model 
-
+```
+```{r}
 slice_size <- 10
 n <- nrow(iris)
 slice <- iris %>% slice(1:slice_size)
@@ -986,14 +990,15 @@ for (i in 1:(n/slice_size-1)) {
  mode <- update(mode, moredata = slice)
 }
 mode
-
+```
+```{r}
 #install.packages("ff")
 ffcars <- as.ffdf(cars)
 summary(ffcars)
 
 ffiris <- as.ffdf(iris)
 summary(ffiris)
-
+```
 #install.packages("ffbase")
 
 #install.packages("bigglm")
@@ -1008,21 +1013,23 @@ summary(ffiris)
 #iris_sqlite <- tbl(iris_db, "iris")
 #iris_sqlite %>% group_by(Species) %>%
 #summarise(mean.Petal.Length = mean(Petal.Length)) 
- 
+
+```{r} 
 ## **Chapter 6** 
 ## **Supervise Machine Learning**
 ### Linear Regression
 cars %>% head()
-cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm") 
+cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula = y ~ x) 
 cars %>% lm(dist ~ speed, data = .) %>% summary 
 cars %>% lm(dist ~ speed, data = .) %>% coefficients 
 cars %>% lm(dist ~ speed, data = .) %>% confint 
-
+```
+```{r}
 predict_dist <- function(speed, theta_1)
  data.frame(speed = speed,
  dist = theta_1 * speed,
  theta = as.factor(theta_1))
- 
+
 cars %>% ggplot(aes(x = speed, y = dist, colour = theta)) +
  geom_point(colour = "black") +
  geom_line(data = predict_dist(cars$speed, 2)) +
@@ -1045,8 +1052,8 @@ cars %>% lm(dist ~ speed - 1, data = .) %>% coefficients
 cars %>% ggplot(aes(x = speed, y = dist)) +
  geom_point() +
  geom_smooth(method = "lm", formula = y ~ x - 1)
-
-
+```
+```{r}
 ### Logistic Regression
 data("BreastCancer")
 BreastCancer %>% head
@@ -1064,7 +1071,7 @@ BreastCancer %>%
  as.numeric(as.character(Cl.thickness))) %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  ggplot(aes(x = Cl.thickness.numeric, y = IsMalignant)) + geom_jitter(height = 0.05, width = 0.3, alpha=0.4) +
- geom_smooth(method = "glm",
+ geom_smooth(method = "glm", formula = y ~ x, 
  method.args = list(family = "binomial")) 
 
 BreastCancer %>%
@@ -1074,14 +1081,15 @@ BreastCancer %>%
  glm(IsMalignant ~ Cl.thickness.numeric,
  family = "binomial",
  data = .) 
-
+```
+```{r}
 ### Model Matrice and Formula
 cars %>%
  model.matrix(dist ~ speed, data = .) %>% head(5)
 cars %>%
  model.matrix(dist ~ speed - 1, data = .) %>% head(5) 
-
-
+```
+```{r}
 BreastCancer %>%
  mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness)),
@@ -1090,9 +1098,9 @@ BreastCancer %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  model.matrix(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric,
  data = .) %>%
- head(5) 
-
-
+ head() 
+```
+```{r}
 BreastCancer %>%
  mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness)),
@@ -1102,7 +1110,8 @@ BreastCancer %>%
  model.matrix(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric - 1,
  data = .) %>%
  head()
-
+```
+```{r}
 BreastCancer %>%
  mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness)),
@@ -1112,7 +1121,8 @@ BreastCancer %>%
  glm(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric - 1,
  family = "binomial",
  data = .)
- 
+```
+
  BreastCancer %>%
  mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness)),
