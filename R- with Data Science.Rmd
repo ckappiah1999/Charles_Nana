@@ -1524,7 +1524,7 @@ predict(model, BreastCancer) %>% head
 
 table(BreastCancer$Class, predict(model, BreastCancer))
 ```
-
+```{r}
 ## **Chapter Seven** 
 ### **Unsupervised Learning**
 
@@ -1538,7 +1538,8 @@ iris %>% ggplot() + geom_point(aes(x = Petal.Length, y = Petal.Width, colour = S
 pca <- iris %>% select(-Species) %>% prcomp
 pca
 pca %>% plot
-
+```
+```{r}
 mapped_iris <- pca %>% predict(iris)
 mapped_iris %>% head
 
@@ -1553,16 +1554,15 @@ HouseVotes84 %>% head
 
 vote_patterns <- HouseVotes84 %>%
  select(-Class) %>%
- apply(c(1,2), . %>% { ifelse(as.character(.) == "n", 0, 1) }) %>%
- apply(c(1,2), . %>% { ifelse(is.na(.), 0.5, .) })
+ apply(c(1,2), . %>% { ifelse(as.character(.) == "n", 0, 1) }) %>% apply(c(1,2), . %>% { ifelse(is.na(.), 0.5, .) })
 pca <- vote_patterns %>% prcomp
-
+```
+```{r}
 mapped_votes <- pca %>% predict(vote_patterns)
-mapped_votes %>%
- as.data.frame %>%
- cbind(Class = HouseVotes84$Class) %>%
+mapped_votes %>%as.data.frame %>% cbind(Class = HouseVotes84$Class) %>%
  ggplot() + geom_point(aes(x = PC1, y = PC2, colour = Class))
- 
+``` 
+```{r}
 ### Multidimensional Scaling 
 iris_dist <- iris %>% select(-Species) %>% dist
 mds_iris <- iris_dist %>% cmdscale(k=2)
@@ -1573,18 +1573,19 @@ mds_iris %>%
  cbind(Species = iris$Species) %>%
  ggplot() +
  geom_point(aes(x = V1, y = V2, colour = Species))
-
+```
+```{r}
 mds_votes <- vote_patterns %>% dist %>% cmdscale(k = 2)
 mds_votes %>%
  as.data.frame %>%
  cbind(Class = HouseVotes84$Class) %>%
  ggplot() +
  geom_point(aes(x = V1, y = V2, colour = Class))
-
+```
+```{r}
 random_ngram <- function(n)
- sample(c('C','H','A','R','L','E','S'), size = n, replace = TRUE) %>%
- paste0(collapse = "")
- 
+ sample(c('C','H','A','R','L','E','S'), size = n, replace = TRUE) %>% paste0(collapse = "")
+
 random_string <- function(m) {
  n <- max(1, m + sample(c(-1,1), size = 1) * rgeom(1, 1/2))
  random_ngram(n)
@@ -1601,11 +1602,12 @@ string_dist %>%
  geom_point() +
  geom_label(aes(label = String),
  hjust = 0, nudge_y = -0.1)
-
+```
+```{r}
 ### Kmeans
 clusters <- iris %>%
  select(-Species) %>%
- kmeans(centers = 7)
+ kmeans(centers = 3)
 clusters$centers
 
 clusters$cluster %>% head
@@ -1617,7 +1619,8 @@ iris %>%
  geom_bar(aes(x = Species, fill = as.factor(Cluster)),
  position = "dodge") +
  scale_fill_discrete("Cluster")
-
+```
+```{r}
 pca <- iris %>%
  select(-Species) %>%
  prcomp
@@ -1651,24 +1654,26 @@ map <- rep(NA, each = 3)
 map[counts] <- names(counts)
 table(iris$Species, map[clusters$cluster])
 
-
+#?prcomp
+```
+```{r}
 ## Hierarchical Clustering
 iris_dist <- iris %>% select(-Species) %>% scale %>% dist
 clustering <- hclust(iris_dist)
 plot(clustering)
-
+```
+```{r}
 #install.packages("ggdendro")
 #library(ggdendro)
 ggdendrogram(clustering) + theme_dendro()
-clusters <- clustering %>% cutree(k = 7)
+clusters <- clustering %>% cutree(k = 3)
 
 iris %>%
  cbind(Cluster = clusters) %>%
- ggplot() +
- geom_bar(aes(x = Species, fill = as.factor(Cluster)),
- position = "dodge") +
+ ggplot() + geom_bar(aes(x = Species, fill = as.factor(Cluster)), position = "dodge") +
  scale_fill_discrete("Cluster")
-
+```
+```{r}
 mapped_iris %>%
  as.data.frame %>%
  cbind(Species = iris$Species,
@@ -1676,7 +1681,8 @@ mapped_iris %>%
  ggplot() +
  geom_point(aes(x = PC1, y = PC2,
  shape = Species, colour = Clusters))
-
+```
+```{r}
 ## Association Rules
 #install.packages("arules")
 
@@ -1694,7 +1700,7 @@ head %>% inspect(linebreak = FALSE)
 
 rules %>% subset(support > 0.5) %>% sort(by = "lift") %>%
  head %>% inspect(linebreak = FALSE)
-
+```
 #install.packages("e1071")
 #library(e1071)
 
@@ -1968,7 +1974,6 @@ g <- f("y")
 g()
 h <- f("z")
 h()
-
 
 f <- function() {
  x <- NULL
