@@ -1122,7 +1122,7 @@ BreastCancer %>%
  family = "binomial",
  data = .)
 ```
-
+```{r}
  BreastCancer %>%
  mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness)),
@@ -1130,20 +1130,21 @@ BreastCancer %>%
  as.numeric(as.character(Cell.size))) %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  glm(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric,
- family = "binomial",
- data = .) 
-
+ family = "binomial", data = .) 
+```
+```{r}
 BreastCancer %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  model.matrix(IsMalignant ~ Bare.nuclei, data = .) %>%
- head(5) 
-
+ head() 
+```
+```{r}
 BreastCancer %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  model.matrix(IsMalignant ~ Cl.thickness, data = .) %>%
- head(5) 
-
-
+ head() 
+```
+```{r}
 BreastCancer %>%
  mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness)),Cell.size.numeric =
@@ -1151,23 +1152,25 @@ BreastCancer %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  model.matrix(IsMalignant ~ Cl.thickness.numeric * Cell.size.numeric,
  data = .) %>%
- head(5) 
-
-
+ head() 
+```
+```{r}
 BreastCancer %>%
  mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness))) %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  model.matrix(IsMalignant ~ Cl.thickness.numeric * Bare.nuclei, data = .) %>%
  head() 
-
+```
+```{r}
 BreastCancer %>%
  mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness))) %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  model.matrix(IsMalignant ~ Cl.thickness.numeric : Bare.nuclei, data = .) %>%
- head(3) 
-
+ head() 
+```
+```{r}
 cars %>%
  model.matrix(dist ~ speed + speed^2, data = .) %>%
  head 
@@ -1180,26 +1183,29 @@ cars %>%
 cars %>% lm(dist ~ speed + I(speed^2), data = .) %>%
  summary
 
+
 cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() +
  geom_smooth(method = "lm", formula = y ~ x + I(x^2))
- 
+``` 
+```{r}
 iris %>% model.matrix(Sepal.Width ~ Sepal.Length, data = .) %>% head
 
 iris %>% model.matrix(Sepal.Width ~ Sepal.Length + I(Sepal.Length^2), data=.) %>% head()
 
 iris %>% lm(Sepal.Width ~ Sepal.Length + I(Sepal.Length^2), data = .) %>% summary
 
-iris %>% ggplot(aes(x = Sepal.Width, y = Sepal.Length)) + geom_point( color = "red") +
+iris %>% ggplot(aes(x = Sepal.Width, y = Sepal.Length)) + geom_point( color = "lightgreen") +
  geom_smooth(method = "lm", formula = y ~ x + I(x^2))
-
+```
+```{r}
 ### Validating Models
 line <- cars %>% lm(dist ~ speed, data = .)
 poly <- cars %>% lm(dist ~ speed + I(speed^2), data = .)
 
 predict(line, cars) %>% head
 predict(poly, cars) %>% head 
-
-
+```
+```{r}
 ### Evaluating Regression Models
 rmse <- function(x,t) sqrt(mean(sum((t - x)^2)))
 rmse(predict(line, cars), cars$dist)
@@ -1212,10 +1218,8 @@ poly <- training_data %>% lm(dist ~ speed + I(speed^2), data = .)
 rmse(predict(line, test_data), test_data$dist) 
 rmse(predict(poly, test_data), test_data$dist) 
 
-
 sampled_cars <- cars %>% mutate(training = sample(0:1, nrow(cars), replace = TRUE))
 sampled_cars %>% head 
-
 
 training_data <- sampled_cars %>% filter(training == 1)
 test_data <- sampled_cars %>% filter(training == 0)
@@ -1226,8 +1230,8 @@ line <- training_data %>% lm(dist ~ speed, data = .)
 poly <- training_data %>% lm(dist ~ speed + I(speed^2), data = .) 
 rmse(predict(line, test_data), test_data$dist) 
 rmse(predict(poly, test_data), test_data$dist) 
-
-
+```
+```{r}
 ### Evaluating Classification Models
 formatted_data <- BreastCancer %>%
  mutate(Cl.thickness.numeric =
@@ -1240,7 +1244,8 @@ formatted_data <- BreastCancer %>%
  glm(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric, data = .)
 
 predict(fitted_model, formatted_data, type = "response") %>% head 
-
+```
+```{r}
 ### Confusion Matrix
 classify <- function(probability) ifelse(probability < 0.5, 0, 1)
 classified_malignant <- classify(predict(fitted_model, formatted_data)) 
@@ -1253,8 +1258,8 @@ classify <- function(probability)
  ifelse(probability < 0.5, "benign", "malignant")
 classified <- classify(predict(fitted_model, formatted_data))
 table(formatted_data$Class, classified, dnn = c("Data", "Predictions")) 
- 
- 
+``` 
+```{r} 
 ### Accuracy
 confusion_matrix <- table(formatted_data$Class, classified,dnn=c("Data", "Predictions"))
 
@@ -1275,7 +1280,8 @@ accuracy <- function(confusion_matrix)
 
 replicate(8, accuracy(table(BreastCancer$Class,
  sample(BreastCancer$Class))))
-
+```
+```{r}
 ### Sensitivity and Specificity
 (specificity <- confusion_matrix[1,1]/
  (confusion_matrix[1,1] + confusion_matrix[1,2])) # negative class
@@ -1283,10 +1289,10 @@ replicate(8, accuracy(table(BreastCancer$Class,
  (confusion_matrix[2,1] + confusion_matrix[2,2])) # positive class
 
 specificity <- function(confusion_matrix)
- confusion_matrix[1,1]/(confusion_matrix[1,1]+confusion_matrix[1,2])
+ confusion_matrix[1,1]/(confusion_matrix[1,1] + confusion_matrix[1,2])
  
 sensitivity <- function(confusion_matrix)
- confusion_matrix[2,2]/(confusion_matrix[2,1]+confusion_matrix[2,2])
+ confusion_matrix[2,2]/(confusion_matrix[2,1] + confusion_matrix[2,2])
  
 prediction_summary <- function(confusion_matrix)
  c("accuracy" = accuracy(confusion_matrix),
@@ -1298,17 +1304,19 @@ random_prediction_summary <- function()
  sample(BreastCancer$Class)))
  
 replicate(3, random_prediction_summary())
-
+```
+```{r}
 ### Other Measures
 confusion_matrix[2,1] / sum(confusion_matrix[,1])
 confusion_matrix[1,1] / sum(confusion_matrix[,1]) 
 
 confusion_matrix[2,2] / sum(confusion_matrix[,2]) 
 confusion_matrix[1,2] / sum(confusion_matrix[,2]) 
-
+```
+```{r}
 ### Random Permutation of Data
 permuted_cars <- cars[sample(1:nrow(cars)),]
-permuted_cars %>% head(3)
+permuted_cars %>% head()
 
 permute_rows <- function(df) df[sample(1:nrow(df)),]
 permuted_cars <- cars %>% permute_rows
@@ -1326,9 +1334,7 @@ grouped_cars[1]
 (grouped_cars[[1]] %>%
  lm(dist ~ speed, data = .) %>%.$coefficients)
  
- 
-qplot(grouped_cars[[1]] %>%
- lm(dist ~ speed, data = .) %>%.$coefficients)
+qplot(grouped_cars[[1]] %>%lm(dist ~ speed, data = .) %>%.$coefficients)
  
 
 estimates <- grouped_cars[[1]] %>%
@@ -1341,8 +1347,9 @@ for (i in 2:length(grouped_cars)) {
  estimates <- rbind(estimates, group_estimates)
 }
 estimates 
-
-library(purrr) 
+```
+```{r}
+#library(purrr) 
 
 estimates <- grouped_cars %>%
  map(. %>% lm(dist ~ speed, data = .) %>% .$coefficients)
@@ -1354,8 +1361,8 @@ estimates <- grouped_cars %>%
  do.call("rbind", .)
  
 estimates
-
-
+```
+```{r}
 ### Cross Validation
 cross_validation_groups <- function(grouped_df) {
  result <- vector(mode = "list", length = length(grouped_df))
@@ -1370,7 +1377,8 @@ cars %>%
  group_data(5) %>%
  cross_validation_groups %>%
  map(. %>% lm(dist ~ speed, data = .) %>% .$coefficients) %>% do.call("rbind", .)
-
+```
+```{r}
 cross_validation_split <- function(grouped_df) {
  result <- vector(mode = "list", length = length(grouped_df))
  for (i in seq_along(grouped_df)) {
@@ -1385,8 +1393,8 @@ cars %>%
  permute_rows %>%
  group_data(5) %>%
  cross_validation_split
-
-
+```
+```{r}
 prediction_accuracy_cars <- function(test_and_training) {
  result <- vector(mode = "numeric",
  length = length(test_and_training))
@@ -1402,8 +1410,8 @@ prediction_accuracy_cars <- function(test_and_training) {
 }
 
 cars %>%permute_rows %>%group_data(5) %>%cross_validation_split %>%prediction_accuracy_cars
-
-
+```
+```{r}
 random_group <- function(n, probs) {
  probs <- probs / sum(probs)
  g <- findInterval(seq(0, 1, length = n), c(0, cumsum(probs)),
@@ -1412,6 +1420,7 @@ random_group <- function(n, probs) {
 }
 
 random_group(8, c(training = 0.5, test = 0.5))
+
 random_group(8, c(training = 0.6, test = 0.4))
 
 random_group(8, c(training = 0.8, test = 0.2)) 
@@ -1423,8 +1432,8 @@ partition <- function(df, n, probs) {
 random_cars <- cars %>% partition(4, c(training = 0.5, test = 0.5))
 
 random_cars %>% prediction_accuracy_cars 
-
-
+```
+```{r}
 ### Decision Tree
 #library(rpart)
 
@@ -1443,7 +1452,8 @@ table(BreastCancer$Class, predicted_class)
 
 accuracy = sum(453,147) / sum(453,147,5,94)
 accuracy
-
+```
+```{r}
 #install.packages("party")
 #library(party)
 model <- cars %>% ctree(dist ~ speed, data = .)
@@ -1457,7 +1467,8 @@ predict(model, BreastCancer) %>% head
 table(BreastCancer$Class, predict(model, BreastCancer)) 
 
 cars %>% ctree(dist ~ speed, data = .) %>% plot
-
+```
+```{r}
 ### Random Forests
 #install.packages("randomForest")
 #library(randomForest)
@@ -1472,23 +1483,23 @@ table(BreastCancer$Class, predict(model, BreastCancer))
 
 accuracy = sum(437,165) / sum(437,165,76,21)
 accuracy
-
+```
+```{r}
 ### Neural Networks
 #install.packages("nnet")
 model <- cars %>% nnet(dist ~ speed, data = ., size = 5)
 rmse(predict(model, cars), cars$dist)
 
-model <- wines %>%
- nnet(Class ~ Cl.thickness, data = ., size = 5)
+model <- BreastCancer %>% nnet(Class ~ Cl.thickness, data = ., size = 5)
 
 predict(model, BreastCancer) %>% head 
-
 
 predicted_class <- predict(model, BreastCancer) %>%
  { ifelse(. < 0.5, "benign", "malignant") }
  
 table(BreastCancer$Class, predicted_class)
-
+```
+```{r}
 ### Support Vector Machines
 #install.packages("kernlab")
 #library(kernlab)
@@ -1496,27 +1507,27 @@ table(BreastCancer$Class, predicted_class)
 model <- cars %>% ksvm(dist ~ speed, data = .)
 rmse(predict(model, cars), cars$dist)
 
-model <- BreastCancer %>%
- ksvm(Class ~ Cl.thickness, data = .)
+model <- BreastCancer %>% ksvm(Class ~ Cl.thickness, data = .)
 
 predict(model, BreastCancer) %>% head 
 
 table(BreastCancer$Class, predict(model, BreastCancer))
-
-
+```
+```{r}
 ### Naive Bayes
 #install.packages("e1071")
 #library(e1071)
 
-model <- BreastCancer %>%
- naiveBayes(Class ~ Cl.thickness, data = .)
+model <- BreastCancer %>% naiveBayes(Class ~ Cl.thickness, data = .)
 
 predict(model, BreastCancer) %>% head
 
 table(BreastCancer$Class, predict(model, BreastCancer))
+```
 
 ## **Chapter Seven** 
 ### **Unsupervised Learning**
+
 iris %>% head()
 
 iris %>% ggplot() +
