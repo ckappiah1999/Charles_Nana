@@ -1211,6 +1211,212 @@ y <- rnorm(50, w1 * x + w0, 1/beta)
 ```
 
 ```{r}
+make_posterior <- function(x, y, alpha, beta) {
+  # Ensure x is a matrix and add intercept term if necessary
+  X <- as.matrix(cbind(1, x))
+  y <- as.matrix(y)
+  
+  # Compute posterior parameters
+  XtX <- t(X) %*% X
+  precision_prior <- alpha * diag(ncol(X))  # Prior precision
+  precision_posterior <- precision_prior + beta * XtX
+  covariance_posterior <- solve(precision_posterior)
+  mean_posterior <- covariance_posterior %*% (beta * t(X) %*% y)
+  
+  return(list(mean = mean_posterior, covariance = covariance_posterior))
+}
+
+sample_from_posterior <- function(posterior, n_samples = 1) {
+  # Extract mean and covariance
+  mean_vec <- as.vector(posterior$mean)
+  cov_matrix <- posterior$covariance
+  
+  # Draw samples from the multivariate normal distribution
+  library(MASS)
+  samples <- mvrnorm(n = n_samples, mu = mean_vec, Sigma = cov_matrix)
+  
+  return(samples)
+}
+
+# Example usage
+set.seed(42)
+x <- matrix(rnorm(20), ncol=1)  # Predictor
+y <- 3 + 2*x + rnorm(10)        # Response with some noise
+alpha <- 1                      # Prior precision
+beta <- 1                       # Noise precision
+
+posterior <- make_posterior(x, y, alpha, beta)
+samples <- sample_from_posterior(posterior, n_samples = 5)
+
+print(samples)
+
+```
+```{r}
+# Load necessary library
+library(ggplot2)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Number of samples
+n_samples <- 100  # Use fewer samples for clarity in line plot
+
+# Sample w0 and w1 from a normal prior
+w0 <- rnorm(n_samples, mean = 0, sd = 1)  # Prior for w0
+w1 <- rnorm(n_samples, mean = 0, sd = 1)  # Prior for w1
+
+# Create data frame
+samples <- data.frame(w0 = w0, w1 = w1)
+
+# Scatter plot of w1 vs. w0 (weight space)
+plot1 <- ggplot(samples, aes(x = w0, y = w1)) +
+  geom_point(alpha = 0.5, color = "blue") +
+  labs(title = "Samples in Weight Space", x = "w0", y = "w1") +
+  theme_minimal()
+
+# Generate x values for line plot
+x_vals <- seq(-5, 5, length.out = 100)
+
+# Create a data frame of (x, y) values for each sampled (w0, w1)
+line_data <- do.call(rbind, lapply(1:n_samples, function(i) {
+  data.frame(x = x_vals, y = w0[i] + w1[i] * x_vals, sample = i)
+}))
+
+# Line plot in (x, y) space
+plot2 <- ggplot(line_data, aes(x = x, y = y, group = sample)) +
+  geom_line(alpha = 0.3, color = "red") +
+  labs(title = "Sampled Lines in (x, y) Space", x = "x", y = "y") +
+  theme_minimal()
+
+# Print plots
+print(plot1)
+print(plot2)
+
+```
+
+```{r}
+# Load required package
+library(MASS)  # For multivariate normal sampling
+
+# Function to compute the posterior distribution of weights
+make_posterior <- function(x, y, alpha, beta) {
+  # Ensure x is a matrix and add intercept term if necessary
+  X <- as.matrix(cbind(1, x))  # Add intercept column
+  y <- as.matrix(y)
+  
+  # Compute posterior mean and covariance
+  XtX <- t(X) %*% X
+  precision_prior <- alpha * diag(ncol(X))  # Prior precision matrix
+  precision_posterior <- precision_prior + beta * XtX
+  covariance_posterior <- solve(precision_posterior)
+  mean_posterior <- covariance_posterior %*% (beta * t(X) %*% y)
+  
+  return(list(mean = mean_posterior, covariance = covariance_posterior))
+}
+
+# Function to sample from the posterior distribution
+sample_from_posterior <- function(posterior, n_samples = 1) {
+  mean_vec <- as.vector(posterior$mean)
+  cov_matrix <- posterior$covariance
+  
+  # Draw samples from the multivariate normal distribution
+  samples <- mvrnorm(n = n_samples, mu = mean_vec, Sigma = cov_matrix)
+  
+  return(samples)
+}
+
+# Example usage
+set.seed(42)  # For reproducibility
+x <- matrix(rnorm(20), ncol=1)  # Predictor values
+y <- 3 + 2*x + rnorm(10)        # Response with noise
+alpha <- 1                      # Prior precision
+beta <- 1                       # Noise precision
+
+# Compute the posterior
+posterior <- make_posterior(x, y, alpha, beta)
+
+# Draw samples from the posterior
+samples <- sample_from_posterior(posterior, n_samples = 5)
+
+print(samples)
+
+```
+
+```{r}
+# Load required package
+library(MASS)  # For multivariate normal sampling
+library(ggplot2)  # For plotting
+
+# Function to compute the posterior distribution of weights
+make_posterior <- function(x, y, alpha, beta) {
+  X <- as.matrix(cbind(1, x))  # Add intercept column
+  y <- as.matrix(y)
+  
+  XtX <- t(X) %*% X
+  precision_prior <- alpha * diag(ncol(X))  # Prior precision matrix
+  precision_posterior <- precision_prior + beta * XtX
+  covariance_posterior <- solve(precision_posterior)
+  mean_posterior <- covariance_posterior %*% (beta * t(X) %*% y)
+  
+  return(list(mean = mean_posterior, covariance = covariance_posterior))
+}
+
+# Function to sample from the posterior distribution
+sample_from_posterior <- function(posterior, n_samples = 10) {
+  mean_vec <- as.vector(posterior$mean)
+  cov_matrix <- posterior$covariance
+  samples <- mvrnorm(n = n_samples, mu = mean_vec, Sigma = cov_matrix)
+  
+  return(samples)
+}
+
+# True underlying parameters
+true_intercept <- 3
+true_slope <- 2
+
+# Prior parameters
+alpha <- 1  # Prior precision
+beta <- 1   # Noise precision
+
+# Function to generate synthetic data
+generate_data <- function(n) {
+  x <- matrix(runif(n, -2, 2), ncol=1)  # Random x values
+  y <- true_intercept + true_slope * x + rnorm(n)  # Linear relation with noise
+  return(list(x = x, y = y))
+}
+
+# Store results for plotting
+plot_data <- data.frame()
+
+# Different dataset sizes to observe posterior behavior
+sample_sizes <- c(5, 10, 20, 50)
+
+# Loop over different dataset sizes
+for (n in sample_sizes) {
+  data <- generate_data(n)
+  posterior <- make_posterior(data$x, data$y, alpha, beta)
+  samples <- sample_from_posterior(posterior, n_samples = 10)
+  
+  df <- data.frame(
+    Intercept = samples[, 1],
+    Slope = samples[, 2],
+    SampleSize = as.factor(n)
+  )
+  
+  plot_data <- rbind(plot_data, df)
+}
+
+# Plot sampled slopes against sample size
+ggplot(plot_data, aes(x = SampleSize, y = Slope)) +
+  geom_boxplot() +
+  geom_hline(yintercept = true_slope, linetype = "dashed", color = "red") +
+  labs(title = "Posterior Samples Centering Around True Slope",
+       y = "Sampled Slope", x = "Number of Data Points") +
+  theme_minimal()
+
+```
+
+```{r}
 predictors <- data.frame(x = rnorm(5), z = rnorm(5))
 y <- with(predictors, rnorm(5, mean = 3*x + 5*z + 2))
 model <- y ~ x + z
@@ -1240,4 +1446,144 @@ model.with.intercept <- y ~ x
 model.matrix(model.with.intercept, frame.with.intercept)
 
 model.response(frame.with.intercept)
+```
+```{r}
+#Without Target
+
+training.data <- data.frame(x = runif(5), y = runif(5))
+frame <- model.frame(y ~ x, training.data)
+model.matrix(y ~ x, frame)
+```
+```{r}
+predict.data <- data.frame(x = runif(5))
+responseless.formula <- delete.response(terms(y ~ x))
+frame <- model.frame(responseless.formula, predict.data)
+model.matrix(responseless.formula, frame)
+```
+```{r}
+build_model_matrix <- function(formula, data) {
+  # Extract the terms from the formula (excluding the response variable)
+  terms <- terms(formula)
+  
+  # Create the model matrix
+  model_matrix <- model.matrix(terms, data)
+  
+  return(model_matrix)
+}
+
+# Example usage
+data <- data.frame(x1 = rnorm(10), x2 = rnorm(10))
+formula <- ~ x1 + x2  # No response variable
+
+model_matrix <- build_model_matrix(formula, data)
+print(model_matrix)
+
+```
+
+
+```{r}
+predict_values <- function(model, new_data) {
+  # Ensure new_data is a data frame
+  if (!is.data.frame(new_data)) {
+    stop("new_data must be a data frame.")
+  }
+  
+  # Extract model terms
+  formula <- formula(model)
+  terms <- terms(formula)
+  
+  # Create model matrix for new data
+  model_matrix <- model.matrix(terms, new_data)
+  
+  # Extract model coefficients
+  coefficients <- coef(model)
+  
+  # Compute predictions
+  predictions <- model_matrix %*% coefficients
+  
+  return(predictions)
+}
+
+# Example usage
+set.seed(123)
+train_data <- data.frame(x1 = rnorm(10), x2 = rnorm(10), y = rnorm(10))
+model <- lm(y ~ x1 + x2, data = train_data)  # Fit a linear model
+
+# New data points (without response variable)
+new_data <- data.frame(x1 = c(0.5, -0.3), x2 = c(1.2, -1.1))
+
+# Predict values
+predictions <- predict_values(model, new_data)
+print(predictions)
+
+```
+
+
+```{r}
+update <- function(model, data, prior) { ... }
+
+update <- function(model, prior, ...) { ... }
+blm <- function(model, ...) {
+ # some code here...
+ prior <- make_a_prior_distribution_somehow()
+ posterior <- update(model, prior, ...)
+ # some code that returns an object here...
+}
+
+blm <- function(model, prior = NULL, ...) {
+ # some code here...
+ if (is.null(prior)) {
+ prior <- make_a_prior_distribution_somehow()
+ }
+ posterior <- update(model, prior, ...)
+ # some code that returns an object here...
+}
+
+posterior <- function(fit) fit$posterior
+
+fit2 <- update(y ~ x, new_data, posterior(fit))
+
+#fit2 <- update(y ~ x, new_data, fit1)
+
+update <- function(model, prior, ...) {
+ if (class(prior) == "blm") {
+ prior <- posterior(prior)
+ }
+ # fitting code here
+}
+
+```
+
+```{r}
+update <- function(model, prior, ...) {
+ if (inherits(prior, "blm")) {
+ prior <- posterior(prior)
+ }
+ # fitting code here
+}
+```
+
+```{r}
+update <- function(model, prior, ...) {
+ prior <- posterior(prior)
+ # fitting code here
+}
+
+posterior <- function(x) UseMethod("posterior")
+posterior.default <- function(x) x
+posterior.blm <- function(x) x$posterior
+
+distribution <- function(x) UseMethod("distribution")
+distribution.default <- function(x) x
+distribution.blm <- function(x) x$posterior
+
+update <- function(model, prior, ...) {
+ prior <- distribution(prior)
+ # fitting code here
+}
+qnorm(0.975)
+?qnorm
+```
+```{r}
+sys.call
 ```
