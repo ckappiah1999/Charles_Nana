@@ -3,10 +3,11 @@ output:
   html_document: default
   word_document: default
 ---
+```{r}
 ## **Chapter One**
 
 ### Simple Expressions
-``` {r}
+
 2 + 4 # Addition
 ```
 ``` {r}
@@ -1703,7 +1704,7 @@ rules %>% subset(support > 0.5) %>% sort(by = "lift") %>%
 ```
 #install.packages("e1071")
 #library(e1071)
-
+```{r}
 # **Chapter 8**
 ## **More on R Programming**
 3 %% 4
@@ -1715,7 +1716,8 @@ rules %>% subset(support > 0.5) %>% sort(by = "lift") %>%
 1 : 2 ^ 4
 
 -1 : 2
-
+```
+```{r}
 !TRUE
 !FALSE
 x <- c(TRUE, FALSE, TRUE, FALSE)
@@ -1723,6 +1725,8 @@ y <- c(TRUE, TRUE, FALSE, FALSE)
 x | y
 FALSE | TRUE
 FALSE || TRUE
+```
+```{r}
 is.numeric(2)
 x <- as.integer(2)
 is.integer(x)
@@ -1733,10 +1737,12 @@ x <- 5 > 4
 x
 class(x)
 is.logical(x)
+```
+```{r}
 x <- "hello, world"
 class(x)
 is.character(x)
-as.character(3.14)
+as.character(3.14) # converting it to character data type
 rep("foo", 10)
 v <- 1:3
 is.atomic(v)
@@ -1746,19 +1752,23 @@ attr(v, "foo") <- "bar"
 v
 is.vector(v)
 
+```
+```{r}
 c(1, 2, c(3, 4), c(5, 6, 7))
 c(1, 2, 3, "foo") -> vec
 vec
 is.vector(vec)
 is.character(vec)
-
+```
+```{r}
 v <- 1:6
 attributes(v)
 dim(v) <- c(2, 3)
 attributes(v)
 dim(v)
 v
-
+```
+```{r}
 v <- 1:6
 matrix(data = v, nrow = 2, ncol = 3, byrow = FALSE)
 matrix(data = v, nrow = 2, ncol = 3, byrow = TRUE)
@@ -1769,14 +1779,15 @@ A %*% B
 t(A)
 solve(A) ### inverse
 solve(A) %*% A ### identity matrix
-
+```
+```{r}
 list(1:3, 5:8)
 list(1:3, c(TRUE, FALSE))
 list((1:4), (5:8), (9:12))
 unlist(list(1:4, 5:7))
-
+```
 #?`[[`
-
+```{r}
 v <- 1:4
 v[2]
 v[2:3]
@@ -1786,7 +1797,8 @@ v[-(1:2)]
 v[v %% 2 == 0]
 v[v %% 2 == 0] <- 13
 v
-
+```
+```{r}
 m <- matrix(1:6, nrow = 2, byrow = TRUE)
 m
 m[1,]
@@ -1800,7 +1812,8 @@ L[2:3]
 L[[1]]
 L[[2]]
 L[[3]]
-
+```
+```{r}
 ### Named Values
 v <- c(a = 1, b = 2, c = 3, d = 4)
 v
@@ -1812,7 +1825,8 @@ v["A"]
 L["a"]
 L[["a"]]
 L$a
-
+```
+```{r}
 ### Control Structures
 if (10 < 12) {
  print("Yes")
@@ -1828,7 +1842,8 @@ if (x < 0) {
 } else {
  print("Nothing")
 }
-
+```
+```{r}
 if (x > 0) "positive" else if (x < 0) "negative" else "zero"
 
 if (x > 0) {
@@ -1842,7 +1857,8 @@ if (x > 0) {
 for (i in 1:100) {
  print(i)
 }
-
+```
+```{r}
 x <- c("foo", "bar", "baz")
 for (i in seq_along(x)) {
  print(i)
@@ -1855,7 +1871,8 @@ for (i in seq_along(x)) {
  }
  print(x[i])
 }
-
+```
+```{r}
 for (i in 1:100) {
  if (i %% 2 == 0) {
  next
@@ -1865,8 +1882,8 @@ for (i in 1:100) {
  }
  print(i)
 }
-
-
+```
+```{r}
 i <- 1
 while (i < 5) {
  print(i)
@@ -1879,14 +1896,17 @@ repeat {
  i <- i + 1
  if (i > 5) break
 }
-
+```
+```{r}
 ### Function
 f <- function() {
  print("hello, world")
  5
 }
 f()
+```
 
+```{r}
 plus <- function(x, y) {
  print(paste(x, "+", y, "is", x + y))
  x + y
@@ -1909,7 +1929,8 @@ pow(4)
 pow(8)
 pow(9,2)
 pow(8,0)
-
+```
+```{r}
 safer_div <- function(x, y) {
  if (y == 0) {
  NA
@@ -1928,9 +1949,10 @@ safer_div <- function(x, y) {
 }
 safer_div(3,6)
 safer_div(3,9)
-
+```
+```{r}
 f <- function(x, y = x^2) y + x
-f(49)
+f(7)
 
 g <- function(x, y = x^2) { x <- 0; y + x }
 g(2)
@@ -1939,8 +1961,8 @@ g(2,9)
 h <- function(x, y = x^2) { y; x <- 0; y + x }
 h(2)
 h(8)
-
-
+```
+```{r}
 ### Scoping
 x <- "x"
 f <- function(y) {
@@ -1956,7 +1978,8 @@ f <- function(y) {
  g()
 }
 f("y")
-
+```
+```{r}
 x <- "x"
 f <- function(y) {
  g <- function() c(x, y)
@@ -1974,7 +1997,8 @@ g <- f("y")
 g()
 h <- f("z")
 h()
-
+```
+```{r}
 f <- function() {
  x <- NULL
  set <- function(val) { x <- val }
@@ -1986,7 +2010,8 @@ x$get()
 
 x$set(5)
 x$get()
-
+```
+```{r}
 f <- function(){
 x <- NULL
  set <- function(val) { x <<- val }
@@ -1995,10 +2020,11 @@ x <- NULL
 }
 x <- f()
 x$get()
-L
+#L
 x$set(5)
 x$get()
-
+```
+```{r}
 n <- function(x) x
 f <- function(n) n(n)
 f(5)
@@ -2013,7 +2039,8 @@ factorial <- function(n) {
  }
 }
 factorial(9)
-
+```
+```{r}
 merge <- function(x, y) {
  if (length(x) == 0) return(y)
  if (length(y) == 0) return(x)
@@ -2024,16 +2051,17 @@ merge <- function(x, y) {
  }
 }
 merge(9,0)
-
-
+merge(12,5)
+```
+```{r}
 merge_sort <- function(x) {
  if (length(x) < 2) return(x)
  n <- length(x)
  m <- n %/% 2
  merge(merge_sort(x[1:m]), merge_sort(x[(m+1):n]))}
 merge_sort (10)
-
-
+```
+```{r}
 # **Chapter 9**
 ### **Advance R Programming**
 (x <- 2 / 3)
@@ -2043,7 +2071,8 @@ merge_sort (10)
 (x <- 1:4 / 3)
 
 (y <- x ** 2)
-
+```
+```{r}
 x <- 1:5
 y <- 6:10
 (z <- x + y)
@@ -2053,7 +2082,8 @@ for (i in seq_along(x)) {
  z[i] <- x[i] + y[i]
 }
 z
-
+```
+```{r}
 sqrt((1:5)**2)
 
 sin(sqrt((1:5)**2))
@@ -2061,10 +2091,11 @@ sin(sqrt((1:5)**2))
 x <- 1:10
 y <- 1:2
 x + y
-
+```
 #z <- 1:3
 #x + z
 
+```{r}
 x <- 1:10
 ifelse(x %% 2 == 0, 5, 15)
 
@@ -2072,7 +2103,9 @@ f <- function(x, y) sqrt(x ** y)
 f(1:6, 2)
 
 f(1:6, 1:2)
+```
 
+```{r}
 role_table <- list("Thomas" = "Instructor",
  "Henrik" = "Student",
  "Kristian" = "Student",
@@ -2092,13 +2125,14 @@ role_table[c("Thomas", "Henrik", "Randi","Charles")]
 map_to_role_2 <- function(names) unlist(role_table[names])
 x <- c("Thomas", "Henrik", "Randi","Charles")
 map_to_role_2(x)
-
+```
+```{r}
 x <- list("first" = list("second" = "foo"), "third" = "bar")
 x[[c("first", "second")]]
 
-x[["first"]][["second"]]
-
-
+#x[["first"]][["second"]]
+```
+```{r}
 ### apply
 m <- matrix(1:6, nrow=2, byrow=TRUE)
 m
@@ -2114,7 +2148,8 @@ apply(m, 1, function(x) c(x,x))
 apply(m, 2, function(x) c(x,x))
 
 apply(m, c(1,2), function(x) c(x,x))
-
+```
+```{r}
 x <- apply(m, c(1,2), function(x) c(x,x))
 k <- dim(x)[3]
 n <- dim(x)[2]
@@ -2123,11 +2158,13 @@ for (i in 1:n) {
  print(x[,i,j])
  }
 }
-
+```
+```{r}
 sumpow <- function(x, n) sum(x) ** n
 apply(m, 1, sumpow,n = 2) # row - wise
-apply(m, 2, sumpow, n =2)
-
+apply(m, 2, sumpow, n =2) # column - wise
+```
+```{r}
 ### lapply
 (l <- list(1, 2, 3))
 lapply(l, function(x) x**2)
@@ -2137,16 +2174,18 @@ lapply(l, function(x) x**2)
 
 lapply(1:5, function(x) x**4)
 
-lapply(list(a=1:3, b=4:6), function(x) x**2)
-
+lapply(list(a = 1:3, b = 4:6), function(x) x**2)
+```
+```{r}
 ### sapply
-sapply(1:3, function(x) x**2)
+sapply(1:3, function(x) x**2) # returns vector by default 
 
 vapply(1:3, function(x) x**2,1)
 
 ?vapply
-
-### Adavance Functions
+```
+```{r}
+### Advance Functions
 
 `+`(2, 2)
 v <- 1:4
@@ -2157,65 +2196,73 @@ v
  x$foo <- value
  x
 }
+
 `bar<-` <- function(x, value) {
  x$bar <- value
  x
 }
+
 x <- list(foo=1, bar=2)
 x$foo
 x$bar
-foo(x) <- 3
+foo(x) <- 4
 x$foo
 bar(x) <- 3
 x$bar
-
+```
+```{r}
 y <- x
 foo(x) <- 5
 x
 y
 
-
 `foo<-` <- function(y, value) {
  y$foo <- value
  y
 }
+
 x <- list(foo=1, bar=2)
 foo(x) <- 3
 x$foo
-
-
+```
+```{r}
 `modify<-` <- function(x, variable, value) {
  x[variable] <- value
  x
 }
+
 x <- list(foo = 1, bar = 2)
-modify(x, "foo") <- 3
-modify(x, "bar") <- 4
+modify(x, "foo") <- 5
+modify(x, "bar") <- 7
 x$foo
 x$bar
-
+```
+```{r}
 x <- 1:4
 f <- function(x) {
  x[2] <- 5 # insert 5 at index 2
+ x[1] <- 9 # insert 9 at index 1 
+ x[4] <- 10 # insert 10 at index 4
  x
 }
 x
 f(x)
-
+```
+```{r}
 square <- function(x) (x**2 - x)
 square(8)
 
 m <- matrix(1:6, nrow=3)
-#m
+m
 sum_of_squares <- function(x) sum(x^2)
-apply(m, 1, sum_of_squares)
-apply(m,2 , sum_of_squares)
+apply(m, 1, sum_of_squares) # row - wise
+apply(m,2 , sum_of_squares) # column - wise
 
-apply(m^2, 1, sum)
-
-
+#apply(m^2, 1, sum)
+```
+```{r}
 apply_if <- function(x, p, f) {
- result <- vector(length=length(x))
+ result <- vector(length = length(x))
  n <- 0
  for (i in seq_along(x)) {
  if (p(x[i])) {
@@ -2226,15 +2273,17 @@ apply_if <- function(x, p, f) {
  head(result, n)
 }
 apply_if(1:8, function(x) x %% 2 == 0, function(x) x^2)
-
-
-power <- function(n) function(x) x^n
+```
+```{r}
+power <- function(n) function(x) x**n
 square <- power(2)
 cube <- power(3)
+
 x <- 1:4
 square(x)
 cube(x)
-
+```
+```{r}
 ### Filter, Map and Reduce
 is_even <- function(x) x %% 2 == 0
 Filter(is_even, 1:8)
@@ -2254,13 +2303,14 @@ Reduce(add_parenthesis, 1:4)
 
 mysum <- function(x) Reduce(`+`, x)
 mysum(1:4)
-
+```
+```{r}
 ### Function Operations
 cached <- function(f) {
  force(f)
  table <- list()
  
- function(n) {
+function(n) {
  key <- as.character(n)
  if (key %in% names(table)) {
  print(paste("I have already computed the value for", n))
@@ -2295,19 +2345,19 @@ factorial(3)
 factorial(4)
 
 factorial(5)
-
-
+```
+```{r}
 fibonacci <- function(n) {
  if (n == 1 || n == 2) {
  1
  } else {
- fibonacci(n-1) + fibonacci(n-2)
+ fibonacci(n - 1) + fibonacci(n - 2)
  }
 }
+
 fibonacci <- cached(fibonacci)
+
 fibonacci(4)
-
-
 
 fibonacci(1)
 
@@ -2318,7 +2368,8 @@ fibonacci(3)
 fibonacci(4)
 
 fibonacci(5)
-
+```
+```{r}
 ### Ellipsis Parameters
 g <- function(a, b, ...) NULL
 g(a = 1, b = 2, c = 3)
@@ -2329,18 +2380,20 @@ tolist()
 tolist(a=1)
 
 tolist(a=1, b= 3)
+tolist(a=1, b= 3, c = 4,d= 12, e = 23)
 
 ### System Timeout
-time_it <- function(f) {
+time_out <- function(f) {
  force(f)
  function(...) {
  system.time(f(...))
  }
 }
 
-ti_mean <- time_it(mean)
+ti_mean <- time_out(mean)
 ti_mean(runif(1e6))
-
+```
+```{r}
 # **Chapter 10**
 ## **Object Oriented Programming**
 ### **Bayesian Linear Models**
@@ -2357,7 +2410,9 @@ blm <- function(model, alpha = 1, beta = 1, ...) {
  mean = mean,
  covar = covar)
 }
+```
 
+```{r}
 # fake some data for our linear model
 x <- rnorm(10)
 a <- 1 ; b <- 1.3
@@ -2369,9 +2424,12 @@ model
 
 
 class(model)
-class(model) <- "blm"
-class(model)
 
+class(model) <- "blm"
+
+class(model)
+```
+```{r}
 blm <- function(model, alpha = 1, beta = 1, ...) {
  # stuff happens here...
  object <- list(formula = model,
@@ -2392,15 +2450,16 @@ blm <- function(model, alpha = 1, beta = 1, ...) {
 }
 
 model
-
-
+```
+```{r}
 ### Polymorphic Function
 print.blm <- function(x, ...) {
  print(x$formula)
 }
 model
-?print
-
+#??print
+```
+```{r}
 ### Defining your own Function
 foo <- function(x, ...) UseMethod("foo")
 foo.default <- function(x, ...) print("default foo")
@@ -2409,7 +2468,9 @@ foo(12)
 
 foo.blm <- function(x, ...) print("blm foo")
 foo(model)
+```
 
+```{r}
 foo.blm <- function(x, upper = FALSE, ...) {
  if (upper) {
  print("BLM FOO")
@@ -2425,33 +2486,37 @@ foo(model)
 foo("a string", upper = TRUE)
 
 foo(model, upper = TRUE)
-
-
+```
+```{r}
 foo <- function(object, ...) UseMethod("foo")
 foo.default <- function(object, ...) stop("foo not implemented")
 
 bar <- function(object, ...) UseMethod("bar")
 bar.default <- function(object, ...) stop("bar not implemented")
 
+
 A <- function(f, b) structure(list(foo = f, bar = b), class ="A")
 
 foo.A <- function(object, ...) paste("A::foo ->", object$foo)
 bar.A <- function(object, ...) paste("A::bar ->", object$bar)
 
-a <- A("qux", "qax")
+a <- A("Charles", "Nana")
 foo(a)
 
 bar(a)
 
 baz <- function(object, ...) UseMethod("baz")
 baz.default <- function(object, ...) stop("baz not implemented")
+```
 
+```{r}
 B <- function(f, b, bb) {
  a <- A(f, b)
  a$baz <- bb
  class(a) <- "B"
  a
 }
+
 bar.B <- function(object, ...) paste("B::bar ->", object$bar)
 baz.B <- function(object, ...) paste("B::baz ->", object$baz)
 
@@ -2462,14 +2527,14 @@ B <- function(f, b, bb) {
  a
 }
 
-b <- B("qux", "qax", "quux")
+b <- B("Charles", "Nana", "Kwame")
 foo(b)
 
 bar(b)
 
 baz(b)
-
-
+```
+```{r}
 C <- function(f, b, bb) {
  b <- B(f, b, bb)
  class(b) <- c("C", "B", "A")
@@ -2487,7 +2552,7 @@ C <- function(f, b, bb) {
  class(b) <- c("C", class(b))
  b
 }
-
+```
 
 # **Chapter 12**
 ## Testing R packages
