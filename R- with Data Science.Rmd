@@ -968,6 +968,9 @@ d %>% ggplot(aes(x = x, y = y)) +
 #install.packages("hexbin")
 d %>% ggplot(aes(x = x, y = y)) +
  geom_hex() + scale_fill_gradient(low = "lightgray", high = "red") + geom_density2d(color = "black")
+
+d %>% ggplot(aes(x = x, y = y)) +
+ geom_hex()
 ``` 
 ```{r} 
 #install.packages("biglm")
@@ -2554,6 +2557,9 @@ C <- function(f, b, bb) {
 }
 ```
 
+
+
+```{r}
 # **Chapter 12**
 ## Testing R packages
 area <- function(x) UseMethod("area")
@@ -2569,7 +2575,7 @@ area.rectangle <- function(x) x$height * x$width
 
 circumference.rectangle <- function(x) 2 * x$height + 2 * x$width
 
-r <- rectangle(width = 2, height = 4)
+r <- rectangle(width = 3, height = 4)
 area(r)
 
 circumference(r)
@@ -2578,10 +2584,11 @@ r <- rectangle(width = 2, height = 4)
 if (area(r) != 2*4) {
  stop("Area not computed correctly!")
 }
+
 if (circumference(r) != 2*2 + 2*4) {
  stop("Circumference not computed correctly!")
 }
-
+```
 
 
 ```{r}
@@ -2626,7 +2633,7 @@ smooth_weights <- function(graph, node_weights, alpha) {
 }
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 profvis::profvis({
  n <- 1000
  nodes <- 1:n
@@ -2728,6 +2735,7 @@ graph <- function(n, edges) {
 }
 ```
 
+
 ```{r}
 profvis::profvis({
  n <- 20000
@@ -2738,6 +2746,7 @@ profvis::profvis({
  smooth_weights(g, weights, 0.8)
 })
 ```
+
 
 ```{r}
 flow_weights_iteration <- function(graph, node_weights, alpha) {
@@ -2772,6 +2781,7 @@ smooth_weights <- function(graph, node_weights, alpha, no_iterations) {
 }
 ```
 
+
 ```{r message=FALSE}
 profvis::profvis({
  n <- 20000
@@ -2782,6 +2792,7 @@ profvis::profvis({
  smooth_weights(g, weights, 0.8, 10)
 })
 ```
+
 
 ```{r}
 smooth_weights <- function(graph, node_weights,
@@ -2813,6 +2824,7 @@ microbenchmark(
  Reduce(`+`, 1:10, 0)
 )
 ```
+
 ```{r}
 x <- sample(LETTERS, 1000, replace = TRUE)
 microbenchmark(
@@ -2851,6 +2863,7 @@ handle_i <- function(i) {
 }
 ```
 
+
 ```{r}
 test_rmse <- function(data) {
  model <- data$training %>% lm(dist ~ speed, data = .)
@@ -2859,12 +2872,12 @@ test_rmse <- function(data) {
 }
 sample_rmse <- function (n) {
  random_cars <- cars %>%
- partition(n, c(training = 0.5, test = 0.5))
+ partition(n, c(training = 0.6, test = 0.4))
  unlist(Map(test_rmse, random_cars))
 }
 sample_rmse_parallel <- function (n) {
  random_cars <- cars %>%
- partition(n, c(training = 0.5, test = 0.5))
+ partition(n, c(training = 0.6, test = 0.4))
  unlist(clusterMap(cl, test_rmse, random_cars))
 }
 
