@@ -445,13 +445,15 @@ summarize (by_month, min(Ozone), mean(Ozone), max(Ozone))
 internet_usage = c(22,0, 7,12,5, 33, 14, 8, 0, 9)
 internet_usage
 mean(internet_usage) # finding the mean of internet_usage
-
+```{r}
 net_usage = c(22,0,7,12,5,NA,33,14,8,NA,0,9)
 net_usage
-mean(net_usage, na.rm = TRUE) # finding the mean of net_usage with missing numbers 
+mean(net_usage, na.rm = FALSE) # finding the mean of net_usage with missing numbers 
+```
 
+```{r}
 # Median
-median(net_usage, na.rm=TRUE)
+median(net_usage, na.rm = TRUE)
 
 # Minimum, Maximum and Range
 A = c(49,33,63,48,54,62,52,64,71,68)
@@ -459,6 +461,7 @@ min(A)
 max(A)
 which.min(A)
 which.max(A)
+```
 
 print(max(A) - min(A))
 range(A)

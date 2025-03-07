@@ -1,0 +1,21 @@
+---
+title: "Statistical Analysis with Cached Chunks"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+## Introduction
+
+This document demonstrates caching in R Markdown with random number generation.
+
+## Cached Random Numbers
+
+```{r cache_random, cache=TRUE}
+set.seed(123)  # Ensures reproducibility initially
+random_numbers <- rnorm(100)  # Generate 100 random values
+head(random_numbers)  # Display first few numbers
+```

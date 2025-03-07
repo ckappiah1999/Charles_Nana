@@ -3,14 +3,17 @@ output:
   html_document: default
   word_document: default
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 ```{r}
 ## **Chapter One**
 
 ### Simple Expressions
 
 2 + 4 # Addition
-```
-``` {r}
+
 4 / 2 # Division
 ```
 ``` {r}
@@ -26,7 +29,7 @@ output:
 
 3 ** 4 # Indices
 
-9 ** 5 # Indices
+9 ** 3 # Indices
 ```
 ``` {r}
 s = "Hello Charles, I hope you are working smart to achieve your dream?"
@@ -34,45 +37,49 @@ s
 
 e <- 34 # Assigning variable (e) to  value (34)
 e
+nchar(e) # number of characters
 
 3 -> r # Assigning variable (r) to  value (3)
 r
+```
 
+```{r}
 (u <- "Nana Kwame") # parentheses form will print an output
+nchar(u) # number of characters
 
-q = seq( 1,50,2) # Start from 1 and end at 50
+q = seq( 1,50,2) # Start from 1 and end at 50 with a step of 2
 q
-
-nchar(u) # number of characters 
-
-nchar(e)
 
 q[23] # checking for index of the sequence
 q[20] # checking for index of the sequence
-q[2:9] # checking for index from 2 to 9
+q[2:9] # checking form index 2 to index 9
 
+q ** 2 - r
+```
+
+```{r}
 v <- c("A" = 1, "B" = 2, "C" = 3) # Creating keys and values
 v
 
 names(v) <- c("x", "y", "z") # Assigning new keys to the values
 v
 
-v["x"] # checking the key
+v["x"] # checking the key x
+v["y"] # checking the key y
 ```
 ```{r}
-q ** 2 - r 
-
-
 (x <- 1:4) # parentheses form will print an output
 
 (y <- 4:7) # parentheses form will print an output
 
 x - y 
 ```
+
+```{r}
 #?nchar
 
 #?`+`
-```{r}
+
 square <- function(x) x**2
 square(1:4)
 
@@ -83,9 +90,10 @@ square_and_subtract <- function(x, y) return(x ** 2 - y)
 square_and_subtract(30,30)
 
 sum(1:4)
-1 :4
-sqrt(1:4)
 
+1 : 4
+
+sqrt(1:4)
 ```
 ``` {r}
 average <- function(x) {
@@ -97,6 +105,7 @@ average(1:9)
 mean(1:9)
 
 mean <- function(x) sum(x) / length(x)
+
 mean(2:24)
 ```
 ```{r}
@@ -104,9 +113,11 @@ mean(2:24)
 
 if (3 > 2) "true"
 
-if (2 < 3) "false"
+if (2 < 3) "false" else "true"
 
 if (2 > 3) "bar" else "baz"
+
+if (5 > 4) "Charles" else "Nana"
 
 if (2 > 3) {
  x <- "bar"
@@ -122,7 +133,7 @@ maybe_square <- function(x) {
 maybe_square(1:9)
 ```
 ``` {r}
-xo <- 1:5 # Assigning values (1 - 5) to variable xo
+xo <- 1:5 # Assigning values (1 to 5) to variable xo
 total <- 0
 for (element in xo) total <- total + element
 total
@@ -148,6 +159,7 @@ while (index <= length(x)) {
 }
 total
 x
+summary(x)
 ```
 ``` {r}
 ### Factors
@@ -168,9 +180,10 @@ summary(ff)
 ```{r}
 f <- factor(c("small", "small", "medium",
  "large", "small", "large"),
- levels = c("small", "medium", "large"),
+ levels = c("medium", "small", "large"),
  ordered = TRUE)
 f
+summary(f)
 ```
 ```{r}
 v <- 1:26
@@ -182,6 +195,7 @@ v[ffo] # Assigning values to the letters
 
 (ff <- factor(LETTERS[1:4], levels = rev(LETTERS[1:4]))) 
 v[ff]
+
 as.numeric(ff) # Number form
 as.vector(ff) # String form
 v[as.vector(ff)]
@@ -199,6 +213,7 @@ df[,1] # All column one values
 df[,"a"] # using the column name
 df$b # using the column name
 ```
+
 ```{r}
 df2 <- data.frame(a = 5:7, b = letters[5:7])
 rbind(df, df2) ### Combining them using their rows
@@ -217,9 +232,11 @@ is.na(NA) # checking for a missing number
 
 is.na(4) # checking if 4 is a missing number
 
-v <- c(1:10,NA)
+v <- c(1:100,NA)
 sum(v)
 sum(v, na.rm = TRUE)
+
+
 
 ### **R Packages**
 #install.packages("magrittr")
@@ -231,14 +248,19 @@ subsample_rows <- function(d, n) {
  rows <- sample(nrow(d), n)
  d[rows,]
 }
-```
-```{r}
+
 d <- data.frame(x = rnorm(100), y = rnorm(100))
+
 d %>% subsample_rows(n = 3)
 ```
 ``` {r}
-do <- data.frame(x = rnorm(10), y = rnorm(10))
+do <- data.frame(x = rnorm(100), y = rnorm(100))
 do %>% lm(y ~ x, data = .)
+```
+
+```{r}
+so <- data.frame(x = 1:10, y = 11:20)
+so %>% lm(y ~ x, data = .)
 ```
 ``` {r}
 #?lm()
@@ -249,13 +271,13 @@ rnorm(4) %>% data.frame(x = ., y = abs(.))
 
 rnorm(4) %>% data.frame(x = sin(.), y = cos(.))
 
-sin(1.03130453)
-cos(1.03130453)
+#sin(1.03130453)
+#cos(1.03130453)
 ```
 ``` {r}
 f <- function(x, y) {
  y <- sum(cos(x),sin(y)) 
- z <- sum(sin(x),sum(y))
+ z <- sum(sin(x),cos(y))
  z
 }
 
@@ -271,6 +293,7 @@ x <- rnorm(20)
 y <- x + rnorm(20)
 data.frame(x, y) %>% plot_and_fit
 ```
+
 ```{r}
 data.frame(x, y) %>% (function(d) {
  plot(y ~ x, data = d)
@@ -284,11 +307,14 @@ data.frame(x, y) %>% {
 }
 ```
 ```{r}
-d <- data.frame(x = rnorm(10), y = 4 + rnorm(10))
-d %>% {data.frame(mean_x = mean(.$x), mean_y = mean(.$y))}
+d <- data.frame(x = rnorm(100), y = 4 + rnorm(100))
+
+#d %>% {data.frame(mean_x = mean(.$x), mean_y = mean(.$y))}
+
 d %$% data.frame(mean_x = mean(x), mean_y = mean(y))
 
 d <- data.frame(x = rnorm(10), y = rnorm(10))
+
 d %T>% plot(y ~ x, data = .) %>% lm(y ~ x, data = .)
 ```
 ```{r warning=FALSE}

@@ -36,24 +36,28 @@ plot(iris)
 
 ### R Markdown Format 
 
+# Header 1
+## Header 2
+### Header 3
+
 * This is the first line
    * This is a sub-line
    * This is another sub-line
-* This actually goes to the outer level
+ * This actually goes to the outer level
 * This is definitely at the outer level
 
 - First line
 * Second line
- - nested line
+  - nested line
 
-1. This is a
+1. Charles is a good man and ambitious about his dreams.
 2. numbered
 3. list
 
 
 | Name                  | Gender        | Occupation         |
 | :------------         | :-----------: | --------------:    |
-| Charles Kwame Appiah  | Male          | Renewable Engineer |
+| Charles Kwame Appiah  | Male          | Renewable Energy Engineer |
 | Richmond Amoah        | *Male*        | *Fashion*          |
 | Ann Amoah             | *Female*      | *Doctor*           |
 
@@ -63,11 +67,11 @@ plot(iris)
 
 **this**
 
-[Gmail](https://mail.google.com/mail/u/0/?q=francis+#inbox)
+[Github](https://github.com/ckappiah1999/Charles_Nana)
  
  
  
-![Image description](URL to image) 
+![Photos]("C:/Users/HP/Downloads/Reel/Wind.jpg") 
  
  
 This is some text [with a link]
@@ -75,8 +79,14 @@ This is some text [with a link]
 
 This is some text [with a link][interesting].
 
-> this is a
+> This is a
 > block quote
+
+
+```
+block of
+text
+```
 
 
 ```{r}
@@ -84,14 +94,31 @@ f <- function(x) ifelse(x %% 2 == 0, x**2, x**3)
 f(2:20)
 ```
 
-[this section][Cross referencing]
+[this section][@ckappiah1999.com]
+
+
+---
+...
+bibliography: bibliography.bib
+...
+---
+
+
+[@smith04, chapter 4]
+
+---
+...
+bibliography: bibliography.bib
+csl: biomed-central.csl
+...
+---
 
 [@ckappiah1999.com]
 
 <sc>Charles</sc>
 
 
-```{r}
+```{r Nan}
 summary(cars)
 sum(cars)
 mean(cars)
@@ -103,4 +130,21 @@ mean(cars)
 20950 / 2
 
 11000 / 2
+```
+
+
+```{r}
+library(knitr)
+kable(head(cars))
+```
+
+```{r cache_random, cache=TRUE}
+set.seed(123)  # Ensures reproducibility initially
+random_numbers <- rnorm(200)  # Generate 100 random values
+head(random_numbers)  # Display first few numbers
+```
+```{r}
+mean_random <- mean(random_numbers)
+mean_random  # Compute and display the mean
+
 ```

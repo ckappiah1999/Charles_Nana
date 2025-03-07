@@ -1,0 +1,86 @@
+---
+title: "Recap"
+author: "Charles"
+date: "2025-03-06"
+output: 
+  html_document: 
+    fig_caption: true
+    keep_md: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+x = c(rnorm(1:100), NA)
+
+x %>% sum(x,na.rm = TRUE)
+
+
+#library(dplyr)
+
+set.seed(123) # For reproducibility
+
+# Generate 1000 random samples, filter out negatives, and compute mean
+mean_positive <- rnorm(1000) %>%
+  replace(. < 0, NA) %>%
+  mean(na.rm = TRUE)
+
+# Print result
+print(mean_positive)
+```
+```{r}
+#library(dplyr)
+
+# Sample data frame with true values (t) and predicted values (y)
+data <- data.frame(
+  t = c(3, 5, 2, 8, 7),
+  y = c(2.5, 5.3, 1.8, 7.5, 6.9)
+)
+
+# Compute RMSE using a pipeline
+rmse <- data %>%
+  mutate(sq_diff = (t - y)^2) %>%  # Compute squared differences
+  summarise(mean_sq_diff = mean(sq_diff)) %>%  # Compute mean squared difference
+  pull(mean_sq_diff) %>%  # Extract value
+  sqrt()  # Compute square root
+
+# Print the RMSE
+print(rmse)
+```
+```{r}
+data = data.frame (s = c(3,4,5,6,7,8,9,1), 
+                   t = c(4,5,6,7,8,9,10,11))
+
+# Compute the RMSE using a pipeline 
+rmse = data %>%
+  mutate(sq_diff = (s - t)**2) %>%
+  summarise(mean_sq_diff = mean(sq_diff)) %>%
+  pull(mean_sq_diff) %>% sqrt()
+
+# Print the RMSE
+print(rmse)
+```
