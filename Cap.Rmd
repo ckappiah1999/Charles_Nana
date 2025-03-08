@@ -252,3 +252,7 @@ kyphosis_data %>% gather(key = Attribute, value = Measurement,Start) %>% select(
 
 kyphosis_data %>% gather(key = Attribute, value = Measurement,Start) %>% select(Kyphosis, Attribute, Measurement) %>% head()%>% qplot(Attribute, Measurement, geom = "boxplot", facets = . ~ Kyphosis, data = .)
 ```
+
+```{r}
+as_tibble(mpg)
+```
