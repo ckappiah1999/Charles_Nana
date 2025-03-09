@@ -676,19 +676,19 @@ plot(x,y, type="p", main ="X against Y", col = "red")
 ```{r}
 data(cars)
 cars %$% plot(speed, dist, main = "Cars data",
- xlab="Speed", ylab="Stopping distance")
+ xlab = "Speed", ylab = "Stopping distance")
 
-cars %>% plot(dist ~ speed, data = ., main="Cars data", col="red")
+cars %>% plot(dist ~ speed, data = ., main ="Cars data", col = "red")
 ```
 ```{r}
-cars %$% plot(speed, dist, main="Cars data", type="h",
- xlab="Speed", ylab="Stopping Distance")
+cars %$% plot(speed, dist, main = "Cars data", type = "h",
+ xlab = "Speed", ylab = "Stopping Distance")
 
-cars %$% plot(speed, dist, main="Cars data", type="s",
- xlab="Speed", ylab="Stopping Distance")
+cars %$% plot(speed, dist, main = "Cars data", type = "s",
+ xlab = "Speed", ylab = "Stopping Distance")
 
-cars %$% hist(speed, col ="orange")
-cars %$% hist(dist, col="blue")
+cars %$% hist(speed, col = "orange")
+cars %$% hist(dist, col= "blue")
 
 cars %>% lm(dist ~ speed, data = .) %>% plot ### Plotting Linear Models
 ```
@@ -700,23 +700,22 @@ longley %>% lines(Armed.Forces ~ Year, data = ., col = "blue")
 
 longley %$% plot(Unemployed ~ Year, type = 'l',
  ylim = range(c(Unemployed, Armed.Forces)))
-longley %>% lines(Armed.Forces ~ Year, data = ., col = "blue")
+longley %>% lines(Armed.Forces ~ Year, data = ., col = "green")
+
+as_tibble(longley)
 ```
 ```{r}
 cars %>% plot(dist ~ speed, data = ., xlab="Speed", ylab="Stopping Distance")
-cars %>% lm(dist ~ speed, data = .) %>% abline(col = "green")
+cars %>% lm(dist ~ speed, data = .) %>% abline(col = "red")
 ```
 ```{r}
-shape_map <- c("setosa" = 1,
- "versicolor" = 2,
- "virginica" = 3) 
-iris %$% plot(Petal.Length ~ Petal.Width,
- pch = shape_map[Species], col = Species)
+shape_map <- c("setosa" = 1, "versicolor" = 2,  "virginica" = 3) 
 
-shape_map = c("setosa" =1, "versicolor" = 2, "virginica" = 3)
-iris %$% plot(Sepal.Length ~ Sepal.Width, pch = shape_map[Species], col= Species)
+iris %$% plot(Petal.Length ~ Petal.Width, pch = shape_map[Species], col = Species)
 
- cars %>% qplot(speed, dist, data = .)
+iris %$% plot(Sepal.Length ~ Sepal.Width, pch = shape_map[Species], col = Species)
+
+#cars %>% qplot(speed, dist, data = .)
 ```
 ```{r}
 iris %>% qplot(Petal.Width, Petal.Length, color = Species, data = .)
@@ -729,57 +728,57 @@ cars %>% qplot(speed, data = ., bins = 10)
 ### Geometries
 cars %>% qplot(speed, data = ., geom = "density")
 
-cars %>% qplot(speed, dist, data = .)
+cars %>% qplot (dist, data = ., geom = "density")
+
+#cars %>% qplot(speed, dist, data = .)
+
 ggplot(cars) + geom_point(aes(x = speed, y = dist))
-```
+
 #ggplot(cars, aes(x = speed, y = dist)) + geom_point()
 
 #cars %>% ggplot(aes(x = speed, y = dist)) + geom_point()
-```{r} 
-iris %>% ggplot +
- geom_point(aes(x = Petal.Width, y = Petal.Length,
- color = Species))
 ```
-```{r}
+```{r Col.Species}
+iris %>% ggplot + geom_point(aes(x = Petal.Width, y = Petal.Length, color = Species))
+
 iris %>% ggplot +
  geom_point(aes(x = Sepal.Width, y = Sepal.Length,
  color = Species))
 ```
-```{r}
+```{r without.Species}
 iris %>% ggplot +
  geom_point(aes(x = Petal.Width, y = Petal.Length),
  color = "black") 
 ```
-```{r}
+```{r Cars}
 cars %>% ggplot + geom_histogram(aes(x = speed), bins = 10)
+
 cars %>% ggplot + geom_density(aes(x = speed))
+
 cars %>% ggplot + geom_histogram(aes(x=dist), bins = 10)
+
 cars %>% ggplot + geom_density(aes(x=dist))
 ```
 ```{r}
-cars %>% ggplot(aes(x = speed, y = ..count..)) +
- geom_histogram(bins = 10) + geom_density() 
+cars %>% ggplot(aes(x = speed, y = after_stat(count))) +
+ geom_histogram(bins = 10) + geom_density()
+
+cars %>% ggplot(aes(x = dist, y = after_stat(count))) + geom_histogram(bins = 10) + geom_density()
 ```
-```{r}
+```{r Linear models}
 cars %>% ggplot(aes(x = speed, y = dist)) +
  geom_point() + geom_smooth(method = "lm", formula =  y ~ x)
 
 cars %>% ggplot(aes(x = speed, y = dist)) +
- geom_point() + geom_smooth( method= "loess",formula =  y ~ x) 
+ geom_point() + geom_smooth( method = "loess",formula =  y ~ x) 
 ```
-```{r}
-longley %>% ggplot(aes(x = Year)) +
- geom_line(aes(y = Unemployed)) +
- geom_line(aes(y = Armed.Forces), color = "blue") 
+```{r Longley}
+longley %>% ggplot(aes(x = Year)) + geom_line(aes(y = Unemployed)) + geom_line(aes(y = Armed.Forces), color = "blue") 
 ```
-```{r}
-longley %>% ggplot(aes(x = Year)) +
- geom_point(aes(y = Unemployed)) +
- geom_point(aes(y = Armed.Forces), color = "blue") +
- geom_line(aes(y = Unemployed)) +
- geom_line(aes(y = Armed.Forces), color = "blue") 
+```{r Line.Point}
+longley %>% ggplot(aes(x = Year)) + geom_point(aes(y = Unemployed)) + geom_point(aes(y = Armed.Forces), color = "blue") + geom_line(aes(y = Unemployed)) + geom_line(aes(y = Armed.Forces), color = "blue") 
 ```
-```{r}
+```{r Legend.1}
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value, color = key)) + geom_line() + geom_point()
 
@@ -793,14 +792,13 @@ longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
 
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value)) + geom_line() +
- facet_grid(. ~ key  ) #### Facet column-wise
-
+ facet_grid(. ~ key  ) #### Facet column-wise with lines
 
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value)) + geom_point() +
- facet_grid(. ~ key)
+ facet_grid(. ~ key) #### Facet column-wise with points
 ```
-```{r}
+```{r Legend.2}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value)) + geom_boxplot() +
  facet_grid(Measurement ~ .) # row-wise 
@@ -809,7 +807,7 @@ iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value)) + geom_boxplot() +
  facet_grid(. ~ Measurement ) # Column wise
 ```
-```{r}
+```{r Mapped}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value)) +geom_boxplot() +
  facet_grid(Measurement ~ ., scale = "free_y") 
@@ -821,144 +819,105 @@ label_map <- c(Petal.Width = "Petal Width",
  
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value)) +
- geom_boxplot() +
- facet_grid(Measurement ~ ., scale = "free_y",
- labeller = labeller(Measurement = label_map))
+ geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map))
 ```
-```{r}
+```{r Continuous }
 ### Scaling 
-cars %>% ggplot(aes(x = speed, y = dist)) +
- geom_point() + geom_smooth(method = "lm", formula =  y ~ x) +
- scale_x_continuous("Speed") +
- scale_y_continuous("Stopping Distance") 
+cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_continuous("Speed") + scale_y_continuous("Stopping Distance") 
  
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
- ggplot(aes(x = Year, y = value)) + geom_line() + geom_point() +
- scale_x_continuous(breaks = 1947:1962) +
+ ggplot(aes(x = Year, y = value)) + geom_line() + geom_point() + scale_x_continuous(breaks = 1947:1962) +
  facet_grid(key ~ .)
 ```
-```{r}
+```{r Reverse}
 cars %>% ggplot(aes(x = speed, y = dist)) +
- geom_point() + geom_smooth(method = "lm", formula =  y ~ x) +
- scale_x_reverse("Speed") +
- scale_y_continuous("Stopping Distance") 
+ geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_reverse("Speed") + scale_y_continuous("Stopping Distance") 
+
+cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_continuous("speed") + scale_y_reverse("Stopping Distance")
 ```
-```{r}
+```{r Species.Modify}
 iris %>% ggplot(aes(x = Species, y = Petal.Length)) +
  geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) 
 
 iris %>% ggplot(aes(x = Species, y = Petal.Length)) +
  geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) +
  scale_x_discrete(labels = c("setosa" = "Setosa",
- "versicolor" = "Versicolor",
-"virginica" = "Virginica")) 
+ "versicolor" = "Versicolor", "virginica" = "Virginica")) 
+
+iris %>% ggplot(aes(x = Species, y = Sepal.Length)) +
+ geom_boxplot() + geom_jitter(width = 0.001, height = 0.001) + scale_x_discrete(labels = c("setosa" = "Setosa",
+ "versicolor" = "Versicolor", "virginica" = "Virginica")) 
+
+#??geom_jitter
 ``` 
-```{r}
+```{r Color.Species}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
- geom_boxplot() +
- facet_grid(Measurement ~ ., scale = "free_y",
- labeller = labeller(Measurement = label_map))
+ geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map))
 
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
- geom_boxplot() +
- scale_fill_manual(values = c("red", "green", "blue")) +
- facet_grid(Measurement ~ ., scale = "free_y",
- labeller = labeller(Measurement = label_map)) 
+ geom_boxplot() + scale_fill_manual(values = c("red", "green", "blue")) + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map)) 
 ```
-```{r}
+```{r Greens}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
- geom_boxplot() +
- scale_fill_brewer(palette = "Greens") +
- facet_grid(Measurement ~ ., scale = "free_y",
- labeller = labeller(Measurement = label_map)) 
+ geom_boxplot() + scale_fill_brewer(palette = "Greens") +
+ facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map)) 
 
 #theme_set(theme_bw(2)) 
 
-old <- theme_set(theme_bw())
+#old <- theme_set(theme_bw())
 #theme_set(old)
 #theme_replace(panel.grid.minor = element_line(colour = "red"))
 ```
 
-```{r}
+```{r Reds}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
- geom_boxplot() +
- scale_x_discrete(labels = c("setosa" = "Setosa",
- "versicolor" = "Versicolor",
-"virginica" = "Virginica")) +
- scale_fill_brewer(palette = "Reds") +
- facet_grid(Measurement ~ ., switch = "y",
- labeller = labeller(Measurement = label_map)) +
- coord_flip() 
+ geom_boxplot() + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) + scale_fill_brewer(palette = "Reds") +
+ facet_grid(Measurement ~ ., switch = "y", labeller = labeller(Measurement = label_map)) + coord_flip() 
 ``` 
-```{r}
+```{r Blues}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
- geom_boxplot() +
- scale_x_discrete(labels = c("setosa" = "Setosa",
- "versicolor" = "Versicolor",
-"virginica" = "Virginica")) +
- scale_fill_brewer(palette = "Blues") +
- facet_grid(Measurement ~ ., switch = "y",
- labeller = labeller(Measurement = label_map)) + coord_flip()
+ geom_boxplot() + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) + scale_fill_brewer(palette = "Blues") +
+ facet_grid(Measurement ~ ., switch = "y", labeller = labeller(Measurement = label_map)) + coord_flip()
 ```
-```{r}
+```{r Top.Position}
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
- geom_boxplot() +
- scale_x_discrete(labels = c("setosa" = "Setosa",
- "versicolor" = "Versicolor",
-"virginica" = "Virginica")) +
- scale_fill_brewer(palette = "Greens") +
- facet_grid(Measurement ~ ., switch = "y",
- labeller = labeller(Measurement = label_map)) +
- coord_flip() +
- theme(strip.background = element_blank()) +
- theme(legend.position="top")
+ geom_boxplot() + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) + scale_fill_brewer(palette = "Greens") +
+ facet_grid(Measurement ~ ., switch = "y", labeller = labeller(Measurement = label_map)) + coord_flip() + theme(strip.background = element_blank()) + theme(legend.position ="top")
 ```
-```{r}
-label_map <- c(Petal.Width = "Petal Width",
- Petal.Length = "Petal Length",
- Sepal.Width = "Sepal Width",
- Sepal.Length = "Sepal Length")
+```{r Bottom}
+#label_map <- c(Petal.Width = "Petal Width",Petal.Length = "Petal Length",Sepal.Width = "Sepal Width",Sepal.Length = "Sepal Length")
  
-species_map <- c(setosa = "Setosa",
- versicolor = "Versicolor",
- virginica = "Virginica")
+#species_map <- c(setosa = "Setosa",versicolor = "Versicolor",virginica = "Virginica")
  
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
- geom_boxplot() +
- scale_x_discrete(labels = species_map) +
- scale_fill_brewer(palette = "Greens", labels = species_map) +
- facet_grid(Measurement ~ ., switch = "y",
+ geom_boxplot() + scale_x_discrete(labels = species_map) +
+ scale_fill_brewer(palette = "Greens", labels = species_map) + facet_grid(Measurement ~ ., switch = "y",
  labeller = labeller(Measurement = label_map)) +
- coord_flip() +
- theme(strip.background = element_blank()) +
- theme(legend.position="top") 
+ coord_flip() + theme(strip.background = element_blank()) +
+ theme(legend.position="bottom") 
 ``` 
 ```{r} 
 ### Figures with Multiple Plots
 petal <- iris %>% ggplot() +
  geom_point(aes(x = Petal.Width, y = Petal.Length,
- color = Species)) +
- theme(legend.position="none")
+ color = Species)) + theme(legend.position = "none")
  
 sepal <- iris %>% ggplot() +
  geom_point(aes(x = Sepal.Width, y = Sepal.Length,
- color = Species)) +
- theme(legend.position="none")
+ color = Species)) + theme(legend.position = "none")
  
-#install.packages("gridExtra")
 #library(gridExtra)
-grid.arrange(petal, sepal, nrow = 2) 
-grid.arrange(petal, sepal, ncol=2)
+grid.arrange(petal, sepal, nrow = 2, ncol = 1)
 
+grid.arrange(petal, sepal, nrow = 1, ncol= 2)
 
-#install.packages("cowplot")
 #library(cowplot)
 plot_grid(petal, sepal, labels = c("A", "B"))
 ``` 

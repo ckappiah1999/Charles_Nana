@@ -253,6 +253,123 @@ kyphosis_data %>% gather(key = Attribute, value = Measurement,Start) %>% select(
 kyphosis_data %>% gather(key = Attribute, value = Measurement,Start) %>% select(Kyphosis, Attribute, Measurement) %>% head()%>% qplot(Attribute, Measurement, geom = "boxplot", facets = . ~ Kyphosis, data = .)
 ```
 
-```{r}
+```{r mpg}
 as_tibble(mpg)
+```
+
+```{r blue.green}
+kyphosis_data %>% lm(Age ~ Number, data = .) %>% plot
+
+kyphosis_data %>% plot(Number ~ Age, data = ., type = 'p')
+kyphosis_data %>% lines(Start ~ Age, data = ., type = "p",col = "blue")
+
+kyphosis_data %$% plot(Number ~ Age, type = 'p', ylim = range(c(Number, Start)))
+kyphosis_data %>% lines(Start ~ Age, data = ., type = "p" , col = "green")
+
+as_tibble(kyphosis_data)
+```
+
+```{r red}
+kyphosis_data %>% plot(Number ~ Age, data = ., xlab = "Age", ylab = "Number", main = "Age Against Number")
+kyphosis_data %>% lm(Number ~ Age, data = .) %>% abline(col = "red")
+```
+
+```{r Density}
+kyphosis_data %>% qplot (Age, data = ., geom = "density")
+
+kyphosis_data %>% qplot (Number, data = ., geom = "density")
+
+kyphosis_data %>% qplot (Start, data = ., geom = "density")
+```
+
+```{r ggplot}
+kyphosis_data %>% ggplot + geom_point(aes(x = Age, y = Start,
+ color = Kyphosis))
+
+kyphosis_data %>% ggplot + geom_step(aes(x=Age, y = Start, colour =  Kyphosis))
+```
+
+```{r density.hist}
+kyphosis_data %>% ggplot(aes(x = Age, y = after_stat(count))) + geom_histogram(bins = 10) + geom_density()
+
+kyphosis_data %>% ggplot(aes(x = Number, y = after_stat(count))) + geom_histogram(bins = 10) + geom_density()
+
+kyphosis_data %>% ggplot(aes(x = Start, y = after_stat(count))) + geom_histogram(bins = 10) + geom_density()
+```
+
+```{r loess.lm}
+kyphosis_data %>% ggplot(aes(x = Age, y = Number)) +
+ geom_point() + geom_smooth( method = "loess",formula =  y ~ x)
+
+kyphosis_data %>% ggplot(aes(x = Age, y = Number)) +
+ geom_point() + geom_smooth( method = "lm",formula =  y ~ x)
+```
+
+```{r tidy}
+kyphosis_data %>% gather(key, value, Age, Number) %>%
+ ggplot(aes(x = Kyphosis, y = value)) + geom_line() +
+ facet_grid(key ~ ., scale = "free_y")
+
+kyphosis_data %>% gather(key, value, Age, Number) %>%
+ ggplot(aes(x = Kyphosis, y = value)) + geom_point() +
+ facet_grid(key ~ ., scale = "free_y")
+```
+
+```{r facet_grid}
+kyphosis_data %>% gather(Measurement, Value, -Kyphosis) %>%
+ ggplot(aes(x = Kyphosis, y = Value)) + geom_boxplot() +
+ facet_grid(Measurement ~ ., scale = "free_y") # row-wise 
+
+kyphosis_data %>% gather(Measurement, Value, -Kyphosis) %>%
+ ggplot(aes(x = Kyphosis, y = Value)) + geom_boxplot() +
+ facet_grid(. ~ Measurement, scale = "free_y") 
+```
+
+```{r scale.reverse}
+kyphosis_data %>% ggplot(aes(x = Age, y = Number)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_continuous("Age") + scale_y_continuous("Number")
+
+kyphosis_data %>% ggplot(aes(x = Age, y = Number)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_reverse("Age") + scale_y_reverse("Number")
+```
+
+```{r jitter}
+kyphosis_data %>% ggplot(aes(x = Kyphosis, y = Age)) +
+ geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) 
+
+kyphosis_data %>% ggplot(aes(x = Kyphosis, y = Number)) +
+ geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) 
+
+kyphosis_data %>% ggplot(aes(x = Kyphosis, y = Start)) +
+ geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) 
+```
+
+```{r fill_manual}
+kyphosis_data %>% gather(Measurement, Value, -Kyphosis) %>%
+ ggplot(aes(x = Kyphosis, y = Value, fill = Kyphosis)) +
+ geom_boxplot() + scale_fill_manual(values = c("red", "green")) + facet_grid(Measurement ~ ., scale = "free_y")
+```
+```{r fill_brewer}
+kyphosis_data %>% gather(Measurement, Value, -Kyphosis) %>%
+ ggplot(aes(x = Kyphosis, y = Value, fill = Kyphosis)) +
+ geom_boxplot() + scale_fill_brewer(palette = "Greens") +
+ facet_grid(Measurement ~ ., scale = "free_y")
+
+kyphosis_data %>% gather(Measurement, Value, -Kyphosis) %>%
+ ggplot(aes(x = Kyphosis, y = Value, fill = Kyphosis)) +
+ geom_boxplot() + scale_fill_brewer(palette = "Reds") +
+ facet_grid(Measurement ~ ., scale = "free_y")
+
+kyphosis_data %>% gather(Measurement, Value, -Kyphosis) %>%
+ ggplot(aes(x = Kyphosis, y = Value, fill = Kyphosis)) +
+ geom_boxplot() + scale_fill_brewer(palette = "Blues") +
+ facet_grid(Measurement ~ ., scale = "free_y")
+```
+
+```{r}
+kyphosis_data %>% gather(Measurement, Value, -Kyphosis) %>%
+ ggplot(aes(x = Kyphosis, y = Value, fill = Kyphosis)) +
+ geom_boxplot() + scale_x_discrete(labels = c("absent" = "Absent", "present" = "Present")) + scale_fill_brewer(palette = "Blues") + facet_grid(Measurement ~ ., switch = "y") + coord_flip()
+
+kyphosis_data %>% gather(Measurement, Value, -Kyphosis) %>%
+ ggplot(aes(x = Kyphosis, y = Value, fill = Kyphosis)) +
+ geom_boxplot() + scale_x_discrete(labels = c("absent" = "Absent", "present" = "Present")) + scale_fill_brewer(palette = "Blues") + facet_grid(Measurement ~ ., switch = "y") + coord_flip() + theme(strip.background = element_blank()) + theme(legend.position ="top")
 ```
