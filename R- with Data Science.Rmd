@@ -982,18 +982,12 @@ ffiris <- as.ffdf(iris)
 summary(ffiris)
 ```
 ```{r warning=FALSE}
-#install.packages("ffbase")
-
-#install.packages("bigglm")
-
-#model <- biglm(dist ~ speed, data = ffcars)
-#summary(model) 
-
-#install.packages("dbplyr")
+model <- biglm(dist ~ speed, data = ffcars)
+summary(model) 
 
 iris_db <- src_sqlite("iris_db.sqlite3", create = TRUE)
 
-iris_sqlite <- tbl(iris_db, "iris")
+iris_sqlite <- tbl(iris_db, "iris", temporary = FALSE)
 
 iris_sqlite %>% group_by(Species) %>%
  summarise(mean.Petal.Length = mean(Petal.Length))
