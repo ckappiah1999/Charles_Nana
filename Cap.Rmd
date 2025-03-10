@@ -373,3 +373,33 @@ kyphosis_data %>% gather(Measurement, Value, -Kyphosis) %>%
  ggplot(aes(x = Kyphosis, y = Value, fill = Kyphosis)) +
  geom_boxplot() + scale_x_discrete(labels = c("absent" = "Absent", "present" = "Present")) + scale_fill_brewer(palette = "Blues") + facet_grid(Measurement ~ ., switch = "y") + coord_flip() + theme(strip.background = element_blank()) + theme(legend.position ="top")
 ```
+
+```{r}
+kyphosis_data %>% sample_n(10) %>% summary()
+
+kyphosis_data %>% sample_frac(0.2) %>% summary()
+```
+
+```{r}
+mem_change(kyphosis_data)
+```
+
+```{r}
+kyphosis_data %>% sample_n(10) %>% ggplot + geom_point(aes(x = Age, y = Number))
+
+kyphosis_data %>% sample_frac(0.5) %>% ggplot + geom_point(aes(x = Age, y = Number))
+```
+
+```{r density_2D}
+kyphosis_data %>% sample_n(10) %>% ggplot(aes(x = Age, y = Number)) + geom_density_2d()
+
+kyphosis_data %>% sample_frac(.05) %>% ggplot(aes(x = Age, y = Number)) + geom_density_2d()
+```
+
+```{r hexbin}
+kyphosis_data %>% sample_n(10) %>% ggplot(aes(x = Age, y = Number)) + geom_hex()
+
+kyphosis_data %>% sample_frac(.05) %>% ggplot(aes(x = Age, y = Number)) + geom_hex()
+
+kyphosis_data %>% ggplot(aes(x = Age, y = Number)) + geom_hex() + scale_fill_gradient(low = "lightgray", high = "red") + geom_density2d(color = "black")
+```

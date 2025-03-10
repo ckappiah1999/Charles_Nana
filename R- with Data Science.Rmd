@@ -924,10 +924,9 @@ plot_grid(petal, sepal, labels = c("A", "B"))
 ```{r}
 ## **Chapter 5** 
 ### Working With Larges Data sets
-iris %>% sample_n(size=5)
+iris %>% sample_n(size = 10)
 iris %>% sample_frac(size = 0.02) 
 
-#install.packages("pryr")
 #library(pryr) 
 mem_change(x <- rnorm(10000)) 
 mem_change(x[1] <- 0) 
@@ -936,21 +935,20 @@ mem_change(x[1] <- 0)
 ```
 ```{r}
 d <- data.frame(x = rnorm(10000), y = rnorm(10000))
-d %>% ggplot(aes(x = x, y = y)) +
- geom_point(alpha = 0.2)
+
+d %>% ggplot(aes(x = x, y = y)) + geom_point(alpha = 0.2)
 
 mem_change(d)
 
-d %>% ggplot(aes(x = x, y = y)) +
- geom_density_2d()
+d %>% ggplot(aes(x = x, y = y)) + geom_density_2d()
+
+mem_change(d)
 ``` 
 ```{r}
 #install.packages("hexbin")
-d %>% ggplot(aes(x = x, y = y)) +
- geom_hex() + scale_fill_gradient(low = "lightgray", high = "red") + geom_density2d(color = "black")
+d %>% ggplot(aes(x = x, y = y)) + geom_hex() + scale_fill_gradient(low = "lightgray", high = "red") + geom_density2d(color = "black")
 
-d %>% ggplot(aes(x = x, y = y)) +
- geom_hex()
+d %>% ggplot(aes(x = x, y = y)) + geom_hex()
 ``` 
 ```{r} 
 #install.packages("biglm")
@@ -983,6 +981,7 @@ summary(ffcars)
 ffiris <- as.ffdf(iris)
 summary(ffiris)
 ```
+```{r warning=FALSE}
 #install.packages("ffbase")
 
 #install.packages("bigglm")
@@ -992,11 +991,13 @@ summary(ffiris)
 
 #install.packages("dbplyr")
 
-#iris_db <- src_sqlite("iris_db.sqlite3", create = TRUE)
-#iris_sqlite <- copy_to(iris_db, iris, temporary = FALSE)
-#iris_sqlite <- tbl(iris_db, "iris")
-#iris_sqlite %>% group_by(Species) %>%
-#summarise(mean.Petal.Length = mean(Petal.Length)) 
+iris_db <- src_sqlite("iris_db.sqlite3", create = TRUE)
+
+iris_sqlite <- tbl(iris_db, "iris")
+
+iris_sqlite %>% group_by(Species) %>%
+ summarise(mean.Petal.Length = mean(Petal.Length))
+```
 
 ```{r} 
 ## **Chapter 6** 
