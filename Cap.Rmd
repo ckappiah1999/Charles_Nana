@@ -11,22 +11,20 @@ output:
 
 
 ```{r Ex.1a}
-x = c(rnorm(1:100), NA)
+#x = c(rnorm(1:100), NA)
 
-x %>% sum(x,na.rm = TRUE)
+#x %>% sum(x,na.rm = TRUE)
 
 
 #library(dplyr)
 
-set.seed(123) # For reproducibility
+#set.seed(123) # For reproducibility
 
 # Generate 1000 random samples, filter out negatives, and compute mean
-mean_positive <- rnorm(1000) %>%
-  replace(. < 0, NA) %>%
-  mean(na.rm = TRUE)
+#mean_positive <- rnorm(1000) %>%replace(. < 0, NA) %>%mean(na.rm = TRUE)
 
 # Print result
-print(mean_positive)
+#print(mean_positive)
 ```
 ```{r Ex.1b}
 #library(dplyr)
@@ -403,3 +401,271 @@ kyphosis_data %>% sample_frac(.05) %>% ggplot(aes(x = Age, y = Number)) + geom_h
 
 kyphosis_data %>% ggplot(aes(x = Age, y = Number)) + geom_hex() + scale_fill_gradient(low = "lightgray", high = "red") + geom_density2d(color = "black")
 ```
+
+```{r}
+cars %>% model.matrix(dist ~ speed + I(speed^2) + I(speed**3) + I(speed**4), data = .) %>% head 
+ 
+cars %>% lm(dist ~ speed + I(speed^2) + I(speed**3) + I(speed**4), data = .) %>%
+ summary
+
+cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() +
+ geom_smooth(method = "lm", formula = y ~ x + I(x^2) + I(x^3) + I(x^4))
+```
+
+```{r}
+rmse <- function(x,t) sqrt(mean(sum((t - x)^2)))
+
+training_data <- cars[1:25,]
+test_data <- cars[26:50,] 
+
+line <- training_data %>% lm(dist ~ speed, data = .)
+poly <- training_data %>% lm(dist ~ speed + I(speed^2) + I(speed**3) + I(speed**4), data = .) 
+
+rmse(predict(line, test_data), test_data$dist) 
+rmse(predict(poly, test_data), test_data$dist) 
+
+sampled_cars <- cars %>% mutate(training = sample(0:1, nrow(cars), replace = TRUE))
+sampled_cars %>% head 
+```
+```{r}
+# Load necessary libraries
+#library(ggplot2)
+#library(caret)
+
+# Load the cars dataset
+data(cars)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Split data into training (70%) and test (30%)
+trainIndex <- sample(1:nrow(cars), size = 0.7 * nrow(cars), replace = FALSE)
+
+trainData <- cars[trainIndex, ]
+testData <- cars[-trainIndex, ]
+
+get_poly_error <- function(degree, trainData, testData) {
+  # Ensure column names are referenced explicitly
+  if (!"speed" %in% names(trainData)) stop("Column 'speed' not found in trainData")
+  if (!"speed" %in% names(testData)) stop("Column 'speed' not found in testData")
+
+  # Fit polynomial model
+  model <- lm(dist ~ poly(speed, degree), data = trainData)
+
+  # Predict on training and test data
+  trainPred <- predict(model, newdata = trainData)
+  testPred <- predict(model, newdata = testData)
+
+  # Compute RMSE
+  trainRMSE <- sqrt(mean((trainData$dist - trainPred)^2))
+  testRMSE <- sqrt(mean((testData$dist - testPred)^2))
+
+  return(c(degree, trainRMSE, testRMSE))
+}
+
+# Run for degrees 1 to 10 using lapply for better handling
+results <- as.data.frame(do.call(rbind, lapply(1:10, function(d) get_poly_error(d, trainData, testData))))
+colnames(results) <- c("Degree", "Train_RMSE", "Test_RMSE")
+
+
+# Find the degree with the lowest test RMSE
+best_degree <- results$Degree[which.min(results$Test_RMSE)]
+
+# Print results and best degree
+print(results)
+cat("\nBest generalization occurs at polynomial degree:", best_degree, "\n")
+
+# Plot the RMSE values
+ggplot(results, aes(x = Degree)) +
+  geom_line(aes(y = Train_RMSE, color = "Train RMSE")) +
+  geom_line(aes(y = Test_RMSE, color = "Test RMSE")) +
+  labs(title = "Polynomial Degree vs RMSE", x = "Polynomial Degree", y = "RMSE") +
+  scale_color_manual(values = c("Train RMSE" = "blue", "Test RMSE" = "red")) +
+  theme_minimal()
+```
+
+```{r message=FALSE, warning=FALSE}
+# Load necessary libraries
+library(mlbench)  # For Breast Cancer dataset
+library(caret)    # For data partitioning
+library(dplyr)    # For data manipulation
+
+# Load Breast Cancer dataset
+
+data(BreastCancer)
+#rm = rm(Id)
+
+# Remove missing values
+BreastCancer <- na.omit(BreastCancer, Id)
+
+# Convert Class column to a factor (Malignant = 1, Benign = 0)
+BreastCancer$Class <- factor(ifelse(BreastCancer$Class == "malignant", 1, 0), levels = c(0, 1))
+
+# Split dataset into training (70%) and testing (30%)
+set.seed(123)
+trainIndex <- createDataPartition(BreastCancer$Class, p = 0.7, list = FALSE)
+trainData <- BreastCancer[trainIndex, ]
+testData <- BreastCancer[-trainIndex, ]
+
+# Function to fit a logistic regression model
+train_logistic_model <- function(trainData) {
+  glm(Class ~ ., data = trainData, family = binomial)
+}
+
+# Function to make predictions and evaluate performance
+predict_summary <- function(model, data) {
+  # Predict probabilities
+  probs <- predict(model, newdata = data, type = "response")
+  # Convert to binary (threshold = 0.5)
+  preds <- ifelse(probs > 0.5, 1, 0)
+  actuals <- as.numeric(data$Class)
+
+  # Compute evaluation metrics
+  cm <- table(Predicted = preds, Actual = actuals)
+  accuracy <- sum(diag(cm)) / sum(cm)
+  precision <- cm[2, 2] / sum(cm[2, ])
+  recall <- cm[2, 2] / sum(cm[, 2])
+  f1_score <- 2 * (precision * recall) / (precision + recall)
+
+  return(list(ConfusionMatrix = cm, Accuracy = accuracy, Precision = precision, Recall = recall, F1_Score = f1_score))
+}
+
+# Train the model
+model <- train_logistic_model(trainData)
+
+# Evaluate on training data
+train_results <- predict_summary(model, trainData)
+print("Training Set Performance:")
+print(train_results)
+
+# Evaluate on test data
+test_results <- predict_summary(model, testData)
+print("Test Set Performance:")
+print(test_results)
+```
+
+```{r}
+model <- cars %>% rpart(dist ~ speed, data = .)
+rmse(predict(model, cars), cars$dist) # root mean square
+
+model <- BreastCancer %>%
+ rpart(Class ~ Cl.thickness, data = .) 
+predict(model, BreastCancer) %>% head 
+
+predicted_class <- predict(model, BreastCancer) %>%
+ as.data.frame %$% ifelse(benign > 0.5, "benign", "malignant")
+ 
+table(BreastCancer$Class, predicted_class)
+
+accuracy = sum(diag(table(BreastCancer$Class, predicted_class))) / sum(table(BreastCancer$Class, predicted_class))
+accuracy
+```
+
+```{r}
+# Load necessary libraries
+library(mlbench)   # Contains BreastCancer dataset
+library(caret)     # For data splitting and cross-validation
+library(rpart)     # For decision tree
+library(rpart.plot) # For tree visualization
+
+# Load dataset
+data("BreastCancer")
+
+# Remove ID column and handle missing values
+BreastCancer <- BreastCancer[, -1]  # Remove ID column
+BreastCancer <- na.omit(BreastCancer)  # Remove rows with missing values
+
+# Convert target variable to factor
+BreastCancer$Class <- as.factor(BreastCancer$Class)
+
+# Split data into training (70%) and test (30%)
+set.seed(123)
+trainIndex <- createDataPartition(BreastCancer$Class, p = 0.7, list = FALSE)
+trainData <- BreastCancer[trainIndex, ]
+testData <- BreastCancer[-trainIndex, ]
+
+# Train Decision Tree model
+model <- rpart(Class ~ ., data = trainData, method = "class")
+
+# Make predictions on test data
+predictions <- predict(model, testData, type = "class")
+
+# Evaluate model using confusion matrix
+conf_matrix <- confusionMatrix(predictions, testData$Class)
+print(conf_matrix)
+
+# Perform 10-fold Cross-Validation
+ctrl <- trainControl(method = "cv", number = 10)
+cv_model <- train(Class ~ ., data = trainData, method = "rpart", trControl = ctrl)
+
+# Print Cross-Validation Results
+print(cv_model)
+
+# Plot Decision Tree
+rpart.plot(model, main = "Decision Tree for Breast Cancer Classification")
+```
+
+```{r}
+# Load necessary libraries
+#library(mlbench)
+#library(randomForest)
+#library(caret)
+
+# Load the Breast Cancer dataset
+data("BreastCancer")
+
+# Remove the ID column
+BreastCancer$Id <- NULL  
+
+# Convert target variable to factor
+BreastCancer$Class <- as.factor(BreastCancer$Class)
+
+# Convert explanatory variables to numeric (except the target)
+BreastCancer[, -10] <- lapply(BreastCancer[, -10], function(x) as.numeric(as.character(x)))
+
+# Handle missing values by removing rows with NAs
+BreastCancer <- na.omit(BreastCancer)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Split data into training (70%) and testing (30%)
+trainIndex <- createDataPartition(BreastCancer$Class, p = 0.7, list = FALSE)
+trainData <- BreastCancer[trainIndex, ]
+testData <- BreastCancer[-trainIndex, ]
+
+# Train the Random Forest model
+rf_model <- randomForest(Class ~ ., data = trainData, ntree = 500, mtry = 3, importance = TRUE)
+
+# Make predictions on test data
+rf_predictions <- predict(rf_model, testData)
+
+# Evaluate accuracy
+confusionMatrix(rf_predictions, testData$Class)
+
+# Perform Cross-Validation using caret
+control <- trainControl(method = "cv", number = 10)  # 10-fold cross-validation
+cv_model <- train(Class ~ ., data = BreastCancer, method = "rf", trControl = control)
+
+# Print cross-validation results
+print(cv_model)
+```
+
+```{r}
+model <- cars %>% nnet(dist ~ speed, data = ., size = 5)
+rmse(predict(model, cars), cars$dist)
+
+model <- BreastCancer %>% nnet(Class ~ Cl.thickness, data = ., size = 50)
+
+predict(model, BreastCancer) %>% head 
+
+predicted_class <- predict(model, BreastCancer) %>%
+ { ifelse(. < 0.5, "benign", "malignant") }
+ 
+table(BreastCancer$Class, predicted_class) %>% head
+
+accuracy = sum(diag(table(BreastCancer$Class, predicted_class))) / sum((table(BreastCancer$Class, predicted_class)))
+accuracy
+```
+
+
