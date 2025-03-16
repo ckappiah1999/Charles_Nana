@@ -470,6 +470,7 @@ colnames(results) <- c("Degree", "Train_RMSE", "Test_RMSE")
 
 # Find the degree with the lowest test RMSE
 best_degree <- results$Degree[which.min(results$Test_RMSE)]
+best_degree <- results$Degree[which.max(results$Test_RMSE)]
 
 # Print results and best degree
 print(results)
@@ -480,23 +481,22 @@ ggplot(results, aes(x = Degree)) +
   geom_line(aes(y = Train_RMSE, color = "Train RMSE")) +
   geom_line(aes(y = Test_RMSE, color = "Test RMSE")) +
   labs(title = "Polynomial Degree vs RMSE", x = "Polynomial Degree", y = "RMSE") +
-  scale_color_manual(values = c("Train RMSE" = "blue", "Test RMSE" = "red")) +
-  theme_minimal()
+  scale_color_manual(values = c("Train RMSE" = "blue", "Test RMSE" = "red")) + theme_minimal()
 ```
 
 ```{r message=FALSE, warning=FALSE}
 # Load necessary libraries
-library(mlbench)  # For Breast Cancer dataset
-library(caret)    # For data partitioning
-library(dplyr)    # For data manipulation
+#library(mlbench)  # For Breast Cancer dataset
+#library(caret)    # For data partitioning
+#library(dplyr)    # For data manipulation
 
 # Load Breast Cancer dataset
 
 data(BreastCancer)
-#rm = rm(Id)
 
-# Remove missing values
-BreastCancer <- na.omit(BreastCancer, Id)
+
+BreastCancer <- BreastCancer[, -1]  # Remove ID column
+BreastCancer <- na.omit(BreastCancer)  # Remove rows with missing values
 
 # Convert Class column to a factor (Malignant = 1, Benign = 0)
 BreastCancer$Class <- factor(ifelse(BreastCancer$Class == "malignant", 1, 0), levels = c(0, 1))
@@ -504,6 +504,7 @@ BreastCancer$Class <- factor(ifelse(BreastCancer$Class == "malignant", 1, 0), le
 # Split dataset into training (70%) and testing (30%)
 set.seed(123)
 trainIndex <- createDataPartition(BreastCancer$Class, p = 0.7, list = FALSE)
+
 trainData <- BreastCancer[trainIndex, ]
 testData <- BreastCancer[-trainIndex, ]
 
@@ -518,10 +519,10 @@ predict_summary <- function(model, data) {
   probs <- predict(model, newdata = data, type = "response")
   # Convert to binary (threshold = 0.5)
   preds <- ifelse(probs > 0.5, 1, 0)
-  actuals <- as.numeric(data$Class)
+  actuals <- as.factor(data$Class)
 
   # Compute evaluation metrics
-  cm <- table(Predicted = preds, Actual = actuals)
+  cm <- table(Predicted = preds, Data = actuals)
   accuracy <- sum(diag(cm)) / sum(cm)
   precision <- cm[2, 2] / sum(cm[2, ])
   recall <- cm[2, 2] / sum(cm[, 2])
@@ -544,29 +545,12 @@ print("Test Set Performance:")
 print(test_results)
 ```
 
-```{r}
-model <- cars %>% rpart(dist ~ speed, data = .)
-rmse(predict(model, cars), cars$dist) # root mean square
-
-model <- BreastCancer %>%
- rpart(Class ~ Cl.thickness, data = .) 
-predict(model, BreastCancer) %>% head 
-
-predicted_class <- predict(model, BreastCancer) %>%
- as.data.frame %$% ifelse(benign > 0.5, "benign", "malignant")
- 
-table(BreastCancer$Class, predicted_class)
-
-accuracy = sum(diag(table(BreastCancer$Class, predicted_class))) / sum(table(BreastCancer$Class, predicted_class))
-accuracy
-```
-
-```{r}
+```{r warning=FALSE}
 # Load necessary libraries
-library(mlbench)   # Contains BreastCancer dataset
-library(caret)     # For data splitting and cross-validation
-library(rpart)     # For decision tree
-library(rpart.plot) # For tree visualization
+#library(mlbench)   # Contains BreastCancer dataset
+#library(caret)     # For data splitting and cross-validation
+#library(rpart)     # For decision tree
+#library(rpart.plot) # For tree visualization
 
 # Load dataset
 data("BreastCancer")
@@ -581,6 +565,7 @@ BreastCancer$Class <- as.factor(BreastCancer$Class)
 # Split data into training (70%) and test (30%)
 set.seed(123)
 trainIndex <- createDataPartition(BreastCancer$Class, p = 0.7, list = FALSE)
+
 trainData <- BreastCancer[trainIndex, ]
 testData <- BreastCancer[-trainIndex, ]
 
@@ -629,8 +614,8 @@ BreastCancer <- na.omit(BreastCancer)
 # Set seed for reproducibility
 set.seed(123)
 
-# Split data into training (70%) and testing (30%)
-trainIndex <- createDataPartition(BreastCancer$Class, p = 0.7, list = FALSE)
+# Split data into training (50%) and testing (50%)
+trainIndex <- createDataPartition(BreastCancer$Class, p = 0.5, list = FALSE)
 trainData <- BreastCancer[trainIndex, ]
 testData <- BreastCancer[-trainIndex, ]
 
@@ -668,4 +653,25 @@ accuracy = sum(diag(table(BreastCancer$Class, predicted_class))) / sum((table(Br
 accuracy
 ```
 
+```{r Project 1}
+URL <- "https://archive.ics.uci.edu/static/public/186/wine+quality.zip"
 
+read.table(URL, header=TRUE, sep=';')
+```
+
+
+```{r Project 2}
+url = "https://archive.ics.uci.edu/ml/datasets/Wine+Quality"
+
+read.table(url, header = TRUE, sep = ";")
+
+wines <- rbind(data.frame(type = "red", red), data.frame(type = "white", white))
+
+```
+
+```{r}
+library(nycflights13)
+
+#flights
+
+```
