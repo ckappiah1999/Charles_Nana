@@ -669,9 +669,292 @@ wines <- rbind(data.frame(type = "red", red), data.frame(type = "white", white))
 
 ```
 
-```{r}
-library(nycflights13)
+```{r letter-a, echo = FALSE}
+#library(nycflights13)
 
 #flights
+question("What number is the letter A in the English alphabet?",
+  answer("8"),
+  answer("14"),
+  answer("1", correct = TRUE),
+  answer("23")
+)
 
+```
+
+```{r radio, echo = FALSE}
+question_radio(
+  "Is this a good question?",
+  answer("yes", correct = TRUE),
+  answer("no", message = 'This is a good question.')
+)
+```
+
+```{r checkbox, echo = FALSE}
+question_checkbox(
+  "Select all the toppings that belong on a Margherita Pizza:",
+  answer("tomato", correct = TRUE),
+  answer("mozzarella", correct = TRUE),
+  answer("basil", correct = TRUE),
+  answer("extra virgin olive oil", correct = TRUE),
+  answer("pepperoni", message = "Great topping! ... just not on a Margherita Pizza"),
+  answer("onions"),
+  answer("bacon"),
+  answer("spinach"),
+  random_answer_order = TRUE,
+  allow_retry = TRUE,
+  try_again = "Be sure to select all toppings!"
+)
+```
+
+
+```{r text_box, echo = FALSE}
+question_text(
+  "Please enter the word 'C0rrect' below:",
+  answer("correct", message = "Don't forget to capitalize"),
+  answer("c0rrect", message = "Don't forget to capitalize"),
+  answer("Correct", message = "Is it really an 'o'?"),
+  answer("C0rrect", correct = TRUE),
+  allow_retry = TRUE
+)
+```
+
+```{r numeric, echo = FALSE}
+question_numeric(
+ "What is pi rounded to 2 digits?",
+ answer(3, message = "Don't forget to use the digits argument"),
+ answer(3.1, message = "Too few digits"),
+ answer(3.142, message = "Too many digits"),
+ answer(3.14, correct = TRUE),
+ allow_retry = TRUE,
+ min = 3,
+ max = 4,
+ step = 0.01
+)
+```
+
+
+```{r options, echo = FALSE}
+question(
+  "How many parameters are supplied in this question?",
+  answer("1", message = "Really?"),
+  answer("2"),
+  answer("3"),
+  answer("15", correct = TRUE, message = "Custom message here."),
+  type = "learnr_text", # radio
+  correct = "Question is correct!",
+  try_again = "Try Again!",
+  message = "Reminder to do something after answering the question...",
+  post_message = "Message to be displayed after the correct answer is found",
+  submit_button = "Submit Answer Here!",
+  try_again_button = "Try Again Here!",
+  allow_retry = TRUE,
+  random_answer_order = TRUE,
+  options = list(
+    placeholder = "The answer is '15'",
+    trim = TRUE
+  )
+)
+```
+
+
+```{r custom_class, echo = FALSE}
+question_is_correct.always_correct <- function(question, value, ...) {
+  learnr::mark_as(TRUE, messages = NULL)
+}
+
+registerS3method("question_is_correct", "always_correct", question_is_correct.always_correct)
+
+ques <- question(
+  "Custom Method",
+  answer("answer", correct = TRUE),
+  answer("also marked as correct", correct = FALSE),
+  type = c("always_correct", "learnr_checkbox")
+)
+```
+
+```{r sortable_question, echo = FALSE}
+rank_ex <- sortable::question_rank(
+  "Sort the first 5 letters",
+  learnr::answer(LETTERS[1:5], correct = TRUE),
+  learnr::answer(rev(LETTERS[1:5]), correct = FALSE, "Other direction!")
+)
+rank_ex
+```
+
+```{r}
+apply_if <- function(x, p, f) {
+ result <- vector(length = length(x))
+ n <- 0
+ for (i in seq_along(x)) {
+ if (p(x[i])) {
+ n <- n + 1
+ result[n] <- f(x[i])
+ }
+ }
+ head(result, n)
+}
+apply_if(1:8, function(x) x %% 2 == 0, function(x) x^2)
+```
+
+```{r power_cube}
+power <- function(n) function(x,n) x**n
+
+square(1:4,2)
+
+cube(1:4,3)
+```
+
+```{r apply}
+### apply
+m <- matrix(1:9, nrow = 3, byrow = TRUE)
+m
+
+apply(m, 1, function(x) paste(x, collapse = ":")) # row-wise
+
+apply(m, 2, function(x) paste(x, collapse = ":")) # column-wise
+
+apply(m, c(1,2), function(x) paste(x, collapse = ":")) # Both
+
+sumpow <- function(x, n) sum(x) ** n
+apply(m, 1, sumpow,n = 2) # row - wise
+apply(m, 2, sumpow, n = 2) # column - wise
+```
+
+
+```{r}
+factorial <- function(n) {
+function(n){
+  key <- as.character(n)
+  if (key %in% names(table)){
+    print(paste("I have already computed the value for", n))
+    table[[key]]
+  }else{
+    print(paste("Going to compute the value for", n))
+    res <- n(f)
+    print(paste("that turned out to be", res))
+    table[key] <<- res
+    print(table)
+    res
+  }  
+  }
+ if (n == 1) {
+ 1
+ } else {
+ n * factorial(n - 1)
+ }
+}
+
+factorial(5)
+```
+
+
+```{r cir}
+# Define the generic Shape class with default methods that raise errors
+
+circumference <- function(shape) {
+  stop("circumference() is not implemented for generic Shape")
+}
+
+area <- function(shape) {
+  stop("area() is not implemented for generic Shape")
+}
+
+# Define a Circle class
+Circle <- function(radius) {
+  if (radius <= 0) stop("Radius must be positive")
+  structure(list(radius = radius), class = "Circle")
+}
+
+# Implement circumference for Circle
+circumference.Circle <- function(shape) {
+  return(2 * pi * shape$radius)
+}
+```
+
+```{r area}
+# Implement area for Circle
+area.Circle <- function(shape) {
+  return(pi * shape$radius^2)
+}
+
+# Define a Rectangle class
+Rectangle <- function(width, height) {
+  if (width <= 0 || height <= 0) stop("Width and height must be positive")
+  structure(list(width = width, height = height), class = "Rectangle")
+}
+
+# Implement circumference for Rectangle
+circumference.Rectangle <- function(shape) {
+  return(2 * (shape$width + shape$height))
+}
+
+# Implement area for Rectangle
+area.Rectangle <- function(shape) {
+  return(shape$width * shape$height)
+}
+```
+
+```{r}
+# Example usage
+circle <- Circle(5)
+cat("Circle circumference:", circumference.Circle(circle), "\n")
+cat("Circle area:", area.Circle(circle), "\n")
+
+rectangle <- Rectangle(4, 6)
+cat("Rectangle circumference:",circumference.Rectangle(rectangle), "\n")
+cat("Rectangle area:", area.Rectangle(rectangle), "\n")
+```
+
+```{r}
+# Define a Polynomial class
+Polynomial <- function(coefficients) {
+  structure(list(coefficients = coefficients), class = "Polynomial")
+}
+
+# Evaluate the polynomial at a given point x
+evaluate_polynomial <- function(poly, x) {
+  if (!inherits(poly, "Polynomial")) stop("Input must be a Polynomial object")
+  coefs <- poly$coefficients
+  n <- length(coefs) - 1
+  sum(coefs * x^(0:n))
+}
+
+# Find the roots of the polynomial
+find_roots <- function(poly) {
+  if (!inherits(poly, "Polynomial")) stop("Input must be a Polynomial object")
+  coefs <- poly$coefficients
+  degree <- length(coefs) - 1
+  
+  if (degree == 1) {
+    # Linear case: ax + b = 0 => x = -b/a
+    return(-coefs[1] / coefs[2])
+  } else if (degree == 2) {
+    # Quadratic case: ax^2 + bx + c = 0
+    a <- coefs[3]
+    b <- coefs[2]
+    c <- coefs[1]
+    discriminant <- b^2 - 4 * a * c
+    
+  if (discriminant < 0) {
+      return(NULL)  # No real roots
+    } else {
+      return(c((-b + sqrt(discriminant)) / (2 * a), (-b - sqrt(discriminant)) / (2 * a)))
+    }
+  } else {
+    # General case: Use uniroot on a function representing the polynomial
+    poly_func <- function(x) evaluate_polynomial(poly, x)
+    root <- tryCatch({
+      uniroot(poly_func, lower = -100, upper = 100)$root
+    }, error = function(e) NULL)
+    return(root)
+  }
+}
+```
+
+```{r}
+# Example usage
+poly1 <- Polynomial(c(2, -3, 3))  # x^2 - 3x + 2
+cat("Polynomial evaluated at x = 2:", evaluate_polynomial(poly1, 2), "\n")
+cat("Polynomial roots:", find_roots(poly1), "\n")
 ```
