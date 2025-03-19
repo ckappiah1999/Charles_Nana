@@ -1016,31 +1016,6 @@ rmse(predict(model, wines), wines$density)
 #library(help = "datasets")
 
 
-### **Exercise**
-replace_outliers <- function(x, lower, upper) {
-  x[x < lower | x > upper] <- NA
-  return(x)
-}
-
-# Example usage
-x <- c(1, 5, 10, 15, 20)
-lower <- 5
-upper <- 15
-
-replace_outliers(x, lower, upper)
-
-
-apply_if <- function(v, condition, transformation) {
-  Map(function(x) if (condition(x)) transformation(x) else x, v)
-}
-
-# Example usage
-v <- c(1, 2, 3, 4, 5, 6)
-apply_if(v, function(x) x %% 2 == 0, function(x) x^2)
-
-v <- c(1, 2, 3, 4, 5, 6)
-v * ifelse(v %% 2 == 0, v, 1)  # Squares even numbers, leaves odd numbers unchanged
-
 
 test_that("Dimensions are positive", {
  expect_error(rectangle(width = -1, height = 4))

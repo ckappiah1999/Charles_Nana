@@ -848,6 +848,33 @@ function(n){
 factorial(5)
 ```
 
+```{r}
+### **Exercise**
+replace_outliers <- function(x, lower, upper) {
+  x[x < lower | x > upper] <- NA
+  return(x)
+}
+
+# Example usage
+x <- c(1, 5, 10, 15, 20)
+lower <- 5
+upper <- 15
+
+replace_outliers(x, lower, upper)
+```
+
+```{r}
+apply_if <- function(v, condition, transformation) {
+  Map(function(x) if (condition(x)) transformation(x) else x, v)
+}
+
+# Example usage
+v <- c(1, 2, 3, 4, 5, 6)
+unlist(apply_if(v, function(x) x %% 2 == 0, function(x) x**2))
+
+v <- c(1, 2, 3, 4, 5, 6)
+unlist(v * ifelse(v %% 2 == 0, v, 1))  # Squares even numbers, leaves odd numbers unchanged
+```
 
 ```{r cir}
 # Define the generic Shape class with default methods that raise errors
