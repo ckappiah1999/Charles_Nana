@@ -645,28 +645,12 @@ model <- BreastCancer %>% nnet(Class ~ Cl.thickness, data = ., size = 50)
 predict(model, BreastCancer) %>% head 
 
 predicted_class <- predict(model, BreastCancer) %>%
- { ifelse(. < 0.5, "benign", "malignant") }
+ { ifelse(. < 0.7, "benign", "malignant") }
  
 table(BreastCancer$Class, predicted_class) %>% head
 
 accuracy = sum(diag(table(BreastCancer$Class, predicted_class))) / sum((table(BreastCancer$Class, predicted_class)))
 accuracy
-```
-
-```{r Project 1}
-URL <- "https://archive.ics.uci.edu/static/public/186/wine+quality.zip"
-
-read.table(URL, header=TRUE, sep=';')
-```
-
-
-```{r Project 2}
-url = "https://archive.ics.uci.edu/ml/datasets/Wine+Quality"
-
-read.table(url, header = TRUE, sep = ";")
-
-wines <- rbind(data.frame(type = "red", red), data.frame(type = "white", white))
-
 ```
 
 ```{r letter-a, echo = FALSE}
@@ -707,7 +691,6 @@ question_checkbox(
 )
 ```
 
-
 ```{r text_box, echo = FALSE}
 question_text(
   "Please enter the word 'C0rrect' below:",
@@ -733,7 +716,6 @@ question_numeric(
 )
 ```
 
-
 ```{r options, echo = FALSE}
 question(
   "How many parameters are supplied in this question?",
@@ -756,7 +738,6 @@ question(
   )
 )
 ```
-
 
 ```{r custom_class, echo = FALSE}
 question_is_correct.always_correct <- function(question, value, ...) {
@@ -864,15 +845,15 @@ replace_outliers(x, lower, upper)
 ```
 
 ```{r}
-apply_if <- function(v, condition, transformation) {
-  Map(function(x) if (condition(x)) transformation(x) else x, v)
+apply_if <- function(v, dosomething, transform) {
+  Map(function(x) if (dosomething(x)) transform(x) else x, v)
 }
 
 # Example usage
-v <- c(1, 2, 3, 4, 5, 6)
+v <- seq(1:8)
 unlist(apply_if(v, function(x) x %% 2 == 0, function(x) x**2))
 
-v <- c(1, 2, 3, 4, 5, 6)
+v <- seq(1:10)
 unlist(v * ifelse(v %% 2 == 0, v, 1))  # Squares even numbers, leaves odd numbers unchanged
 ```
 
@@ -985,3 +966,4 @@ poly1 <- Polynomial(c(2, -3, 3))  # x^2 - 3x + 2
 cat("Polynomial evaluated at x = 2:", evaluate_polynomial(poly1, 2), "\n")
 cat("Polynomial roots:", find_roots(poly1), "\n")
 ```
+
