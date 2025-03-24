@@ -1,21 +1,18 @@
 ---
+title: "Fun stuffs"
+author: "Charles"
+date: "2025-03-24"
 output:
-  html_document: default
-  word_document: default
+  html_document:
+    df_print: paged
+    code_download: true
   
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
-knitr_options(
-  opts_knit = NULL,
-  opts_chunk = NULL,
-  knit_hooks = NULL,
-  opts_hooks = NULL,
-  opts_template = NULL
-)
 ```
+
 ```{r}
 ## **Chapter One**
 
@@ -249,7 +246,7 @@ sum(v, na.rm = TRUE)
 
 ### **R Packages**
 #install.packages("magrittr")
-#library(magrittr)
+library(magrittr)
 ```
 ```{r data}
 ### Data Pipeline
@@ -330,7 +327,8 @@ d %T>% plot(y ~ x, data = .) %>% lm(y ~ x, data = .)
 ## **Chapter Three**
 
 ### Data Manipulation
-#library(datasets)
+library(datasets)
+library(ggplot2)
 #library(help = "datasets")
 
 data(cars)
@@ -343,7 +341,7 @@ cars %>% qplot(speed, dist, data = .)
 
 ```{r}
 #install.packages("mlbench")
-#library(mlbench)
+library(mlbench)
 #library(help = "mlbench")
 
 data(iris)
@@ -355,7 +353,7 @@ iris %>% qplot(Petal.Length, Petal.Width, data = ., color = Species)
 ```
 
 ```{r}
-?read.table
+#?read.table
 #### **Breast Cancer**
 data(BreastCancer)
 BreastCancer %>% head()
@@ -462,16 +460,18 @@ boston <- "http://tinyurl.com/zq2u8vx"
 
 ```{r}
 #boston_housing <- read.table(boston)
-str(boston_housing)
+#str(boston_housing)
 
 col_classes <- rep("numeric", length(BostonHousing))
 col_classes[which("chas" == names(BostonHousing))] <- "factor"
 
 #boston_housing <- read.table(boston,col.names = names(BostonHousing),colClasses = col_classes)
-str(boston_housing)
+#str(boston_housing)
 ```
+
 ```{r BreastCancer}
 ### Readr Package
+library(readr)
 
 raw_breast_cancer <- read_csv("C:/Users/HP/Desktop/Data Science/Machine learning/breast+cancer+wisconsin+original/breast-cancer-wisconsin.data",show_col_types = "TRUE", col_names = names(BreastCancer))
 raw_breast_cancer %>% head()
@@ -483,12 +483,15 @@ raw_breast_cancer %>% head()
 ```
 ```{r warning=FALSE}
 ### Manipulating Data with dplyr
+library(tidyverse)
+
 iris %>% tibble::as_tibble()
 iris %>% tbl_df %>% select(Species,Petal.Width) %>% head()
 iris %>% tbl_df %>% select(Species,Sepal.Width) %>% head()
 iris %>% tbl_df %>% select(Species,Petal.Length) %>% head()
 iris %>% tbl_df %>% select(Species,Sepal.Length) %>% head()
 ```
+
 ```{r warning=FALSE}
 iris %>% tbl_df %>%
 select(Sepal.Width, Petal.Width) %>% head() ## Select from Sepal.Width and Petal.Width
@@ -900,9 +903,9 @@ iris %>% gather(Measurement, Value, -Species) %>%
  facet_grid(Measurement ~ ., switch = "y", labeller = labeller(Measurement = label_map)) + coord_flip() + theme(strip.background = element_blank()) + theme(legend.position ="top")
 ```
 ```{r Bottom}
-#label_map <- c(Petal.Width = "Petal Width",Petal.Length = "Petal Length",Sepal.Width = "Sepal Width",Sepal.Length = "Sepal Length")
+label_map <- c(Petal.Width = "Petal Width",Petal.Length = "Petal Length",Sepal.Width = "Sepal Width",Sepal.Length = "Sepal Length")
  
-#species_map <- c(setosa = "Setosa",versicolor = "Versicolor",virginica = "Virginica")
+species_map <- c(setosa = "Setosa",versicolor = "Versicolor",virginica = "Virginica")
  
 iris %>% gather(Measurement, Value, -Species) %>%
  ggplot(aes(x = Species, y = Value, fill = Species)) +
@@ -912,6 +915,7 @@ iris %>% gather(Measurement, Value, -Species) %>%
  coord_flip() + theme(strip.background = element_blank()) +
  theme(legend.position="bottom") 
 ``` 
+
 ```{r} 
 ### Figures with Multiple Plots
 petal <- iris %>% ggplot() +
@@ -922,26 +926,28 @@ sepal <- iris %>% ggplot() +
  geom_point(aes(x = Sepal.Width, y = Sepal.Length,
  color = Species)) + theme(legend.position = "none")
  
-#library(gridExtra)
+library(gridExtra)
 grid.arrange(petal, sepal, nrow = 2, ncol = 1)
 
 grid.arrange(petal, sepal, nrow = 1, ncol= 2)
 
-#library(cowplot)
+library(cowplot)
 plot_grid(petal, sepal, labels = c("A", "B"))
-``` 
+```
+
 ```{r}
 ## **Chapter 5** 
 ### Working With Larges Data sets
 iris %>% sample_n(size = 10)
 iris %>% sample_frac(size = 0.02) 
 
-#library(pryr) 
+library(pryr) 
 mem_change(x <- rnorm(10000)) 
 mem_change(x[1] <- 0) 
 mem_change(y <- x) 
 mem_change(x[1] <- 0) 
 ```
+
 ```{r}
 d <- data.frame(x = rnorm(10000), y = rnorm(10000))
 
@@ -958,15 +964,18 @@ mem_change(d)
 d %>% ggplot(aes(x = x, y = y)) + geom_hex() + scale_fill_gradient(low = "lightgray", high = "red") + geom_density2d(color = "black")
 
 d %>% ggplot(aes(x = x, y = y)) + geom_hex()
-``` 
+```
+
 ```{r}
-#install.packages("ff")
+library(ff)
+
 ffcars <- as.ffdf(cars)
 summary(ffcars)
 
 ffiris <- as.ffdf(iris)
 summary(ffiris)
 ```
+
 ```{r warning=FALSE}
 model <- biglm(dist ~ speed, data = ffcars)
 summary(model) 
@@ -1002,6 +1011,7 @@ cars %>% ggplot(aes(x = speed, y = dist, colour = theta)) +
  geom_line(data = predict_dist(cars$speed, 4)) +
  scale_color_discrete(name = expression(theta[1]))
 ```
+
 ```{r}
 thetas <- seq(0, 5, length.out = 50)
 
@@ -1014,6 +1024,7 @@ data.frame(thetas = thetas, errors = fitting_error(thetas)) %>%
  geom_line() +
  xlab(expression(theta[1])) + ylab("") 
 ```
+
 ```{r without y_intercept}
 cars %>% lm(dist ~ speed - 1, data = .) %>% coefficients
  
@@ -1021,6 +1032,7 @@ cars %>% ggplot(aes(x = speed, y = dist)) +
  geom_point() +
  geom_smooth(method = "lm", formula = y ~ x - 1)
 ```
+
 ```{r jitter}
 ### Logistic Regression
 data("BreastCancer")
@@ -1049,12 +1061,14 @@ BreastCancer %>% mutate(Cl.thickness.numeric =
  glm(IsMalignant ~ Cl.thickness.numeric,
  family = "binomial", data = .) 
 ```
+
 ```{r Model.M}
 ### Model Matrice and Formula
 cars %>% model.matrix(dist ~ speed, data = .) %>% head(5)
 
 cars %>% model.matrix(dist ~ speed - 1, data = .) %>% head(5) 
 ```
+
 ```{r Size + Thickness} }
 BreastCancer %>%
  mutate(Cl.thickness.numeric =
@@ -1065,6 +1079,7 @@ BreastCancer %>%
  model.matrix(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric,
  data = .) %>% head() 
 ```
+
 ```{r without intercept}
 BreastCancer %>%
  mutate(Cl.thickness.numeric =
@@ -1075,6 +1090,7 @@ BreastCancer %>%
  model.matrix(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric - 1,
  data = .) %>% head() 
 ```
+
 ```{r without_inercept}
 BreastCancer %>%
  mutate(Cl.thickness.numeric =
@@ -1084,6 +1100,7 @@ BreastCancer %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  glm(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric - 1, family = "binomial", data = .)
 ```
+
 ```{r with_intercept}
  BreastCancer %>%
  mutate(Cl.thickness.numeric =
@@ -1094,12 +1111,14 @@ BreastCancer %>%
  glm(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric,
  family = "binomial", data = .) 
 ```
+
 ```{r Bare.nuclei}
 BreastCancer %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  model.matrix(IsMalignant ~ Bare.nuclei, data = .) %>%
  head() 
 ```
+
 ```{r Cl}
 BreastCancer %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
@@ -1123,6 +1142,7 @@ BreastCancer %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  model.matrix(IsMalignant ~ Cl.thickness.numeric * Bare.nuclei, data = .) %>% head() 
 ```
+
 ```{r benign}
 BreastCancer %>%
  mutate(Cl.thickness.numeric =
@@ -1130,9 +1150,11 @@ BreastCancer %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
  model.matrix(IsMalignant ~ Cl.thickness.numeric : Bare.nuclei, data = .) %>% head() 
 ```
+
 ```{r poly}
 cars %>% model.matrix(dist ~ speed + speed^2, data = .) %>% head 
 ```
+
 ```{r poly.1}
 ### Polynomial function
 cars %>% model.matrix(dist ~ speed + I(speed^2), data = .) %>% head 
@@ -1154,6 +1176,7 @@ iris %>% lm(Sepal.Width ~ Sepal.Length + I(Sepal.Length^2), data = .) %>% summar
 iris %>% ggplot(aes(x = Sepal.Width, y = Sepal.Length)) + geom_point( color = "lightgreen") +
  geom_smooth(method = "lm", formula = y ~ x + I(x^2))
 ```
+
 ```{r Mod}
 ### Validating Models
 line <- cars %>% lm(dist ~ speed, data = .)
@@ -1164,6 +1187,7 @@ predict(line, cars) %>% head
 
 predict(poly, cars) %>% head 
 ```
+
 ```{r rmse}
 ### Evaluating Regression Models
 rmse <- function(x,t) sqrt(mean(sum((t - x)^2)))
@@ -1194,6 +1218,7 @@ poly <- training_data %>% lm(dist ~ speed + I(speed^2), data = .)
 rmse(predict(line, test_data), test_data$dist) 
 rmse(predict(poly, test_data), test_data$dist) 
 ```
+
 ```{r response}
 ### Evaluating Classification Models
 formatted_data <- BreastCancer %>%
@@ -1208,6 +1233,7 @@ formatted_data <- BreastCancer %>%
 
 predict(fitted_model, formatted_data, type = "response") %>% head 
 ```
+
 ```{r Matrix}
 ### Confusion Matrix
 classify <- function(probability) ifelse(probability < 0.5, 0, 1)
@@ -1225,6 +1251,7 @@ classify <- function(probability)
 classified <- classify(predict(fitted_model, formatted_data))
 table(formatted_data$Class, classified, dnn = c("Data", "Predictions")) 
 ``` 
+
 ```{r acc} 
 ### Accuracy
 confusion_matrix <- table(formatted_data$Class, classified,dnn = c("Data", "Predictions"))
@@ -1233,6 +1260,7 @@ confusion_matrix <- table(formatted_data$Class, classified,dnn = c("Data", "Pred
  
 #table(BreastCancer$Class) 
 ```
+
 ```{r}
 tbl <- table(BreastCancer$Class)
 tbl["benign"] / sum(tbl)
@@ -1275,6 +1303,7 @@ random_prediction_summary <- function()
  
 #replicate(3, random_prediction_summary())
 ```
+
 ```{r Mease}
 ### Other Measures
 confusion_matrix[2,1] / sum(confusion_matrix[,1])
@@ -1283,6 +1312,7 @@ confusion_matrix[1,1] / sum(confusion_matrix[,1])
 confusion_matrix[2,2] / sum(confusion_matrix[,2]) 
 confusion_matrix[1,2] / sum(confusion_matrix[,2]) 
 ```
+
 ```{r Perm}
 ### Random Permutation of Data
 permuted_cars <- cars[sample(1:nrow(cars)),]
@@ -1324,7 +1354,7 @@ estimates
 ```
 
 ```{r esti}
-#library(purrr) 
+library(purrr) 
 
 estimates <- grouped_cars %>%
  map(. %>% lm(dist ~ speed, data = .) %>% .$coefficients)
@@ -1336,6 +1366,7 @@ estimates <- grouped_cars %>%
  
 estimates
 ```
+
 ```{r valid}
 ### Cross Validation
 cross_validation_groups <- function(grouped_df) {
@@ -1383,6 +1414,7 @@ prediction_accuracy_cars <- function(test_and_training) {
 
 cars %>%permute_rows %>%group_data(5) %>% cross_validation_split %>%prediction_accuracy_cars
 ```
+
 ```{r}
 random_group <- function(n, probs) {
  probs <- probs / sum(probs)
@@ -1405,9 +1437,10 @@ random_cars <- cars %>% partition(4, c(training = 0.5, test = 0.5))
 
 random_cars %>% prediction_accuracy_cars 
 ```
+
 ```{r Tree}
 ### Decision Tree
-#library(rpart)
+library(rpart)
 
 model <- cars %>% rpart(dist ~ speed, data = .)
 rmse(predict(model, cars), cars$dist) # root mean square
@@ -1424,9 +1457,10 @@ table(BreastCancer$Class, predicted_class)
 accuracy = sum(453,147) / sum(453,147,5,94)
 accuracy
 ```
+
 ```{r Part}
 #install.packages("party")
-#library(party)
+library(party)
 model <- cars %>% ctree(dist ~ speed, data = .)
 rmse(predict(model, cars), cars$dist) 
 
@@ -1439,9 +1473,10 @@ table(BreastCancer$Class, predict(model, BreastCancer))
 
 cars %>% ctree(dist ~ speed, data = .) %>% plot
 ```
+
 ```{r Forest}
 ### Random Forests
-#library(randomForest)
+library(randomForest)
 model <- cars %>% randomForest(dist ~ speed, data = .)
 rmse(predict(model, cars), cars$dist) # root mean square error
  
@@ -1454,9 +1489,10 @@ table(BreastCancer$Class, predict(model, BreastCancer))
 accuracy = sum(437,165) / sum(437,165,76,21)
 accuracy
 ```
+
 ```{r Neural}
 ### Neural Networks
-#install.packages("nnet")
+library(nnet)
 model <- cars %>% nnet(dist ~ speed, data = ., size = 5)
 rmse(predict(model, cars), cars$dist)
 
@@ -1475,7 +1511,7 @@ accuracy
 ```{r Machines}
 ### Support Vector Machines
 #install.packages("kernlab")
-#library(kernlab)
+library(kernlab)
 
 model <- cars %>% ksvm(dist ~ speed, data = .)
 rmse(predict(model, cars), cars$dist)
@@ -1486,9 +1522,10 @@ predict(model, BreastCancer) %>% head
 
 table(BreastCancer$Class, predict(model, BreastCancer))
 ```
+
 ```{r Naive}
 ### Naive Bayes
-#library(e1071)
+library(e1071)
 
 model <- BreastCancer %>% naiveBayes(Class ~ Cl.thickness, data = .)
 
@@ -1496,6 +1533,7 @@ predict(model, BreastCancer) %>% head
 
 table(BreastCancer$Class, predict(model, BreastCancer))
 ```
+
 ```{r Pca}
 ## **Chapter Seven** 
 ### **Unsupervised Learning**
@@ -1512,6 +1550,7 @@ pca %>% plot
 
 #?prcomp
 ```
+
 ```{r Pred}
 mapped_iris <- pca %>% predict(iris)
 mapped_iris %>% head
@@ -1568,11 +1607,13 @@ random_string <- function(m) {
 
 strings <- replicate(10, random_string(5))
 #install.packages("stringdist")
+library(stringdist)
 string_dist <- stringdistmatrix(strings)
 string_dist %>% cmdscale(k = 4) %>% as.data.frame %>%
  cbind(String = strings) %>% ggplot(aes(x = V1, y = V2)) +
  geom_point() + geom_label(aes(label = String), hjust = 0, nudge_y = -0.1)
 ```
+
 ```{r clust}
 ### Kmeans
 clusters <- iris %>% select(-Species) %>% kmeans(centers = 3)
@@ -1586,6 +1627,7 @@ clusters$cluster %>% table
 iris %>% cbind(Cluster = clusters$cluster) %>%
  ggplot() + geom_bar(aes(x = Species, fill = as.factor(Cluster)), position = "dodge") + scale_fill_discrete("Cluster")
 ```
+
 ```{r cent}
 pca <- iris %>% select(-Species) %>% prcomp
  
@@ -1618,6 +1660,7 @@ table(iris$Species, map[clusters$cluster])
 
 #?prcomp
 ```
+
 ```{r hier}
 ## Hierarchical Clustering
 iris_dist <- iris %>% select(-Species) %>% scale %>% dist
@@ -1628,8 +1671,7 @@ plot(clustering)
 ```
 
 ```{r gend}
-#install.packages("ggdendro")
-#library(ggdendro)
+library(ggdendro)
 ggdendrogram(clustering) + theme_dendro()
 
 clusters <- clustering %>% cutree(k = 2)
@@ -1638,6 +1680,7 @@ iris %>% cbind(Cluster = clusters) %>%
  ggplot() + geom_bar(aes(x = Species, fill = as.factor(Cluster)), position = "dodge") +
  scale_fill_discrete("Cluster")
 ```
+
 ```{r map_iris}
 mapped_iris %>% as.data.frame %>%
  cbind(Species = iris$Species,
@@ -1648,7 +1691,7 @@ mapped_iris %>% as.data.frame %>%
 
 ```{r message=FALSE, warning=FALSE}
 ## Association Rules
-#install.packages("arules")
+library(arules)
 
 data(income)
 income %>% head
@@ -2002,6 +2045,7 @@ x$get()
 x$set(5)
 x$get()
 ```
+
 ```{r}
 f <- function(){
 x <- NULL
@@ -2015,6 +2059,7 @@ x$get()
 x$set(5)
 x$get()
 ```
+
 ```{r fact}
 n <- function(x) x
 f <- function(n) n(n)
@@ -2032,6 +2077,7 @@ factorial <- function(n) {
 factorial(9)
 factorial(1)
 ```
+
 ```{r merge}
 merge <- function(x, y) {
  if (length(x) == 0) return(y)
@@ -2045,6 +2091,7 @@ merge <- function(x, y) {
 merge(9,0)
 merge(12,5)
 ```
+
 ```{r merge_sort}
 merge_sort <- function(x) {
  if (length(x) < 2) return(x)
@@ -2053,6 +2100,7 @@ merge_sort <- function(x) {
  merge(merge_sort(x[1:m]), merge_sort(x[(m+1):n]))}
 merge_sort (10)
 ```
+
 ```{r prog}
 # **Chapter 9**
 ### **Advance R Programming**
@@ -2082,6 +2130,7 @@ for (i in seq_along(x)){
 }
 s
 ```
+
 ```{r pow_}
 sqrt((1:5)**2)
 
@@ -2123,6 +2172,7 @@ map_to_role_2 <- function(names) unlist(role_table[names])
 x <- c("Thomas", "Henrik", "Randi","Charles")
 map_to_role_2(x)
 ```
+
 ```{r lis}
 x <- list("first" = list("second" = "foo"), "third" = "bar")
 x[[c("first", "second")]]
@@ -2146,6 +2196,7 @@ apply(m, 2, function(x) c(x,x))
 
 apply(m, c(1,2), function(x) c(x,x))
 ```
+
 ```{r apply_p}
 x <- apply(m, c(1,2), function(x) c(x,x))
 k <- dim(x)[3]
@@ -2156,11 +2207,13 @@ for (i in 1:n) {
  }
 }
 ```
+
 ```{r sumpow}
 sumpow <- function(x, n) sum(x) ** n
 apply(m, 1, sumpow,n = 2) # row - wise
 apply(m, 2, sumpow, n = 2) # column - wise
 ```
+
 ```{r lapply}
 ### lapply
 l <- list(1, 2, 3)
@@ -2173,6 +2226,7 @@ lapply(1:5, function(x) x**4)
 
 lapply(list(a = 1:3, b = 4:6), function(x) x**2)
 ```
+
 ```{r sapply}
 ### sapply
 sapply(1:3, function(x) x**2) # returns vector by default 
@@ -2181,6 +2235,7 @@ vapply(1:3, function(x) x**2,1)
 
 #?vapply
 ```
+
 ```{r adv}
 ### Advance Functions
 
@@ -2207,6 +2262,7 @@ x$foo
 bar(x) <- 3
 x$bar
 ```
+
 ```{r foo_bar}
 y <- x
 foo(x) <- 5
@@ -2222,6 +2278,7 @@ x <- list(foo = 1, bar = 2)
 foo(x) <- 3
 x$foo
 ```
+
 ```{r foo_bar_1}
 `modify<-` <- function(x, variable, value) {
  x[variable] <- value
@@ -2234,6 +2291,7 @@ modify(x, "bar") <- 7
 x$foo
 x$bar
 ```
+
 ```{r index}
 x <- 1:4
 f <- function(x) {
@@ -2245,6 +2303,7 @@ f <- function(x) {
 x
 f(x)
 ```
+
 ```{r square}
 square <- function(x) (x**2 - x)
 square(5)
@@ -2258,6 +2317,7 @@ apply(m,2 , sum_of_squares) # column - wise
 
 #apply(m^2, 1, sum)
 ```
+
 ```{r apply_if}
 apply_if <- function(x, p, f) {
  result <- vector(length = length(x))
@@ -2272,6 +2332,7 @@ apply_if <- function(x, p, f) {
 }
 apply_if(1:8, function(x) x %% 2 == 0, function(x) x^2)
 ```
+
 ```{r power_cube}
 power <- function(n) function(x) x**n
 square <- power(2)
@@ -2281,6 +2342,7 @@ x <- 1:4
 square(x) 
 cube(x)
 ```
+
 ```{r filter_map_reduce}
 ### Filter, Map and Reduce
 is_even <- function(x) x %% 2 == 0
@@ -2307,6 +2369,7 @@ Reduce(add_parenthesis, 1:4)
 mysum <- function(x) Reduce(`+`, x)
 mysum(1:4)
 ```
+
 ```{r factorail}
 ### Function Operations
 cached <- function(f) {
@@ -2376,6 +2439,7 @@ fibonacci(5)
 
 ?fibonacci
 ```
+
 ```{r ellip}
 ### Ellipsis Parameters
 g <- function(a, b, ...) NULL
@@ -2400,6 +2464,7 @@ time_out <- function(f) {
 ti_mean <- time_out(mean)
 ti_mean(runif(1e6))
 ```
+
 ```{r blm}
 # **Chapter 10**
 ## **Object Oriented Programming**
@@ -2462,6 +2527,7 @@ blm <- function(model, alpha = 1, beta = 1, ...) {
 
 model
 ```
+
 ```{r morphic Function}
 ### Polymorphic Function
 print.blm <- function(x, ...) {
@@ -2470,6 +2536,7 @@ print.blm <- function(x, ...) {
 model
 #??print
 ```
+
 ```{r use_method}
 ### Defining your own Function
 Charles <- function(x, ...) UseMethod("Charles")
@@ -2498,6 +2565,7 @@ Charles("a string", upper = TRUE)
 
 Charles(model, upper = TRUE)
 ```
+
 ```{r foo}
 foo <- function(object, ...) UseMethod("foo")
 foo.default <- function(object, ...) stop("foo not implemented")
@@ -2546,6 +2614,7 @@ bar(b)
 
 baz(b)
 ```
+
 ```{r foo.bar.baz}
 C <- function(f, b, bb) {
  b <- B(f, b, bb)
@@ -2587,7 +2656,6 @@ area(r)
 
 circumference(r)
 
-
 # Automating testing
 r <- rectangle(width = 3, height = 4)
 if (area(r) != 3*4) {
@@ -2602,6 +2670,7 @@ if (circumference(r) != 2*3 + 2*4) {
 ```{r}
 ## **Chapter 14**
 ### Profiling and  Optimizing
+library(profvis)
 graph <- function(n, edges) {
  m <- matrix(0, nrow = n, ncol = n)
  no_edges <- length(edges)

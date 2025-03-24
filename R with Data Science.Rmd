@@ -3,12 +3,12 @@ title: "I do it for fun"
 author: "Charles Kwame Appiah"
 date: "`r Sys.Date()`"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-    code_dowload: true
+    code_download: true
+    theme: journal
 ---
-
-
 
 ```{r}
 x <- "Hello Charles, I hope you're working hard to become who you are destined to be by God's purpose? "
@@ -182,6 +182,8 @@ dfr$Adult
 
 ```{r }
 ### Importing Datasets
+library(readxl)
+
 dat <- read.csv("C:/Users/HP/Desktop/Data Science/Machine learning/Training r.csv")
 #print(dat, na.rm = TRUE)
 head(dat)
