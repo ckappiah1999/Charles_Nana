@@ -37,6 +37,46 @@
 \makeatother
 \usepackage{xcolor}
 \usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -61,32 +101,40 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
+  pdftitle={I do it for fun},
+  pdfauthor={Charles Kwame Appiah},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\author{}
-\date{\vspace{-2.5em}}
+\title{I do it for fun}
+\author{Charles Kwame Appiah}
+\date{2025-03-24}
 
 \begin{document}
+\maketitle
 
-x \textless- ``hello, World'' x class(x) \# checking the class of
-variable x
+x \textless- ``Hello Charles, I hope you're working hard to become who
+you are destined to be by God's purpose?'' x class(x) \# checking the
+class of variable x
 
-y \textless- 3.13 y class(y) \# checking the class of variable y
+y \textless- pi\^{}2 \# y class(y) \# checking the class of variable y
 
 z \textless- 15L z class(z) \# checking the class of variable z
 
-a \textless- 5 + 2i a class(a) \# checking the class of variable a
+a \textless- (5 + 2i)\^{}2 a class(a) \# checking the class of variable
+a
 
 l \textless- TRUE class(l) \# checking the class of variable l
 
 x \textless- list(age=c(10,21,22), weight=c(30,33,32)) x names(x) \#
 Calling the names of the list x
 
-length(x) \# length of the list x
+length(x) \# checking the length of the list x
 
-d \textless- c(``This is my name'') d class(d) \# checking the class of
-variable d
+xk \textless- data.frame(age=c(10,21,22), weight=c(30,33,32)) xk
+
+d \textless- c(``Charles Kwame Appiah is my name'') d class(d) \#
+checking the class of variable d length(d)
 
 f\textless- c(1,3,4,6,7) f class(f) \# checking the class of variable f
 
@@ -95,21 +143,23 @@ variable fo
 
 \section{Initilization}\label{initilization}
 
-x \textless- vector(mode=``logical'', length=5) x class(x)
+x \textless- vector(mode = ``logical'', length = 5) x class(x)
 
 x{[}1:3{]} \textless- TRUE \# indexing the first to third element with
 TRUE x
 
 s \textless- c(TRUE, FALSE,TRUE, 1) s as.logical(s) \# Default
 
-q \textless- list(``Hello World'',2015, TRUE, 32.1) q
+q \textless- list(``Hello World'',2015L, TRUE, 32.1) q
 class(q{[}{[}2{]}{]}) \# Checking the class of list 2
+class(q{[}{[}4{]}{]}) class(q{[}{[}1{]}{]})
 
 mat \textless- c(2,4,5,7) dim(mat) \textless- c(2,2) \# creating a
 matrix with 2 rows and 2 columns mat
 
-temp \textless- c(3,4,5,5.6,6,7) mati \textless- matrix(temp, nrow=2,
-ncol=3,byrow=TRUE) \# creating a matrix with 2 rows and 3 columns mati
+temp \textless- c(3,4,5,5.6,6,7) mati \textless- matrix(temp, nrow = 2,
+ncol = 3,byrow = TRUE) \# creating a matrix with 2 rows and 3 columns
+mati
 
 temp \textless- c(3,4,5,5.6,6,7, 8, 9, 10) mato \textless- matrix(temp,
 nrow=3, ncol=3,byrow=TRUE) \# creating a matrix with 3 rows and 3
@@ -126,13 +176,13 @@ t1 \textless- c(23, 55) t2 \textless- c(34, 45)
 
 rbind(t1,t2) \# binding them by their rows
 
-t1 \textless- c(23, 55) t2 \textless- c(34, 45)
+t3 \textless- c(32, 50) t4 \textless- c(43, 54)
 
 \section{By columns}\label{by-columns}
 
-cbind(t1,t2) \# binding them by their columns
+cbind(t3,t4) \# binding them by their columns
 
-factor\textless- c(``Yes'',``No'',``No'',``Yes'') factor \# use to
+factor \textless- c(``Yes'',``No'',``No'',``Yes'') factor \# use to
 encode vectors
 
 f \textless- factor(c(``Yes'',``No'',``No'',``Yes''), levels=
@@ -140,14 +190,15 @@ c(``Yes'',``No'')) f
 
 x \textless- NA \# Missing number x
 
-is.na(x)
+is.na(x) \# checking if it is a missing number
 
 u \textless- 0/0 u class(u) \# checking for the class of variable u
 
-c \textless- c(``Charles'',``Richmond'',``Nicholas'') d \textless- c(12,
-23, 45) s \textless- c(FALSE,TRUE,TRUE)
+\#Dataframe c \textless- c(``Charles'',``Richmond'',``Nicholas'') d
+\textless- c(12, 23, 45) s \textless- c(FALSE,TRUE,TRUE)
 
-\#Dataframe dfr \textless- data.frame(Username=c,Age=d, Adult=s) dfr
+dfr \textless- data.frame(Username = c,Age = d, Adult = s) dfr \#
+creating a dataframe
 
 \section{First Row}\label{first-row}
 
@@ -169,61 +220,78 @@ dfr\$Username
 
 dfr\$Adult
 
-\#dat \textless-
-read\_csv(``C:\Users\HP\Desktop\Data Science\Machine learning\Training r.csv'')
-\#dat
+\section{Importing Datasets}\label{importing-datasets}
+
+dat \textless- read.csv(``C:/Users/HP/Desktop/Data Science/Machine
+learning/Training r.csv'') print(dat, na.rm = TRUE) dat \textless-
+head()
+
+plot( dat,c(itching \textasciitilde{} skin\_rash), color=``red'')
+
+data \textless- read.excel(``C:/Users/HP/Downloads/Copy of V1- UN Data
+on Refugees (AiCE \_\_ Dataset).xlsx'')
 
 \section{Sequence}\label{sequence}
 
-v \textless- (10:20) v
+v \textless- (10:20) v \# start from 10 and end at 20
 
-w \textless- (-5:9) w
+w \textless- (-5:9) w \# start from -5 and end at 9
 
-qw \textless- seq(2,34,2) qw
+qw \textless- seq(2,34,2) qw \# start from 2 and end at 34 with a moving
+step of 2
 
-iqw \textless- seq(2,34,length=6) iqw
+iqw \textless- seq(2,34,length=6) iqw \# start from 2 and end at 34 with
+a length of 6
 
-qe \textless- rep(1:4,4) \# repeat 1 to 4, 4x qe
+repe \textless- rep(1:4,4) repe \# repeat 1 to 4, 4 times
 
-eq \textless- rep(``Hello'', 5) \# repeat Hello 5x eq
+eq \textless- rep(``Hello Ann'', 5) eq \# repeat Hello Ann 5 times
 
-we \textless- seq(1,15, 2) \# 1 to 15 with a step of 2 we
+we \textless- seq(1,15, 2) we \# start from 1 and end at 15 with a step
+of 2
 
-we{[}1:5{]} \# slicing index 1 to 5
+we{[}1:5{]} \# slicing from index 1 to 5
 
 class(we) \# checking the class of we
 
-fo \textless- list(``Hello'',``Hi'',``Hey'') fo{[}c(1,2){]}
+fo \textless- list(``Hello'',``Hi'',``Hey'') fo fo{[}c(1,2){]}
 fo{[}c(1,2,3){]} \# for several elements fo{[}{[}2{]}{]} \# for only one
 element
 
 class(fo{[}{[}3{]}{]})
 
 wi \textless- list(age=c(12,23,45), height=c(12.3,45.4, 34.5)) wi
+class(wi)
 
-wi\(age
-wi\)height
+woo \textless- data.frame(age=c(12,23,45), height=c(12.3,45.4, 34.5))
+woo class(woo)
 
-wi{[}{[}``age''{]}{]} wi{[}{[}`h',exact=FALSE{]}{]} \# partial matching
+wi\(age # accessing only the age list
+wi\)height \# accessing only the height list
 
-class(wi\(age)
-class(wi\)height)
+wi{[}{[}``age''{]}{]} \# accessing only the age list
+wi{[}{[}`h',exact=FALSE{]}{]} \# partial matching
 
-wr \textless- matrix(1:9, nrow=3, ncol=3, by=TRUE) wr
+class(wi\(age) # checking the class of age list
+class(wi\)height) \# checking the class of height list
 
-class(wr{[}1,1{]})
+wr \textless- matrix(1:9, nrow = 3, ncol = 3, by = TRUE) wr \# creating
+a matrix with 3 rows and 3 columns class(wr)
 
-class(wr{[}1,1, drop=FALSE{]})
+class(wr{[}1,1{]}) \# checking the class of row 1 column 1
+
+class(wr{[}1,1, drop=FALSE{]}) \# checking the class of row 1 column 1
 
 ch \textless- c(1:9,NA,NA,NA) ch i\textless- is.na(ch) \# Locating
-missing numbers i ch{[}!i{]} \# filtering missing numbers
+missing numbers i ch{[}!i{]} \# filtering non missing numbers or is not
+missing numbers
 
 \section{Vectorization}\label{vectorization}
 
-ew \textless- rnorm(1000) ew er \textless- rnorm(1000) er cv \textless-
-vector(mode=``numeric'', length=1000) cv \# Iteration start \textless-
-proc.time() for (i in 1:1000)\{ cv{[}i{]} \textless- ew{[}i{]} +
-er{[}i{]} + \} proc.time()-start
+ew \textless- rnorm(1000) \#ew er \textless- rnorm(1000) \#er cv
+\textless- vector(mode=``numeric'', length=1000) \#cv \# Iteration start
+\textless- proc.time() for (i in 1:1000)\{ cv{[}i{]} \textless-
+ew{[}i{]} + er{[}i{]} \} proc.time()-start
 
 \section{Vectorization}\label{vectorization-1}
 
@@ -239,19 +307,29 @@ x \textless- -20 if (x \textless{} 0) \{ print(``Negative!'') \}else if
 (x \textless{} 10) \{ print(``Positive, less than 10!'') \}else \{
 print(``Number greater than 10!'') \}
 
+x \textless- 6 if (x \textless{} 0) \{ print(``Negative!'') \}else if (x
+\textless{} 10) \{ print(``Positive, less than 10!'') \}else \{
+print(``Number greater than 10!'') \}
+
 \section{for loop}\label{for-loop}
 
-for (i in 1:100)\{ cat(i) cat('' ``) \}
+for (i in 1:100)\{ cat(i) cat('' ``) \# inserting spaces between the
+numbers \}
 
-letters
+letters \# lower case
 
-for (x in letters)\{ cat(x) cat('' ``) \}
+LETTERS \# upper case
+
+class(letters)
+
+for (x in letters)\{ cat(x) cat('' ``) \# inserting spaces between the
+letters \}
 
 \section{while loop}\label{while-loop}
 
 x \textless- -1 while (x \textless{} 5)\{ print(x) x \textless- x+1 \}
 
-x\textless- 1 repeat\{ print(x) if (x \textgreater{} 5)\{ break \} x
+x\textless- 1 repeat\{ print(x) if (x \textgreater{} 7)\{ break \} x
 \textless- x+1 \}
 
 for (i in 1:100)\{ \# Over ride the first 20 iterations if (i \textless=
@@ -259,8 +337,8 @@ for (i in 1:100)\{ \# Over ride the first 20 iterations if (i \textless=
 
 \section{Functions}\label{functions}
 
-myPrinter \textless- function(x)\{ for (i in seq(x))\{ print(``Hello
-World!'') \} \} myPrinter(3)
+myPrinter \textless- function(x)\{ for (i in seq(x))\{ print(``Hello,
+Charles'') \} \} myPrinter(3)
 
 volume \textless- function(x=3, y=3, z=3)\{ print(x\emph{y}z) \}
 volume(y=3,z=5,x=11)
@@ -268,7 +346,9 @@ volume(y=3,z=5,x=11)
 volume()
 
 myPrinter \textless- function(\ldots, mes)\{ print(sum(\ldots))
-print(mes) \} myPrinter (3, 5, 11, mes= ``Hi!'')
+print(mes) \} myPrinter (3, 5, 11, mes= ``Hi! Richmond'')
+
+ls() \# displaying objects stored in R currently
 
 \section{Iterated Functions}\label{iterated-functions}
 
@@ -277,28 +357,35 @@ print(mes) \} myPrinter (3, 5, 11, mes= ``Hi!'')
 str(lapply)
 
 x \textless- list(a=rnorm(10), b=rnorm(20), c=rnorm(30)) lapply(x, mean)
-\# checking the mean of x lapply(x, var) \# checking the variance of x
+\# checking the mean of x lapply(x, var)\# checking the variance of x
+lapply(x, sd) \# checking the standard deviation of x
 
-\#sapply str(sapply) x \textless- list(a=rnorm(10), b=rnorm(20),
-c=rnorm(30)) sapply(x, mean) \# checking the mean of x sapply(x, var) \#
-checking the variance of x
+\section{sapply}\label{sapply}
+
+str(sapply)
+
+xi \textless- list(a=rnorm(10), b=rnorm(20), c=rnorm(30)) sapply(xi,
+mean) \# checking the mean of xi sapply(xi, var) \# checking the
+variance of xi sapply(xi, sd) \# checking the standard deviation of xi
 
 \section{Split}\label{split}
 
-dat \textless- data.frame(subject=1:6,age=c(15, 17, 16,20,21,23),
-adult=c(FALSE,FALSE,FALSE,TRUE,TRUE,TRUE)) s \textless- split(dat,
-dat\$adult) s
+dat \textless- data.frame(subject = 1:6,age = c(15, 17, 16,20,21,23),
+adult = c(FALSE,FALSE,FALSE,TRUE,TRUE,TRUE)) s \textless- split(dat,
+dat\$adult) s \# split them according to True and False
 
 sapply(s, function(x)\{ mean(x{[}{[}``age''{]}{]}) \})
 
 sapply(s, function(x)\{ var(x{[}{[}``age''{]}{]}) \})
+
+sapply(s, function(x)\{ sd(x{[}{[}``age''{]}{]}) \})
 
 \section{tapply}\label{tapply}
 
 str(tapply)
 
 x \textless- c(rnorm(10),rnorm(10),rnorm(10),rnorm(10)) f \textless-
-gl(4, 10) f tapply(x,f,mean) tapply(x,f,var)
+gl(4, 10) f tapply(x, f, mean) tapply(x, f, var) tapply(x, f, sd)
 
 \section{Help}\label{help}
 
@@ -320,30 +407,35 @@ n \textless- sapply(wi,min) n
 \section{Regualization ith range
 {[}0,1{]}}\label{regualization-ith-range-01}
 
-wi\(age <- ( (wi\)age -n{[}1{]})/(m{[}1{]}-n{[}1{]}))\emph{(1 - 0) + 0
-wi\(height <- ( (wi\)height -n{[}2{]})/(m{[}2{]}-n{[}2{]}))}(1-0) + 0
+wi\(age <- ( (wi\)age - n{[}1{]})/(m{[}1{]} - n{[}1{]}))\emph{(1 - 0) +
+0 wi\(height <- ( (wi\)height - n{[}2{]})/(m{[}2{]} - n{[}2{]}))}(1 - 0)
 
 wi
 
 \section{DPLYR AND TIDYR PACKAGES}\label{dplyr-and-tidyr-packages}
 
-\#install.packages(``dplyr'') \#library(dplyr) data(airquality)
-class(airquality) airquality \textless- tibble(airquality)
-class(airquality) airquality select(airquality, Ozone, Solar.R, Day)
-select(airquality, -(Wind:Month)) filter(airquality, Month
-\textgreater{} 5, Month \textless{} 9, Day \textless{} 3)
-filter(airquality, Day==1 \textbar{} Day == 2) arrange(airquality,Ozone,
-desc(Solar.R)) mutate(airquality, Temp.C = round((Temp - 32)* 5/9))
-\#Removing rows with missing values on the Ozone feature airquality
-\textless- filter(airquality, !is.na(Ozone),!is.na(Solar.R)) airquality
+\section{install.packages(``dplyr'')}\label{install.packagesdplyr}
+
+\#library(dplyr) data(airquality) class(airquality) airquality
+\textless- tibble(airquality) class(airquality) airquality
+select(airquality, Ozone, Solar.R, Day) select(airquality,
+-(Wind:Month)) \# offsetting Wind and Month from the airquality dataset
+filter(airquality, Month \textgreater{} 5, Month \textless{} 9, Day
+\textless{} 3) \# values in Month greater than 5 and less than 9, Day
+values less than 3 filter(airquality, Day==1 \textbar{} Day == 2) \#
+Values of Day = 1 or 2 arrange(airquality,Ozone, desc(Solar.R))
+mutate(airquality, Temp.C = round((Temp - 32) * 5/9)) \# creating a new
+column for Temp.C \# Removing rows with missing values on the Ozone and
+Solar.R features airquality \textless- filter(airquality,
+!is.na(Ozone),!is.na(Solar.R)) airquality \# print(airquality, n=143)
 
 \#Grouping by month by\_month \textless- group\_by (airquality, Month)
 by\_month
 
-\#Finding the minimum, average and maximum value per month
-summarize(by\_month, min(Ozone), mean(Ozone), max(Ozone))
+\#Finding the minimum, average and maximum value per Month summarize
+(by\_month, min(Ozone), mean(Ozone), max(Ozone))
 
-\#install.packages(``tidyr'') \#library(tidyr)
+\#install.packages (``tidyr'') \#library (tidyr)
 
 \#dat \#gather(dat, sex, count, -subject)
 
@@ -361,16 +453,84 @@ summarize(by\_month, min(Ozone), mean(Ozone), max(Ozone))
 \section{Statistical Summary and
 Visualization}\label{statistical-summary-and-visualization}
 
-\#Mean internet\_usage = c(22,0, 7,12,5, 33, 14, 8, 0, 9)
-internet\_usage mean(internet\_usage)
+\section{Mean}\label{mean}
 
-net\_usage = c(22,0,7,12,5,NA,33,14,8,NA,0,9) net\_usage
-mean(net\_usage, na.rm=TRUE)
+internet\_usage = c(22,0, 7,12,5, 33, 14, 8, 0, 9) internet\_usage
+mean(internet\_usage) \# finding the mean of internet\_usage
 
-\#Median median(net\_usage,na.rm=TRUE)
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{net\_usage }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{22}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{5}\NormalTok{,}\ConstantTok{NA}\NormalTok{,}\DecValTok{33}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DecValTok{8}\NormalTok{,}\ConstantTok{NA}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{9}\NormalTok{)}
+\NormalTok{net\_usage}
+\end{Highlighting}
+\end{Shaded}
 
-\#Minimum, Maximum and Range A = c(49,33,63,48,54,62,52,64,71,68) min(A)
-max(A) which.min(A) which.max(A)
+\begin{verbatim}
+##  [1] 22  0  7 12  5 NA 33 14  8 NA  0  9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(net\_usage, }\AttributeTok{na.rm =} \ConstantTok{FALSE}\NormalTok{) }\CommentTok{\# finding the mean of net\_usage with missing numbers }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Median}
+\FunctionTok{median}\NormalTok{(net\_usage, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Minimum, Maximum and Range}
+\NormalTok{A }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{49}\NormalTok{,}\DecValTok{33}\NormalTok{,}\DecValTok{63}\NormalTok{,}\DecValTok{48}\NormalTok{,}\DecValTok{54}\NormalTok{,}\DecValTok{62}\NormalTok{,}\DecValTok{52}\NormalTok{,}\DecValTok{64}\NormalTok{,}\DecValTok{71}\NormalTok{,}\DecValTok{68}\NormalTok{)}
+\FunctionTok{min}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 33
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{max}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 71
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{which.min}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{which.max}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9
+\end{verbatim}
 
 print(max(A) - min(A)) range(A) print(range(A){[}2{]} - range(A){[}1{]})
 summary(A)
@@ -378,8 +538,8 @@ summary(A)
 \section{Percentile Values}\label{percentile-values}
 
 X = c(3,4,5,6,7,8,10,10,11,12,14,14,14,15,16,17,21,25,27,32)
-quantile(X,0.80,type = 7) quantile(X,0.50,type = 7) quantile(X,0.25,type
-= 7) quantile(X,0.75,type = 7) median(X) summary(X)
+quantile(X,0.80) quantile(X,0.50,type = 7) quantile(X,0.25,type = 7)
+quantile(X,0.75,type = 7) median(X) summary(X) sd(X) \#cv(X)
 
 \section{Interquantile Range}\label{interquantile-range}
 
@@ -389,43 +549,49 @@ irq = function(X) (quantile(X,0.75) - quantile(X,0.25)) irq(X)
 Deviation}\label{variance-and-standard-deviation}
 
 course = c(6, 2, 1, 9, 17, 4, 3, 2, 1, 5, 11 ,4, 3, 1, 2, 2, 5, 4, 3, 6)
-var(course) sum((course - mean(course))\^{}2 / (length(course)-1))
+1 / course cf = c(course, 0, course) cf
+
+vw \textless- 2 * course + cf + 1 vw
+
+var(course) sum((course - mean(course)) \^{} 2 / (length(course) - 1))
 
 sd(course) sqrt(var(course)) std = function(x) sqrt(var(x)) std(course)
-std(X)
+sqrt(course) sum(course) prod(course) sort(course) order(course)
+sqrt(-14 + 9i)
 
 \section{Coefficient of Variation}\label{coefficient-of-variation}
 
-cv = function(x) (sd(x)/mean(x)) cv(course)
-
-cv(X)
+cv = function(x) ( sd(x) / mean(x) ) cv(course)
 
 \section{Visulaization of Qualitative
 Data}\label{visulaization-of-qualitative-data}
 
 mo = c(``car'',``car'',``bus'',
 ``metro'',``metro'',``car'',``metro'',``metro'',``foot'',``car'',``foot'',``bus'',``bus'',``metro'',``metro'',``car'',``car'',``car'',``metro'',``car'')
+\# dataset of employee's mo
 
-table(mo) prop.table(table(mo))
+table(mo) prop.table(table(mo)) data.frame(mo)
 
 \section{Bar Charts}\label{bar-charts}
 
 barplot(table(mo)) hist(table(mo))
 
-barplot(prop.table(table(mo)))
+barplot(prop.table(table(mo))) hist(prop.table(table(mo)))
 
 \section{Pie Chart}\label{pie-chart}
 
-pie(table(mo))
+pie(table(mo), col = c (``red'', ``green'', ``blue'', ``black''))
 
-pie(prop.table(table(mo)), col=c(``purple'', ``green'', ``red'',
+pie(prop.table(table(mo)), col = c(``purple'', ``green'', ``red'',
 ``blue''))
 
 \section{Contingency Matrix}\label{contingency-matrix}
 
-g = c(rep(``M'',8), rep(``F'',12)) g
+g = c(rep(``Male'',8), rep(``Female'',12)) g
 
 mg = table(mo,g) mg
+
+gm = data.frame(mo,g) gm
 
 margin.table(mg, 1) margin.table(mg,2) prop.table(mg) prop.table(mg,1)
 prop.table(mg,2)
@@ -433,44 +599,53 @@ prop.table(mg,2)
 \section{Stacked Bar Charts and Grouped Bar
 Charts}\label{stacked-bar-charts-and-grouped-bar-charts}
 
-barplot(mg)
+barplot(mg, col = c(``red'',``blue'', ``pink'',``green''))
 
-barplot(mg,xlim=c(0,2), xlab=``Gender'', length=levels(mo), col=1:4)
+barplot(mg,xlim=c(0,2), xlab=``Gender'', length=levels(mo), col =
+c(``red'',``blue'', ``pink'',``green''))
 
-barplot(mg,xlim=c(0,2), xlab=``Transportation'', length=levels(g), col=
-1:2)
+barplot(mg,xlim=c(0,2), xlab=``Transportation'', length=levels(g), col =
+c(``red'',``blue'', ``pink'',``green''))
 
 barplot(prop.table(mg,1), width=0.25, xlim=c(0,3), ylim=c(0,1),
-xlab=``Gender'', legend=levels(mo), beside=T, col= 1:4)
+xlab=``Gender'', legend=levels(mo), beside=T, col = c(``red'',``blue'',
+``pink'',``green''))
 
 mg = table(g,mo) barplot(prop.table(mg,2), width=0.25, xlim=c(0,3),
 ylim=c(0,1), xlab=``Transportation'', legend=levels(g), beside=T, col=
-1:2)
+c(``red'', ``green''))
 
 xo = c(10, 10, 5, 9, 7, 6,8,6,5,8, 10, 7, 7,8, 5, 6,4,7,9,7, 4,8, 10,10,
-7,4,9,5,8,9) table(xo)
+7,4,9,5,8,9) table(xo) data.frame(xo)
 
-prop.table(table(xo))
+prop.table(table(xo)) ?prop.table
 
 \section{Histograms}\label{histograms}
 
-hist(xo) hist(xo, nclass=3)
+hist(xo, col = c(``red'',``blue'', ``pink'',``green'')) hist(xo,
+nclass=3, col = c(``red'',``blue'', ``pink'',``green''))
 
 wo = c (1950, 2090, 2700, 3350, 4200, 3720, 4400, 2980, 3850, 4550,
 3050, 2350, 1850, 2820, 3670, 2950, 3750, 1850, 2420, 3150, 3000, 3470,
 3920, 3100, 2400, 2900, 2650, 3450, 3650, 4020, 4450, 3120, 3660, 3070,
 3550, 2020, 3500, 2500, 3780, 3940, 3540, 2800, 4450, 1950, 3020, 2800,
 3500, 1480, 4495,2850, 3100, 2250,3300, 4100, 3220, 3600,2130, 4020,
-4075) hist(wo) hist(wo, nclass=4) hist(wo, breaks= seq(from = 1000,
-to=5000, by=300)) hist(wo, probability=T) rug(jitter(wo))
+4075) hist(wo, col = c(``red'',``blue'', ``pink'',``green'')) hist(wo,
+nclass=4, col = c(``red'',``blue'', ``pink'',``green'')) hist(wo,
+breaks= seq(from = 1000, to=5000, by=300), col = c(``red'',``blue'',
+``pink'',``green'')) hist(wo, probability=T, col = c(``red'',``blue'',
+``pink'',``green'')) rug(jitter(wo))
 
 \section{Frequency Polygon}\label{frequency-polygon}
 
-temp = hist(wo) temp
+temp = hist(wo, col = c(``red'',``blue'', ``purple'',``green'')) temp
 
 lines(c(min(temp\(breaks), (temp\)mids),max(temp\(breaks)), c(0,temp\)counts,0),type=``l'')
 
-boxplot(wo, horizontal = T) boxplot(wo, vertical = T) fivenum(wo)
+boxplot(wo, horizontal = T, col = c(``red'')) boxplot(wo, vertical = T,
+col = c(``red'')) fivenum(wo) summary(wo)
+
+?fivenum
 
 w1 = c(1950, 2090, 2700, 3350, 4200, 3720, 4400, 2980, 3850, 4550, 3050,
 2350,1850, 2820, 3670, 2950, 3750, 1850, 2420,3150, 3000, 3470, 3920,
@@ -481,7 +656,8 @@ w2 = c(4450, 3120, 3660, 3070, 3550, 2020, 3500, 2500, 3780, 3940, 3340,
 1950,3020,2800,3500,1480,4495,2850,3100,2250,3300,4100,3220,3600,2130,4020,4075)
 fivenum(w2)
 
-boxplot(w1, w2, names=c(``sample 1'', ``sample 2''))
+boxplot(w1, w2, names=c(``sample 1'', ``sample 2''), col = c(``purple'',
+``yellow'' ))
 
 \section{Classification and
 Prediction}\label{classification-and-prediction}
@@ -490,13 +666,12 @@ grad\_desc \textless- function(X, y, theta,alpha, lambda, num\_iters)\{
 m \textless- length(y) F\_history \textless- c(rep(0, num\_iters))
 
 for (iter in c(1:num\_iters))\{ temp \textless- vector() temp \textless-
-theta* (1 - ((alpha\emph{lambda)/m)) - alpha}(1/m) * (theta(X)
-\%\emph{\% (X \%}\% theta - y))) theta \textless- temp
-F\_history{[}iter{]} \textless- computeCost(X, y, theta) \}
-print(F\_history{[}num\_iters{]}) return(list(``theta'' = theta,
-``F\_history'' = F\_history)) \}
+theta * (1 - ((alpha\emph{lambda)/m)) - alpha}(1/m) * (t(X) \%\emph{\%
+(X \%}\% theta - y)) theta \textless- temp F\_history{[}iter{]}
+\textless- computeCost(X, y, theta) \} print(F\_history{[}num\_iters{]})
+return(list(``theta'' = theta, ``F\_history'' = F\_history)) \}
 
-grad\_desc(2,3,5,6,7.5)
+grad\_desc(2,3,5,0.1,7.5,2)
 
 computeCost \textless- function(X, y, th)\{ m \textless- length(y)
 return(1/(2\emph{m) } sum((X\%*\%th - y)\^{}2)) \}
@@ -505,13 +680,18 @@ computeCost(5,6,7)
 
 \section{Clustering}\label{clustering}
 
-iris\_new \textless- iris iris\_new iris\_new\(Species <- NULL
+iris\_new \textless- iris \#iris\_new iris\_new\(Species <- NULL
 kc <- kmeans(iris_new, 3)
 table(iris\)Species, kc\$cluster)
 
 plot(iris\_new{[}c(``Sepal.Length'', ``Sepal.Width''){]}, col =
 kc\(cluster)
-points(kc\)centers{[},c(``Sepal.Length'',``Sepal.Width''){]}, col=1:3,
+points(kc\)centers{[},c(``Sepal.Length'',``Sepal.Width''){]}, col = 1:3,
+pch=8, cex=2)
+
+plot(iris\_new{[}c(``Petal.Length'', ``Petal.Width''){]}, col =
+kc\(cluster)
+points(kc\)centers{[},c(``Petal.Length'',``Petal.Width''){]}, col=1:3,
 pch=8, cex=2)
 
 data(iris) set.seed(500) idx \textless- sample(1:dim(iris){[}1{]}, 40)
@@ -532,22 +712,18 @@ labels = iris\$Species{[}idx{]}, xlab = ``Clusters'') rect.hclust(hc, 3)
 
 tr = trees tr
 
-plot(tr{[}c(``Volume'',``Height''){]}, col = ``red'', type=``l'' )
+plot(tr{[}c(``Volume'',``Height''){]}, col = ``red'')
 
-plot(tr{[}c(``Girth'',``Height''){]}, col = ``blue'', type=``l'' )
+plot(tr{[}c(``Girth'',``Height''){]}, col = ``blue'' )
 
-plot(tr{[}c(``Volume'',``Girth''){]}, col = ``black'', type=``l'' )
+plot(tr{[}c(``Volume'',``Girth''){]}, col = ``black'' )
 
-ca = cars ca
-
-plot(ca{[}c(``speed'',``dist''){]}, type=``l'')
+ca = cars ca plot(ca{[}c(``speed'',``dist''){]})
 
 pre = pressure pre plot(pre{[}c(``temperature'',``pressure''){]},
 type=``l'')
 
-cab = CO2 cab
-
-plot(cab{[}c(``conc'',``uptake''){]})
+cab = CO2 cab plot(cab{[}c(``conc'',``uptake''){]})
 
 oran = Orange oran plot(oran{[}c(``Tree'',``circumference''){]})
 plot(oran{[}c(``Tree'',``age''){]})
@@ -558,7 +734,7 @@ RULES}\label{mining-of-frequent-itemsets-and-association-rules}
 
 \section{Arules algorithm}\label{arules-algorithm}
 
-install.packages(`arules') library(arules)
+\#install.packages(`arules') library(arules)
 
 db \textless- list(c(``A'', ``B'', ``D'', ``E''), c(``B'', ``C'',
 ``E''), c(``A'', ``B'', ``D'', ``E''), c(``A'', ``B'', ``C'', ``E''),
@@ -582,5 +758,20 @@ data(Adult) inspect(apriori(Adult, parameter=list(supp=0.75)))
 
 inspect(apriori(Adult, parameter=list(supp=0.75),
 appearance=list(rhs=``capital-gain=None'', default=``lhs'')))
+
+test\_that(``Dimensions are positive'', \{ expect\_error(rectangle(width
+= -1, height = 4)) expect\_error(rectangle(width = 2, height = -1))
+expect\_error(rectangle(width = -1, height = -1))
+expect\_error(rectangle(width = 0, height = 4))
+expect\_error(rectangle(width = 2, height = 0))
+expect\_error(rectangle(width = 0, height = 0)) \})
+
+seed \textless- as.integer(1000 * rnorm(1)) test\_that(paste(``The test
+works with seed'', seed), \{ set.seed(seed) \# test code that uses
+random numbers \})
+
+seed()
+
+pi cos(90) cos(1)
 
 \end{document}

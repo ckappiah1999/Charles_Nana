@@ -2,10 +2,19 @@
 output:
   html_document: default
   word_document: default
+  
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+knitr_options(
+  opts_knit = NULL,
+  opts_chunk = NULL,
+  knit_hooks = NULL,
+  opts_hooks = NULL,
+  opts_template = NULL
+)
 ```
 ```{r}
 ## **Chapter One**
@@ -2578,19 +2587,20 @@ area(r)
 
 circumference(r)
 
-r <- rectangle(width = 2, height = 4)
-if (area(r) != 2*4) {
+
+# Automating testing
+r <- rectangle(width = 3, height = 4)
+if (area(r) != 3*4) {
  stop("Area not computed correctly!")
 }
 
-if (circumference(r) != 2*2 + 2*4) {
+if (circumference(r) != 2*3 + 2*4) {
  stop("Circumference not computed correctly!")
 }
 ```
 
-
 ```{r}
-## Chapter 14
+## **Chapter 14**
 ### Profiling and  Optimizing
 graph <- function(n, edges) {
  m <- matrix(0, nrow = n, ncol = n)
@@ -2702,7 +2712,6 @@ profvis::profvis({
 })
 ```
 
-
 ```{r}
 graph <- function(n, edges) {
  neighbours <- vector("list", length = n)
@@ -2732,7 +2741,6 @@ graph <- function(n, edges) {
  structure(neighbours, class = "graph")
 }
 ```
-
 
 ```{r}
 profvis::profvis({
@@ -2819,7 +2827,7 @@ microbenchmark(
 microbenchmark(
  sum(1:10),
  mysum(1:10),
- Reduce(`+`, 1:10, 0)
+ Reduce(`+`, 1:10)
 )
 ```
 
@@ -2830,6 +2838,7 @@ microbenchmark(
  factor(x)
 )
 ```
+
 ```{r}
 x <- rnorm(1000)
 names(x) <- paste("n", 1:1000)
@@ -2838,6 +2847,7 @@ microbenchmark(
  unlist(Map(function(x) x**2, x))
 )
 ```
+
 ```{r}
 smooth_weights_iteration_map <- function(graph, node_weights, alpha) {
  if (length(node_weights) != length(graph))
@@ -2890,31 +2900,6 @@ microbenchmark(
  sample_rmse_parallel(1000),
  times = 5
 )
-```
-```{r}
-NumericVector
-smooth_weights_iteration_cpp(List g,
- NumericVector node_weights,
-double alpha)
-{
- NumericVector new_weights(g.length());
- for (int i = 0; i < g.length(); ++i) {
-IntegerVector neighbours = g[i];
- double neighbour_sum = 0.0;
- int n = 0;
- for (int j = 0; j < neighbours.length(); ++j) {
- neighbour_sum += node_weights[j];
- ++n;
- }
- if (n > 0) {
- new_weights[i] = alpha * node_weights[i] +
- (1-alpha) * (neighbour_sum / n);
- } else {
- new_weights[i] = node_weights[i];
- }
- }
- return new_weights;
-}
 ```
 
 ```{r}
