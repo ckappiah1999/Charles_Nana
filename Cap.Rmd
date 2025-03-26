@@ -1,31 +1,35 @@
 ---
-title: "Statistical Analysis with Cached Chunks"
+title: "Fun time with R programming"
 author: "Charles Kwame Appiah"
 date: "`r Sys.Date()`"
 output:
   pdf_document: default
   html_document: default
   word_document: default
+  code_download: true
+  theme: journal
+  df_print: paged
 ---
 
 
-
 ```{r Ex.1a}
-#x = c(rnorm(1:100), NA)
+library(tidyverse)
+library(magrittr)
 
-#x %>% sum(x,na.rm = TRUE)
+x = c(rnorm(1:100), NA)
 
+x %>% sum(na.omit(x))
 
-#library(dplyr)
-
-#set.seed(123) # For reproducibility
+set.seed(123) # For reproducibility
 
 # Generate 1000 random samples, filter out negatives, and compute mean
-#mean_positive <- rnorm(1000) %>%replace(. < 0, NA) %>%mean(na.rm = TRUE)
+sample_positive <- c(rnorm(1:1000), NA)
+mean_positive <- mean(na.omit(sample_positive))
 
 # Print result
-#print(mean_positive)
+print(mean_positive)
 ```
+
 ```{r Ex.1b}
 #library(dplyr)
 
@@ -109,7 +113,7 @@ kyphosis_data %>% tibble::as_tibble()
 
 kyphosis_data %>% tbl_df %>% select(Kyphosis,Age) %>% head()
 
-kyphosis_data %>% tbl_df %>% select(Kyphosis,Number)%>%head()
+kyphosis_data %>% tbl_df %>% select(Kyphosis,Number) %>%head()
 
 kyphosis_data %>% tbl_df %>% select(Kyphosis,Start) %>%head()
 ```
@@ -379,6 +383,7 @@ kyphosis_data %>% sample_frac(0.2) %>% summary()
 ```
 
 ```{r}
+library(pryr)
 mem_change(kyphosis_data)
 ```
 
@@ -429,8 +434,8 @@ sampled_cars %>% head
 ```
 ```{r}
 # Load necessary libraries
-#library(ggplot2)
-#library(caret)
+library(ggplot2)
+library(caret)
 
 # Load the cars dataset
 data(cars)
@@ -486,8 +491,8 @@ ggplot(results, aes(x = Degree)) +
 
 ```{r message=FALSE, warning=FALSE}
 # Load necessary libraries
-#library(mlbench)  # For Breast Cancer dataset
-#library(caret)    # For data partitioning
+library(mlbench)  # For Breast Cancer dataset
+library(caret)    # For data partitioning
 #library(dplyr)    # For data manipulation
 
 # Load Breast Cancer dataset

@@ -3,12 +3,22 @@ title: "I do it for fun"
 author: "Charles Kwame Appiah"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
+  pdf_document:
+    toc: true
   html_document:
     df_print: paged
     code_download: true
     theme: journal
+    toc: true
 ---
+
+## Data Types
+
+* Character
+* Numeric
+* Integer
+* Complex
+* Logical – True/False
 
 ```{r}
 x <- "Hello Charles, I hope you're working hard to become who you are destined to be by God's purpose? "
@@ -52,6 +62,8 @@ xk <- data.frame(age=c(10,21,22), weight=c(30,33,32))
 xk
 ```
 
+## Vector and List
+
 ```{r}
 d <- c("Charles Kwame Appiah is my name")
 d
@@ -94,6 +106,13 @@ class(q[[2]]) # Checking the class of list 2
 class(q[[4]])
 class(q[[1]])
 ```
+## Matrix
+Basically, a Matrix is a collection of multiple vectors. It is a special structure
+which has the dimension as additional attribute. Simply put, a matrix is a two dimensional vector and its atomic, meaning that both rows and columns of the
+matrix should include elements of the same class. There are many ways of
+creating a matrix. One of them is to create a vector and then set dimensions with
+the dim function.
+
 
 ```{r}
 mat <- c(2,4,5,7)
@@ -132,6 +151,9 @@ t4 <- c(43, 54)
 cbind(t3,t4) # binding them by their columns
 ```
 
+## Factors and Nominal Data
+Factors provide an easy way to represent and manage nominal data. They provide levels, which basically are the possible values they can get. A factor is created with the factor function. The order of the levels plays a role in some cases. Also, in some cases it is useful to use the levels argument of the factor function, restricting this way the allowed values. On this scenario, values which are not mentioned in the levels argument are reject and are considered missing values.
+
 ```{r}
 factor <- c("Yes","No","No","Yes")
 factor # use to encode vectors
@@ -139,6 +161,9 @@ factor # use to encode vectors
 f <- factor(c("Yes","No","No","Yes"), levels= c("Yes","No"))
 f
 ```
+
+## Missing Values
+There is a special data type for representing missing values. Missing values in R are either represented as NA (Not Available) or NaN (Not a Number) for non predefined calculations. In order to test missing values, the functions is.na and is.nan can be used accordingly. The NA value belongs to the numeric class while the NaN value belongs to the logical class.
 
 ```{r}
 x <- NA # Missing number
@@ -153,8 +178,11 @@ u
 class(u) # checking for the class of variable u
 ```
 
+## Dataframe
+Data Frames are used to store data in a table format. They have a similar to the matrix structure since they are two-dimensional as well. Though, unlike matrices, they can have different type of data in each column, just like lists. A logical restriction in data frames is that each column can only contain objects of the same class. In order to create a data frame we use the data.frame function.
+
 ```{r}
-### Dataframe
+
 c <- c("Charles","Richmond","Nicholas")
 d <- c(12, 23, 45)
 s <- c(FALSE,TRUE,TRUE)
@@ -180,6 +208,20 @@ dfr$Username
 dfr$Adult
 ```
 
+## READING DATA FROM FILE
+One of the most important tasks is reading data from a file. The most popular ways of reading files are by using the functions read.table and read.csv. Some of their most important arguments are:
+* file, the name of the file 
+*header, a logical argument indicating whether the file contains a header line
+* sep, alphanumeric, indicates the character used for separating the
+columns eg. space, comma, etc .
+* colClasses, character vector, including the classes of each column of the dataset.
+*nrows, the number of rows to read – the default is reading the whole
+file.
+* comment.char, alphanumeric, a character value that specifies the
+character used for comments.
+* skip, the number of lines skipped before starting to read data.
+* stringsAsFactors, logical arguments, convert character class objects to factors. The default value is TRUE.
+
 ```{r }
 ### Importing Datasets
 library(readxl)
@@ -192,6 +234,9 @@ head(dat)
 data <- read_xlsx("C:/Users/HP/Desktop/Data Science/Pandas/Copy of V1- UN Data on Refugees (AiCE __ Dataset).xlsx")
  head(data)
 ```
+
+## Sequence Creation
+Sequence creation is a simple but very important task, since it sets the foundations for more important tasks, like reference in a subset of a structure or vectorization. The simplest way of creating sequences is by using the the “:”operator
 
 ```{r}
 # Sequence
@@ -274,6 +319,10 @@ i
 ch[!i] # filtering non missing numbers or is not missing numbers
 ```
 
+## VECTORIZATION
+One of the things that make `R` stand out, is the ability to perform calculations between vectors and matrices. The conversion of calculations in `vectors/matrices` calculations is called vectorization. Quite often, calculations between vectors and/or matrices can replace iterations. This way, the code can be much more
+brief, clean and readable. The main reason we want to have as much
+vectorization as possible is because calculations between vectors are performed much faster than if they were made one by one inside an iteration. This happens because in calculations between vectors, calculations are performed at the same time.
 ```{r}
 ### Vectorization
 ew <- rnorm(1000)
@@ -294,7 +343,6 @@ start <- proc.time()
 cv <- ew + er
 proc.time()-start
 ```
-
 
 ```{r}
 ####  Control Structures
@@ -479,7 +527,6 @@ wi$height <- ( (wi$height - n[2])/(m[2] - n[2]))*(1 - 0)
 wi
 ```
 
-
 ```{r}
 # DPLYR AND TIDYR PACKAGES
 # install.packages("dplyr")
@@ -509,25 +556,19 @@ by_month
 #Finding the minimum, average and maximum value per Month
 summarize (by_month, min(Ozone), mean(Ozone), max(Ozone))
 ```
-#install.packages ("tidyr")
-#library (tidyr)
 
-#dat
-#gather(dat, sex, count, -subject)
+#install.packages ("tidyr") #library (tidyr)
 
+#dat #gather(dat, sex, count, -subject)
 
-#dat <- gather(dat, sex, class, count, -subject)
-#dat
+#dat \<- gather(dat, sex, class, count, -subject) #dat
 
-#dat
-#separate(dat, sex, class, c("sex", "class"))
+#dat #separate(dat, sex, class, c("sex", "class"))
 
-#dat 
-#dat <- gather(dat, lesson, grade, lesson1:lesson4, na.rm = TRUE)
+#dat #dat \<- gather(dat, lesson, grade, lesson1:lesson4, na.rm = TRUE)
 #dat
 
-#dat <- spread(dat, quarter, grade)
-#dat 
+#dat \<- spread(dat, quarter, grade) #dat
 
 #mutate(dat, lesson = extract_numeric(lesson))
 
@@ -555,6 +596,7 @@ max(A)
 which.min(A)
 which.max(A)
 ```
+
 ```{r}
 print(max(A) - min(A))
 range(A)
@@ -580,6 +622,7 @@ sd(X)
 irq = function(X) (quantile(X,0.75) - quantile(X,0.25))
 irq(X)
 ```
+
 ```{r warning=FALSE}
 ### Variance and Standard Deviation
 course = c(6, 2, 1, 9, 17, 4, 3, 2, 1, 5, 11 ,4, 3, 1, 2, 2, 5, 4, 3, 6)
@@ -716,7 +759,6 @@ fivenum(w2)
 boxplot(w1, w2, names=c("sample 1", "sample 2"), col = c("purple", "yellow" ))
 ```
 
-
 ```{r}
 # Classification and Prediction
 
@@ -773,7 +815,6 @@ hc <- hclust(dist(iris_Sample),method = "complete")
 plot(hc, hang = -1, labels = iris$Species[idx], xlab = "Clusters")
 rect.hclust(hc, 3)
 ```
-
 
 ```{r}
 data(iris)

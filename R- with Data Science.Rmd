@@ -3,10 +3,12 @@ title: "Fun stuffs"
 author: "Charles"
 date: "2025-03-24"
 output:
+  word_document: default
   html_document:
     df_print: paged
     code_download: true
-  
+    theme: journal
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -977,6 +979,8 @@ summary(ffiris)
 ```
 
 ```{r warning=FALSE}
+library(biglm)
+
 model <- biglm(dist ~ speed, data = ffcars)
 summary(model) 
 
@@ -2883,6 +2887,8 @@ smooth_weights <- function(graph, node_weights,
 
 ```{r}
 ### Increasing Speed
+library(microbenchmark)
+
 mysum <- function(sequence) {
  s <- 0
  for (x in sequence) s <- s + x
@@ -2941,7 +2947,9 @@ handle_i <- function(i) {
 ```
 
 
-```{r}
+
+
+library(cluster)
 test_rmse <- function(data) {
  model <- data$training %>% lm(dist ~ speed, data = .)
  predictions <- data$test %>% predict(model, data = .)
@@ -2955,7 +2963,7 @@ sample_rmse <- function (n) {
 sample_rmse_parallel <- function (n) {
  random_cars <- cars %>%
  partition(n, c(training = 0.6, test = 0.4))
- unlist(clusterMap(cl, test_rmse, random_cars))
+ unlist(clustermq(cl, test_rmse, random_cars))
 }
 
 microbenchmark(
@@ -2969,9 +2977,10 @@ microbenchmark(
  sample_rmse_parallel(1000),
  times = 5
 )
-```
+
 
 ```{r}
+library(Rcpp)
 cppFunction("
 NumericVector
 smooth_weights_iteration_cpp(List g,
@@ -3000,11 +3009,18 @@ new_weights <-
 }
 ```
 
-```{r}
+
+library(microbenchmark)
 microbenchmark(
  smooth_weights(g, weights, 0.8, 10),
  smooth_weights_cpp(g, weights, 0.8, 10),
  times = 5
 )
-```
 
+```{r}
+library(rstudioapi)
+
+viewer <- getOption("viewer")
+viewer("R-with Data Science.Rmd", height = "maximize")
+#rstudioapi::navigateToFile("")
+```
