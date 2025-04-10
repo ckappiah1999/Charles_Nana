@@ -2,6 +2,7 @@
 title: "Recap"
 author: "Charles"
 date: "2025-03-06"
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}

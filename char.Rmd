@@ -1,51 +1,38 @@
 ---
-title: "R Notebook"
+title: "R Markdown"
+author: "Charles"
+date: "`r Sys.Date()`"
 output:
+  pdf_document:
+    toc: true
   html_document:
     df_print: paged
-  pdf_document: default
+    code_download: true
+    theme: yeti
+    toc: true
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code.
-
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*.
-
-```{r}
-plot(cars)
-```
-
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
-
-
-``` {r}
-plot (iris)
-```
-cars
-plot(cars,c("speed", "dist"))
-
-```{r}
-plot(iris)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # **Chapter Two**
 
 
-### R Markdown Format 
+# Header 1 (Main heading)
+## Header 2 (Sub heading)
+### Header 3 (Sub heading)
 
-# Header 1
-## Header 2
-### Header 3
 
+## Creating a list
+### Unordered list
 * This is the first line
    * This is a sub-line
    * This is another sub-line
  * This actually goes to the outer level
 * This is definitely at the outer level
 
+### Ordered list
 - First line
 * Second line
   - nested line
@@ -55,26 +42,32 @@ plot(iris)
 3. list
 
 
+## Creating Tables
+
 | Name                  | Gender        | Occupation         |
 | :------------         | :-----------: | --------------:    |
 | Charles Kwame Appiah  | Male          | Renewable Energy Engineer |
 | Richmond Amoah        | *Male*        | *Fashion*          |
 | Ann Amoah             | *Female*      | *Doctor*           |
 
+### Italics
+*Charles is good at what he does*
 
-*this*
+### Bold
+**Charles is always finding new ways to learn new things everyday**
 
+### Creating a link
+[Ckappiah1999](https://github.com/ckappiah1999/Charles_Nana)
+ 
+ 
+## Inseritng a picture 
+We insert images like this, starting with the exclamation mark !, adding a square bracket [] to contain the text of the image and adding the path to the image. 
 
-**this**
+![Did you know](Wind.jpg){width="30%"}
 
-[Github](https://github.com/ckappiah1999/Charles_Nana)
  
- 
- 
-![Photos]("C:/Users/HP/Downloads/Reel/Wind.jpg") 
- 
- 
-This is some text [with a link]
+## Inline code 
+`Click on this link to get access to my account on` [Github](https://github.com/ckappiah1999/Charles_Nana)
 
 
 This is some text [with a link][interesting].
@@ -82,10 +75,15 @@ This is some text [with a link][interesting].
 > This is a
 > block quote
 
+### Creating a chunk 
 
-```
-block of
-text
+```{r}
+data(presidents)
+str(as.data.frame(presidents))
+
+pre <- presidents
+
+print(pre)
 ```
 
 
@@ -93,9 +91,11 @@ text
 f <- function(x) ifelse(x %% 2 == 0, x**2, x**3)
 f(2:20)
 ```
+### creating section
 
 [this section][@ckappiah1999.com]
 
+### Creating biography 
 
 ---
 ...
@@ -103,8 +103,7 @@ bibliography: bibliography.bib
 ...
 ---
 
-
-[@smith04, chapter 4]
+[@ckappiah1999, chapter 4]
 
 ---
 ...
@@ -117,23 +116,20 @@ csl: biomed-central.csl
 
 <sc>Charles</sc>
 
+### Adding citation
+We can add citation like this ^[Done for the day]
 
-```{r Nan}
+```{r echo=TRUE, warning=FALSE}
+data(cars)
 summary(cars)
 sum(cars)
-mean(cars)
+str(cars)
 ```
-```{r}
-18250/2
-```
-```{r}
-20950 / 2
+The mean of the distant in the cars dataset is `r mean(cars$dist)`
 
-11000 / 2
-```
+### Calling the knit package
 
-
-```{r}
+```{r warning=FALSE}
 library(knitr)
 kable(head(cars))
 ```

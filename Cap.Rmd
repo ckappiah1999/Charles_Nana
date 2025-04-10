@@ -3,22 +3,25 @@ title: "Fun time with R programming"
 author: "Charles Kwame Appiah"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
   html_document: default
-  word_document: default
   code_download: true
   theme: journal
   df_print: paged
+  pdf_document: default
 ---
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
 
 ```{r Ex.1a}
+# importing packages
 library(tidyverse)
 library(magrittr)
 
 x = c(rnorm(1:100), NA)
 
-x %>% sum(na.omit(x))
+# removing missing value and sum the rest
+x %>% sum(na.rm = TRUE)
 
 set.seed(123) # For reproducibility
 
@@ -40,8 +43,10 @@ data <- data.frame(
 )
 
 # Compute RMSE using a pipeline
-rmse <- data %>% mutate(sq_diff = (x - y)^2) %>%  # Compute squared differences
-  summarise(mean_sq_diff = mean(sq_diff)) %>%  # Compute mean squared difference
+rmse <- data %>% mutate(sq_diff = (x - y)^2) %>%  
+  # Compute squared differences
+  summarise(mean_sq_diff = mean(sq_diff)) %>%  
+  # Compute mean squared difference
   pull(mean_sq_diff) %>%  # Extract value
   sqrt()  # Compute square root
 
@@ -64,7 +69,7 @@ print(rmse)
 
 ```{r cache_random.Ex.2a, cache=TRUE}
 set.seed(1234)  # Ensures reproducibility initially
-random_numbers <- rnorm(200)  # Generate 100 random values
+random_numbers <- as.data.frame(rnorm(100))  # Generate 100 random values
 head(random_numbers)# Display first few numbers
 
 #??set.seed 
@@ -77,12 +82,14 @@ mean_random  # Compute and display the mean
 ```
 
 ```{r Ex.3}
+# import dataset from csv file
 kyphosis_data = read.csv("C:/Users/HP/Desktop/Data Science/Machine learning/kyphosis.csv")
 
 kyphosis_data %>% head()
 
 kyphosis_data %>% summary
 ```
+# Group_by  
 
 ```{r Summarise}
 kyphosis_data %>% group_by(Kyphosis) %>% summarise(mean.Age =mean(Age))
@@ -92,92 +99,114 @@ kyphosis_data %>% group_by(Kyphosis) %>%summarise(mean.Number =mean(Number))
 kyphosis_data %>% group_by(Kyphosis) %>% summarise(mean.Start =mean(Start))
 ```
 
+# Visualization
+
 ```{r qplot, warning=FALSE}
-kyphosis_data %>% qplot(Age, Number, data=.)
+kyphosis_data %>% qplot(Age, Number, data=., col = Kyphosis)
 
-kyphosis_data %>% qplot (Age, Start, data = .)
+kyphosis_data %>% qplot (Age, Start, data = ., col = Kyphosis)
 
-kyphosis_data %>% qplot (bins = 10, Number, data = .)
+kyphosis_data %>% qplot (bins = 10, Number, data = ., col = Kyphosis)
 ```
 
-```{r Legend}
-kyphosis_data %>% qplot (Age, Start, data = ., color = Kyphosis)
-
-kyphosis_data %>% qplot (Age, Number, data = ., color = Kyphosis)
-```
 
 ```{r Sel, warning=FALSE}
-kyphosis_data$Kyphosis %>% unique
+kyphosis_data$Kyphosis %>% unique 
 
-kyphosis_data %>% tibble::as_tibble()
+# convert to tibble
+as_tibble(kyphosis_data)
 
+# Selecting Kyphosis and Age column only
 kyphosis_data %>% tbl_df %>% select(Kyphosis,Age) %>% head()
 
+# Selecting Kyphosis and Number column only
 kyphosis_data %>% tbl_df %>% select(Kyphosis,Number) %>%head()
 
+# Selecting Kyphosis and Start column only
 kyphosis_data %>% tbl_df %>% select(Kyphosis,Start) %>%head()
 ```
 
 ```{r A.N, warning=FALSE}
+# Selecting Age and Number column only
 kyphosis_data %>% tbl_df %>% select(Age, Number) %>% head()
 
+# Selecting Age and Start column only
 kyphosis_data %>% tbl_df %>% select(Age, Start) %>% head()
 ```
 
 ```{r Sel only e, warning=FALSE}
+# Selecting column containing  only letter "e"
 kyphosis_data %>% tbl_df %>% select(contains("e")) %>% head()
 
+# Selecting column starting with only letter "k"
 kyphosis_data %>% tbl_df %>% select(starts_with("k")) %>%  head()
 ```
 
 ```{r only t, warning=FALSE}
+# Select only letter ending with "t"
 kyphosis_data %>% tbl_df %>% select(ends_with("t")) %>% head()
 
+# Select only letter matching with "o"
 kyphosis_data %>% tbl_df %>%select(matches("o")) %>% head()
 
+# Select only letter matching with "s"
 kyphosis_data %>% tbl_df %>%select(matches("s")) %>% head()
 
+# Select only letter not starting with "s"
 kyphosis_data %>% tbl_df %>%select(-starts_with("s")) %>% head()
 ```
 
 ```{r A+N, warning=FALSE}
-kyphosis_data %>% tbl_df %>%mutate(Age.plus.Number = Age + Number) %>% select(Kyphosis, Age.plus.Number) %>% head()
+# creating a new column 
+kyphosis_data %>% tbl_df %>% mutate(Age.plus.Number = Age + Number) %>% select(Kyphosis, Age.plus.Number) %>% head()
 
 kyphosis_data %>% tbl_df %>% mutate(Age.plus.Start = Age + Start) %>% select(Kyphosis, Age.plus.Start) %>% head()
 ```
 
 ```{r A.N.S, warning=FALSE}
 kyphosis_data %>% tbl_df %>%
- mutate(Age.plus.Number = Age + Number, Age.plus.Start = Age + Start) %>% select(Kyphosis, Age.plus.Number, Age.plus.Start ) %>% head()
+ mutate(Age.plus.Number = Age + Number, Age.plus.Start = Age + Start) %>% select (Kyphosis, Age.plus.Number, Age.plus.Start ) %>% head()
 ```
 
 ```{r without select, warning=FALSE}
+# Combining Age and Number to create Age.plus.Number
+# Combining Age and Start to create Age.plus.Start
 kyphosis_data %>% tbl_df %>% transmute(Kyphosis,Age.plus.Number = Age + Number, Age.plus.Start = Age + Start) %>%head()
 ```
 
 ```{r Age_arrange, warning=FALSE}
+# Arrange Age from smallest to largest
 kyphosis_data %>% tbl_df %>% arrange(Age) %>% head()
 
+# Arrange Number from smallest to largest
 kyphosis_data %>% tbl_df %>% arrange(Number) %>% head()
 
+# Arrange Start from smallest to largest
 kyphosis_data %>% tbl_df %>% arrange(Start) %>% head()
 
+# Arrange Age from largest to smallest
 kyphosis_data %>% tbl_df %>% arrange(desc(Age)) %>% head()
 ```
 
 ```{r filter_Age, warning=FALSE}
+# Filter values >= 45 in Age column
 kyphosis_data %>% tbl_df %>% filter(Age >= 45) %>% head()
 
+# Filter values >= 5 in Number column
 kyphosis_data %>% tbl_df %>% filter(Number >= 5) %>% head()
 
-kyphosis_data %>% tbl_df %>% filter(Start >= 3) %>% head()
+# Filter values >= 3 in Start column
+kyphosis_data %>% tbl_df %>% filter(Start >= 10) %>% head()
 ```
 
 ```{r  Number < 5, warning=FALSE}
+# Filter Age values >= 5 and also has Kyphosis
 kyphosis_data %>% tbl_df %>%filter(Age >= 5 & Kyphosis == "present") %>% select(Kyphosis, Age) %>% head()
 
+# Filter Number values < 5 and also has Kyphosis
 kyphosis_data %>% tbl_df %>%filter(Number < 5 & Kyphosis == "present") %>%select(Kyphosis, Number) %>% head()
 
+# Filter Start values < 5 and also has Kyphosis
 kyphosis_data %>% tbl_df %>%filter(Start < 5 & Kyphosis == "present") %>%select(Kyphosis, Start) %>% head()
 ```
 
@@ -186,73 +215,88 @@ kyphosis_data %>% tbl_df %>% group_by(Kyphosis) %>% head()
 ```
 
 ```{r total_row}
+# Count the number of observation in the dataset
 kyphosis_data %>% summarise(Observations = n())
 ```
 
 ```{r Persons, warning=FALSE}
+# Counting the number of persons with Kyphosis
 kyphosis_data %>% group_by(Kyphosis) %>% summarise(Number.Of.Persons = n())
 ```
 
 ```{r Persons.Mean}
-kyphosis_data %>% group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Mean.Age = mean(Age))
+# Counting the number of persons with Kyphosis according to mean Age
+kyphosis_data %>% group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Mean_Age = mean(Age))
 
-kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Mean.Numbers = mean(Number))
+# Counting the number of persons with Kyphosis according to mean Number
+kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Mean_Numbers = mean(Number))
 
-kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Mean.Start = mean(Start))
+# Counting the number of persons with Kyphosis according to mean Start
+kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Mean_Start = mean(Start))
 ```
 
 ```{r Persons.Medain}
-kyphosis_data %>% group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Median.Age = median(Age))
+# Counting the number of persons with Kyphosis according to median Age
+kyphosis_data %>% group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Median_Age = median(Age))
 
-kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Median.Numbers = median(Number))
+# Counting the number of persons with Kyphosis according to median Number
+kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Median_Numbers = median(Number))
 
-kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Median.Start = median(Start))
+# Counting the number of persons with Kyphosis according to median Start
+kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Median_Start = median(Start))
 ```
 
 ```{r Std.Persons}
+# Counting the number of persons with Kyphosis according to Age standard deviation 
 kyphosis_data %>% group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Std.Age = sd(Age))
 
+# Counting the number of persons with Kyphosis according to Number standard deviation 
 kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Std.Numbers = sd(Number))
 
+# Counting the number of persons with Kyphosis according to Start standard deviation
 kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Std.Start = sd(Start))
 ```
 
 ```{r}
-kyphosis_data %>% group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Var.Age = var(Age))
+# Counting the number of persons with Kyphosis according to Age variance
+kyphosis_data %>% group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Var_Age = var(Age))
 
-kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Var.Numbers = var(Number))
+# Counting the number of persons with Kyphosis according to Number variance
+kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Var_Numbers = var(Number))
 
-kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Var.Start = var(Start))
+# Counting the number of persons with Kyphosis according to Start variance
+kyphosis_data %>%group_by(Kyphosis) %>% summarise(Number.Of.Persons = n(), Var_Start = var(Start))
 ```
+# Boxplot of the dataset
 
 ```{r plot.ex}
 kyphosis_data %>% select(Kyphosis, Age) %>%
- qplot(Kyphosis, Age, geom = "boxplot", data = .)
+ qplot(Kyphosis, Age, geom = "boxplot", data = ., col = Kyphosis)
 
 kyphosis_data %>% select(Kyphosis, Number) %>%
- qplot(Kyphosis, Number, geom = "boxplot", data = .)
+ qplot(Kyphosis, Number, geom = "boxplot", data = ., col = Kyphosis)
 
 kyphosis_data %>% select(Kyphosis, Start) %>%
- qplot(Kyphosis, Start, geom = "boxplot", data = .)
+ qplot(Kyphosis, Start, geom = "boxplot", data = ., col = Kyphosis)
 ```
 
 ```{r}
 kyphosis_data %>% gather(key = Attribute, value = Measurement,Age) %>% select(Kyphosis, Attribute, Measurement) %>% head()
 
-kyphosis_data %>% gather(key = Attribute, value = Measurement,Age) %>% select(Kyphosis, Attribute, Measurement) %>% head()%>% qplot(Attribute, Measurement, geom = "boxplot", facets = . ~ Kyphosis, data = .)
+kyphosis_data %>% gather(key = Attribute, value = Measurement,Age) %>% select(Kyphosis, Attribute, Measurement) %>% head()%>% qplot(Attribute, Measurement, geom = "boxplot", facets = . ~ Kyphosis, data = ., col = Kyphosis)
 ```
 
 
 ```{r}
 kyphosis_data %>% gather(key = Attribute, value = Measurement,Number) %>% select(Kyphosis, Attribute, Measurement) %>% head()
 
-kyphosis_data %>% gather(key = Attribute, value = Measurement,Number) %>% select(Kyphosis, Attribute, Measurement) %>% head() %>% qplot(Attribute, Measurement, geom = "boxplot", facets = . ~ Kyphosis, data = .)
+kyphosis_data %>% gather(key = Attribute, value = Measurement,Number) %>% select(Kyphosis, Attribute, Measurement) %>% head() %>% qplot(Attribute, Measurement, geom = "boxplot", facets = . ~ Kyphosis, data = ., col = Kyphosis)
 ```
 
 ```{r}
 kyphosis_data %>% gather(key = Attribute, value = Measurement,Start) %>% select(Kyphosis, Attribute, Measurement) %>% head()
 
-kyphosis_data %>% gather(key = Attribute, value = Measurement,Start) %>% select(Kyphosis, Attribute, Measurement) %>% head()%>% qplot(Attribute, Measurement, geom = "boxplot", facets = . ~ Kyphosis, data = .)
+kyphosis_data %>% gather(key = Attribute, value = Measurement,Start) %>% select(Kyphosis, Attribute, Measurement) %>% head()%>% qplot(Attribute, Measurement, geom = "boxplot", facets = . ~ Kyphosis, data = ., col = Kyphosis)
 ```
 
 ```{r mpg}
@@ -277,18 +321,20 @@ kyphosis_data %>% lm(Number ~ Age, data = .) %>% abline(col = "red")
 ```
 
 ```{r Density}
-kyphosis_data %>% qplot (Age, data = ., geom = "density")
+kyphosis_data %>% qplot (Age, data = ., geom = "density", col = Kyphosis)
 
-kyphosis_data %>% qplot (Number, data = ., geom = "density")
+kyphosis_data %>% qplot (Number, data = ., geom = "density", col = Kyphosis)
 
-kyphosis_data %>% qplot (Start, data = ., geom = "density")
+kyphosis_data %>% qplot (Start, data = ., geom = "density", col = Kyphosis)
 ```
 
 ```{r ggplot}
-kyphosis_data %>% ggplot + geom_point(aes(x = Age, y = Start,
+# Bar plot
+kyphosis_data %>% ggplot + geom_bar(aes( x = Start,
  color = Kyphosis))
 
-kyphosis_data %>% ggplot + geom_step(aes(x=Age, y = Start, colour =  Kyphosis))
+# Area plot
+kyphosis_data %>% ggplot + geom_area(aes(x=Age, y = Start, colour =  Kyphosis))
 ```
 
 ```{r density.hist}
@@ -296,7 +342,7 @@ kyphosis_data %>% ggplot(aes(x = Age, y = after_stat(count))) + geom_histogram(b
 
 kyphosis_data %>% ggplot(aes(x = Number, y = after_stat(count))) + geom_histogram(bins = 10) + geom_density()
 
-kyphosis_data %>% ggplot(aes(x = Start, y = after_stat(count))) + geom_histogram(bins = 10) + geom_density()
+kyphosis_data %>% ggplot(aes(x = Start, y = after_stat(count))) + geom_histogram(bins = 10) + geom_density() 
 ```
 
 ```{r loess.lm}
@@ -373,24 +419,28 @@ kyphosis_data %>% gather(Measurement, Value, -Kyphosis) %>%
 
 kyphosis_data %>% gather(Measurement, Value, -Kyphosis) %>%
  ggplot(aes(x = Kyphosis, y = Value, fill = Kyphosis)) +
- geom_boxplot() + scale_x_discrete(labels = c("absent" = "Absent", "present" = "Present")) + scale_fill_brewer(palette = "Blues") + facet_grid(Measurement ~ ., switch = "y") + coord_flip() + theme(strip.background = element_blank()) + theme(legend.position ="top")
+ geom_boxplot() + scale_x_discrete(labels = c("absent" = "Absent", "present" = "Present")) + scale_fill_brewer(palette = "Blues") + facet_grid(Measurement ~ ., switch = "y", scale = "free_x") + coord_flip() + theme(strip.background = element_blank()) + theme(legend.position = "top")
 ```
+### Random Sampling
 
 ```{r}
+# Sample 10 of the dataset
 kyphosis_data %>% sample_n(10) %>% summary()
 
+# Sample 20% of the dataset
 kyphosis_data %>% sample_frac(0.2) %>% summary()
 ```
 
 ```{r}
 library(pryr)
+# Checking the memory usage of the dataset
 mem_change(kyphosis_data)
 ```
 
-```{r}
-kyphosis_data %>% sample_n(10) %>% ggplot + geom_point(aes(x = Age, y = Number))
+```{r Samp_10.0.5}
+kyphosis_data %>% sample_n(10) %>% ggplot + geom_point(aes(x = Age, y = Number)) 
 
-kyphosis_data %>% sample_frac(0.5) %>% ggplot + geom_point(aes(x = Age, y = Number))
+kyphosis_data %>% sample_frac(0.5) %>% ggplot + geom_point(aes(x = Age, y = Number)) 
 ```
 
 ```{r density_2D}
@@ -408,34 +458,43 @@ kyphosis_data %>% ggplot(aes(x = Age, y = Number)) + geom_hex() + scale_fill_gra
 ```
 
 ```{r}
+data(cars)
+# creating a polynomial function
 cars %>% model.matrix(dist ~ speed + I(speed^2) + I(speed**3) + I(speed**4), data = .) %>% head 
- 
-cars %>% lm(dist ~ speed + I(speed^2) + I(speed**3) + I(speed**4), data = .) %>%
- summary
 
-cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() +
+# creating a linear function 
+cars %>% lm(dist ~ speed + I(speed^2) + I(speed**3) + I(speed**4), data = .) %>% summary
+
+cars %>% ggplot(aes(x = speed, y = dist)) + geom_point(col = "brown") +
  geom_smooth(method = "lm", formula = y ~ x + I(x^2) + I(x^3) + I(x^4))
 ```
+### Find the root mean square error
 
 ```{r}
 rmse <- function(x,t) sqrt(mean(sum((t - x)^2)))
 
+# split the dataset into training 50% and testing 50%
 training_data <- cars[1:25,]
 test_data <- cars[26:50,] 
 
 line <- training_data %>% lm(dist ~ speed, data = .)
 poly <- training_data %>% lm(dist ~ speed + I(speed^2) + I(speed**3) + I(speed**4), data = .) 
 
+# predicting the error on the linear and polynomial function
 rmse(predict(line, test_data), test_data$dist) 
 rmse(predict(poly, test_data), test_data$dist) 
 
 sampled_cars <- cars %>% mutate(training = sample(0:1, nrow(cars), replace = TRUE))
 sampled_cars %>% head 
 ```
+
+
 ```{r}
 # Load necessary libraries
 library(ggplot2)
 library(caret)
+library(datasets)
+
 
 # Load the cars dataset
 data(cars)
@@ -487,9 +546,21 @@ ggplot(results, aes(x = Degree)) +
   geom_line(aes(y = Test_RMSE, color = "Test RMSE")) +
   labs(title = "Polynomial Degree vs RMSE", x = "Polynomial Degree", y = "RMSE") +
   scale_color_manual(values = c("Train RMSE" = "blue", "Test RMSE" = "red")) + theme_minimal()
+
+ggsave(filename = gc("Cap.jpeg"), dpi = 320, scale = 1, bg = "lightgreen" )
 ```
 
-```{r message=FALSE, warning=FALSE}
+## Machine learning
+### Logistic Regression
+
+```{r}
+data <- cars
+
+data
+```
+
+
+```{r}
 # Load necessary libraries
 library(mlbench)  # For Breast Cancer dataset
 library(caret)    # For data partitioning
@@ -504,7 +575,7 @@ BreastCancer <- BreastCancer[, -1]  # Remove ID column
 BreastCancer <- na.omit(BreastCancer)  # Remove rows with missing values
 
 # Convert Class column to a factor (Malignant = 1, Benign = 0)
-BreastCancer$Class <- factor(ifelse(BreastCancer$Class == "malignant", 1, 0), levels = c(0, 1))
+BreastCancer$Class <- factor(ifelse(BreastCancer$Class == "malignant", 1, 0), levels = c(1, 0))
 
 # Split dataset into training (70%) and testing (30%)
 set.seed(123)
@@ -523,7 +594,7 @@ predict_summary <- function(model, data) {
   # Predict probabilities
   probs <- predict(model, newdata = data, type = "response")
   # Convert to binary (threshold = 0.5)
-  preds <- ifelse(probs > 0.5, 1, 0)
+  preds <- ifelse(probs > 0.5, "Malignant", "Benign")
   actuals <- as.factor(data$Class)
 
   # Compute evaluation metrics
@@ -549,13 +620,13 @@ test_results <- predict_summary(model, testData)
 print("Test Set Performance:")
 print(test_results)
 ```
-
+### Decision tree
 ```{r warning=FALSE}
 # Load necessary libraries
-#library(mlbench)   # Contains BreastCancer dataset
-#library(caret)     # For data splitting and cross-validation
-#library(rpart)     # For decision tree
-#library(rpart.plot) # For tree visualization
+library(mlbench)   # Contains BreastCancer dataset
+library(caret)     # For data splitting and cross-validation
+library(rpart)     # For decision tree
+library(rpart.plot) # For tree visualization
 
 # Load dataset
 data("BreastCancer")
@@ -577,10 +648,16 @@ testData <- BreastCancer[-trainIndex, ]
 # Train Decision Tree model
 model <- rpart(Class ~ ., data = trainData, method = "class")
 
+# Make predictions on train dat
+pred = predict(model, trainData, type = "class")
+
 # Make predictions on test data
 predictions <- predict(model, testData, type = "class")
 
 # Evaluate model using confusion matrix
+cv = confusionMatrix(pred, trainData$Class)
+print(cv)
+
 conf_matrix <- confusionMatrix(predictions, testData$Class)
 print(conf_matrix)
 
@@ -595,11 +672,13 @@ print(cv_model)
 rpart.plot(model, main = "Decision Tree for Breast Cancer Classification")
 ```
 
+### Random Forest
+
 ```{r}
 # Load necessary libraries
-#library(mlbench)
-#library(randomForest)
-#library(caret)
+library(mlbench)
+library(randomForest)
+library(caret)
 
 # Load the Breast Cancer dataset
 data("BreastCancer")
@@ -619,8 +698,8 @@ BreastCancer <- na.omit(BreastCancer)
 # Set seed for reproducibility
 set.seed(123)
 
-# Split data into training (50%) and testing (50%)
-trainIndex <- createDataPartition(BreastCancer$Class, p = 0.5, list = FALSE)
+# Split data into training (70%) and testing (30%)
+trainIndex <- createDataPartition(BreastCancer$Class, p = 0.7, list = FALSE)
 trainData <- BreastCancer[trainIndex, ]
 testData <- BreastCancer[-trainIndex, ]
 
@@ -628,9 +707,11 @@ testData <- BreastCancer[-trainIndex, ]
 rf_model <- randomForest(Class ~ ., data = trainData, ntree = 500, mtry = 3, importance = TRUE)
 
 # Make predictions on test data
+rf_train <- predict(rf_model, trainData)
 rf_predictions <- predict(rf_model, testData)
 
 # Evaluate accuracy
+confusionMatrix(rf_train, trainData$Class)
 confusionMatrix(rf_predictions, testData$Class)
 
 # Perform Cross-Validation using caret
@@ -640,8 +721,9 @@ cv_model <- train(Class ~ ., data = BreastCancer, method = "rf", trControl = con
 # Print cross-validation results
 print(cv_model)
 ```
-
+### Neural Network
 ```{r}
+library(nnet)
 model <- cars %>% nnet(dist ~ speed, data = ., size = 5)
 rmse(predict(model, cars), cars$dist)
 
@@ -654,12 +736,13 @@ predicted_class <- predict(model, BreastCancer) %>%
  
 table(BreastCancer$Class, predicted_class) %>% head
 
-accuracy = sum(diag(table(BreastCancer$Class, predicted_class))) / sum((table(BreastCancer$Class, predicted_class)))
-accuracy
+(accuracy = sum(diag(table(BreastCancer$Class, predicted_class))) / sum((table(BreastCancer$Class, predicted_class))))
 ```
 
 ```{r letter-a, echo = FALSE}
 #library(nycflights13)
+
+library(learnr)
 
 #flights
 question("What number is the letter A in the English alphabet?",
@@ -780,7 +863,7 @@ apply_if <- function(x, p, f) {
  }
  head(result, n)
 }
-apply_if(1:8, function(x) x %% 2 == 0, function(x) x^2)
+apply_if(1:8, function(x) x %% 2 == 0, function(x) x**2)
 ```
 
 ```{r power_cube}
