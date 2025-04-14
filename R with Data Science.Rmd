@@ -144,34 +144,35 @@ class(q[[4]]) # Checking the class of list 4
 class(q[[1]]) # Checking the class of list 1
 ```
 
-## Matrix
+## 
 
-Matrix is a two-dimensional array. It is created with the `matrix()` function. The `matrix()` function takes a vector as input and reshapes it into a matrix. The `nrow` argument specifies the number of rows in the matrix, and the `ncol` argument specifies the number of columns in the matrix.
+is a two-dimensional array. It is created with the `()` function. The `()` function takes a vector as input and reshapes it into a . The `nrow` argument specifies the number of rows in the , and the `ncol` argument specifies the number of columns in the .
 
 ```{r}
 mat <- c(2,4,5,7) # creating a vector
-dim(mat) <- c(2,2) # creating a matrix with 2 rows and 2 columns
+dim(mat) <- c(2,2) # creating a  with 2 rows and 2 columns
 mat
+solve(mat)
 
 mar = c(2,4,5,7,8,9) # creating a vector
-dim(mar) <- c(3,2) # creating a matrix with 3 rows and 2 columns
+dim(mar) <- c(3,2) # creating a  with 3 rows and 2 columns
 mar
 ```
 
 ```{r}
 temp <- c(3,4,5,5.6,6,7) # creating a vector
-mati <- matrix(temp, nrow = 2, ncol = 3,byrow = TRUE) # creating a matrix with 2 rows and 3 columns
+mati <- (temp, nrow = 2, ncol = 3,byrow = TRUE) # creating a  with 2 rows and 3 columns
 mati
 
 temp <- c(3,4,5,5.6,6,7, 8, 9, 10) # creating a vector
-mato <- matrix(temp, nrow = 3, ncol = 3,byrow = TRUE) # creating a matrix with 3 rows and 3 columns
+mato <- (temp, nrow = 3, ncol = 3,byrow = TRUE) # creating a  with 3 rows and 3 columns
 mato
 ```
 
 ```{r}
 # Default byrow = FALSE
 temp <- c(3,4,5,5.6,6,7) # creating a vector
-mati <- matrix(temp, nrow = 2, ncol = 3,byrow = FALSE) # creating a matrix with 2 rows and 3 columns
+mati <- (temp, nrow = 2, ncol = 3,byrow = FALSE) # creating a  with 2 rows and 3 columns
 mati
 ```
 
@@ -346,10 +347,10 @@ class(woo$height) # checking the class of height list
 ```
 
 ```{r}
-# creating a matrix with 3 rows and 3 columns
-wr <- matrix(1:9, nrow = 3, ncol = 3, by = TRUE) 
+# creating a  with 3 rows and 3 columns
+wr <- (1:9, nrow = 3, ncol = 3, by = TRUE) 
 
-wr # creating a matrix with 3 rows and 3 columns
+wr # creating a  with 3 rows and 3 columns
 
 class(wr) # checking the class of wr
 
@@ -543,7 +544,7 @@ lapply(x, sd) # checking the standard deviation of x
 
 ### sapply
 
-`sapply` is used to apply a function to each element of a list and simplify the result. sapply returns a vector or matrix instead of a list.
+`sapply` is used to apply a function to each element of a list and simplify the result. sapply returns a vector or instead of a list.
 
 ```{r}
 str(sapply) # checking the structure of sapply
@@ -586,7 +587,7 @@ sd(x[["age"]])
 
 ### tapply
 
-`tapply` is used to apply a function to each group of a vector. tapply returns a vector or matrix, where each element is the result of applying the function to the corresponding group of the input vector.
+`tapply` is used to apply a function to each group of a vector. tapply returns a vector or , where each element is the result of applying the function to the corresponding group of the input vector.
 
 ```{r}
 str(tapply)
@@ -883,15 +884,15 @@ pie(table(mo), col = c ("red", "green", "blue", "black")) # creating a pie chart
 pie(prop.table(table(mo)), col = c("purple", "green", "red", "blue")) # creating a pie chart of mo
 ```
 
-### Contingency Matrix
+### Contingency 
 
-`A contingency matrix` is used to visualize the relationship between two categorical variables. A contingency matrix is a two-dimensional table that shows the frequency of each combination of categories in the two variables. A contingency matrix is used to visualize the relationship between two categorical variables.
+`A contingency` is used to visualize the relationship between two categorical variables. A contingency is a two-dimensional table that shows the frequency of each combination of categories in the two variables. A contingency is used to visualize the relationship between two categorical variables.
 
 ```{r}
 g = c(rep("Male",8), rep("Female",12)) # creating a vector
 g
 
-mg = table(mo,g) # creating a contingency matrix of mo and g
+mg = table(mo,g) # creating a contingency  of mo and g
 mg
 
 gm = data.frame(mo,g) # creating a dataframe of mo and g
@@ -923,7 +924,7 @@ barplot(mg,xlim=c(0,2), xlab="Transportation", length=levels(g), col = c("red","
 
 barplot(prop.table(mg,1), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Gender", legend=levels(mo), beside=T, col = c("red","blue", "pink","green")) # creating a bar chart of mg
 
-mg = table(g,mo) # creating a contingency matrix of g and mo
+mg = table(g,mo) # creating a contingency  of g and mo
 barplot(prop.table(mg,2), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Transportation", legend=levels(g), beside=T, col= c("red", "green")) # creating a bar chart of mg
 ```
 

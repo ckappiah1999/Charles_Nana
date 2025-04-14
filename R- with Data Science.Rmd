@@ -581,7 +581,7 @@ iris %>% tbl_df %>% select(contains("al")) %>% head()
 # Select columns that matches with t
 iris %>% tbl_df %>% select(matches(".t.")) %>% head()
 
-# Inverse selection
+#  selection
 iris %>% tbl_df %>% select(-starts_with("Petal")) %>% head() 
 ```
 
@@ -1211,9 +1211,9 @@ BreastCancer %>% mutate(Cl.thickness.numeric =
 
 ```{r Model.M}
 ### Model Matrice and Formula
-cars %>% model.matrix(dist ~ speed, data = .) %>% head(5)
+cars %>% model.(dist ~ speed, data = .) %>% head(5)
 
-cars %>% model.matrix(dist ~ speed - 1, data = .) %>% head(5) 
+cars %>% model.(dist ~ speed - 1, data = .) %>% head(5) 
 ```
 
 ```{r Size + Thickness} }
@@ -1223,7 +1223,7 @@ BreastCancer %>%
  Cell.size.numeric =
  as.numeric(as.character(Cell.size))) %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.matrix(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric,
+ model.(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric,
  data = .) %>% head() 
 ```
 
@@ -1234,7 +1234,7 @@ BreastCancer %>%
  Cell.size.numeric =
  as.numeric(as.character(Cell.size))) %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.matrix(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric - 1,
+ model.(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric - 1,
  data = .) %>% head() 
 ```
 
@@ -1262,14 +1262,14 @@ BreastCancer %>%
 ```{r Bare.nuclei}
 BreastCancer %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.matrix(IsMalignant ~ Bare.nuclei, data = .) %>%
+ model.(IsMalignant ~ Bare.nuclei, data = .) %>%
  head() 
 ```
 
 ```{r Cl}
 BreastCancer %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.matrix(IsMalignant ~ Cl.thickness, data = .) %>%
+ model.(IsMalignant ~ Cl.thickness, data = .) %>%
  head() 
 ```
 
@@ -1279,7 +1279,7 @@ BreastCancer %>%
  as.numeric(as.character(Cl.thickness)),Cell.size.numeric =
  as.numeric(as.character(Cell.size))) %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.matrix(IsMalignant ~ Cl.thickness.numeric * Cell.size.numeric, data = .) %>% head() 
+ model.(IsMalignant ~ Cl.thickness.numeric * Cell.size.numeric, data = .) %>% head() 
 ```
 
 ```{r thickness* nuclei}
@@ -1287,7 +1287,7 @@ BreastCancer %>%
  mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness))) %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.matrix(IsMalignant ~ Cl.thickness.numeric * Bare.nuclei, data = .) %>% head() 
+ model.(IsMalignant ~ Cl.thickness.numeric * Bare.nuclei, data = .) %>% head() 
 ```
 
 ```{r benign}
@@ -1295,16 +1295,16 @@ BreastCancer %>%
  mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness))) %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.matrix(IsMalignant ~ Cl.thickness.numeric : Bare.nuclei, data = .) %>% head() 
+ model.(IsMalignant ~ Cl.thickness.numeric : Bare.nuclei, data = .) %>% head() 
 ```
 
 ```{r poly}
-cars %>% model.matrix(dist ~ speed + speed^2, data = .) %>% head 
+cars %>% model.(dist ~ speed + speed^2, data = .) %>% head 
 ```
 
 ```{r poly.1}
 ### Polynomial function
-cars %>% model.matrix(dist ~ speed + I(speed^2), data = .) %>% head 
+cars %>% model.(dist ~ speed + I(speed^2), data = .) %>% head 
  
 cars %>% lm(dist ~ speed + I(speed^2), data = .) %>%
  summary
@@ -1314,9 +1314,9 @@ cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() +
 ```
 
 ```{r}
-iris %>% model.matrix(Sepal.Width ~ Sepal.Length, data = .) %>% head
+iris %>% model.(Sepal.Width ~ Sepal.Length, data = .) %>% head
 
-iris %>% model.matrix(Sepal.Width ~ Sepal.Length + I(Sepal.Length^2), data=.) %>% head()
+iris %>% model.(Sepal.Width ~ Sepal.Length + I(Sepal.Length^2), data=.) %>% head()
 
 iris %>% lm(Sepal.Width ~ Sepal.Length + I(Sepal.Length^2), data = .) %>% summary
 
@@ -1381,8 +1381,8 @@ formatted_data <- BreastCancer %>%
 predict(fitted_model, formatted_data, type = "response") %>% head 
 ```
 
-```{r Matrix}
-### Confusion Matrix
+```{r }
+### Confusion 
 classify <- function(probability) ifelse(probability < 0.5, 0, 1)
 classified_malignant <- classify(predict(fitted_model, formatted_data)) 
 table(formatted_data$IsMalignant, classified_malignant) 
@@ -1401,9 +1401,9 @@ table(formatted_data$Class, classified, dnn = c("Data", "Predictions"))
 
 ```{r acc}
 ### Accuracy
-confusion_matrix <- table(formatted_data$Class, classified,dnn = c("Data", "Predictions"))
+confusion_ <- table(formatted_data$Class, classified,dnn = c("Data", "Predictions"))
 
-(accuracy <- sum(diag(confusion_matrix))/sum(confusion_matrix))
+(accuracy <- sum(diag(confusion_))/sum(confusion_))
  
 #table(BreastCancer$Class) 
 ```
@@ -1426,24 +1426,24 @@ table(BreastCancer$Class, sample(BreastCancer$Class)) # random sampling
 
 ```{r Neg.Pos}
 ### Sensitivity and Specificity
-(specificity <- confusion_matrix[1,1]/
- (confusion_matrix[1,1] + confusion_matrix[1,2])) # negative class
+(specificity <- confusion_[1,1]/
+ (confusion_[1,1] + confusion_[1,2])) # negative class
 
-(sensitivity <- confusion_matrix[2,2]/
- (confusion_matrix[2,1] + confusion_matrix[2,2])) # positive class
+(sensitivity <- confusion_[2,2]/
+ (confusion_[2,1] + confusion_[2,2])) # positive class
 ```
 
 ```{r random_prediction}
-specificity <- function(confusion_matrix)
- confusion_matrix[1,1]/(confusion_matrix[1,1] + confusion_matrix[1,2])
+specificity <- function(confusion_)
+ confusion_[1,1]/(confusion_[1,1] + confusion_[1,2])
  
-sensitivity <- function(confusion_matrix)
- confusion_matrix[2,2]/(confusion_matrix[2,1] + confusion_matrix[2,2])
+sensitivity <- function(confusion_)
+ confusion_[2,2]/(confusion_[2,1] + confusion_[2,2])
  
-prediction_summary <- function(confusion_matrix)
- c("accuracy" = accuracy(confusion_matrix),
- "specificity" = specificity(confusion_matrix),
- "sensitivity" = sensitivity(confusion_matrix))
+prediction_summary <- function(confusion_)
+ c("accuracy" = accuracy(confusion_),
+ "specificity" = specificity(confusion_),
+ "sensitivity" = sensitivity(confusion_))
  
 random_prediction_summary <- function()
  prediction_summary(table(BreastCancer$Class,
@@ -1454,11 +1454,11 @@ random_prediction_summary <- function()
 
 ```{r Mease}
 ### Other Measures
-confusion_matrix[2,1] / sum(confusion_matrix[,1])
-confusion_matrix[1,1] / sum(confusion_matrix[,1]) 
+confusion_[2,1] / sum(confusion_[,1])
+confusion_[1,1] / sum(confusion_[,1]) 
 
-confusion_matrix[2,2] / sum(confusion_matrix[,2]) 
-confusion_matrix[1,2] / sum(confusion_matrix[,2]) 
+confusion_[2,2] / sum(confusion_[,2]) 
+confusion_[1,2] / sum(confusion_[,2]) 
 ```
 
 ```{r Perm}
@@ -1757,7 +1757,7 @@ random_string <- function(m) {
 strings <- replicate(10, random_string(5))
 #install.packages("stringdist")
 library(stringdist)
-string_dist <- stringdistmatrix(strings)
+string_dist <- stringdist(strings)
 string_dist %>% cmdscale(k = 4) %>% as.data.frame %>%
  cbind(String = strings) %>% ggplot(aes(x = V1, y = V2)) +
  geom_point() + geom_label(aes(label = String), hjust = 0, nudge_y = -0.1)
@@ -1863,7 +1863,7 @@ rules %>% subset(support > 0.5) %>% sort(by = "lift") %>%
 
 3 %% 4
 
-3 %/% 4
+3  4
 
 3/4
 
@@ -1945,24 +1945,22 @@ dim(v) <- c(2, 3)
 attributes(v)
 
 dim(v)
-
-v
 ```
 
 ```{r mat}
 v <- 1:6
-matrix(data = v, nrow = 2, ncol = 3, byrow = FALSE)
-matrix(data = v, nrow = 2, ncol = 3, byrow = TRUE)
+(data = v, nrow = 2, ncol = 3, byrow = FALSE)
+(data = v, nrow = 2, ncol = 3, byrow = TRUE)
 
-(A <- matrix(1:4, nrow = 2))
-(B <- matrix(5:8, nrow = 2))
+(A <- c(1:4, nrow = 2))
+(B <- c(5:8, nrow = 2))
 
 A * B # element-wise mult
-A %*% B
+A %*% B # matrix mult
 
 t(A)
 solve(A) ### inverse
-solve(A) %*% A ### identity matrix
+solve(A) %*% A ### identity 
 ```
 
 ```{r}
@@ -1990,7 +1988,7 @@ v
 ```
 
 ```{r drop}
-m <- matrix(1:6, nrow = 2, byrow = TRUE)
+m <- (1:6, nrow = 2, byrow = TRUE)
 m
 m[1,]
 m[,1]
@@ -2265,7 +2263,7 @@ merge(12,5)
 merge_sort <- function(x) {
  if (length(x) < 2) return(x)
  n <- length(x)
- m <- n %/% 2
+ m <- n  2
  merge(merge_sort(x[1:m]), merge_sort(x[(m+1):n]))}
 merge_sort (10)
 ```
@@ -2352,7 +2350,7 @@ x[[c("first", "second")]]
 
 ```{r apply}
 ### apply
-m <- matrix(1:6, nrow = 2, byrow = TRUE)
+m <- (1:6, nrow = 2, byrow = TRUE)
 m
 
 apply(m, 1, function(x) paste(x, collapse = ":")) # row-wise
@@ -2479,7 +2477,7 @@ f(x)
 square <- function(x) (x**2 - x)
 square(5)
 
-m <- matrix(1:6, nrow = 3)
+m <- (1:6, nrow = 3)
 m
 
 sum_of_squares <- function(x) sum(x^2)
@@ -2644,7 +2642,7 @@ ti_mean(runif(1e6))
 blm <- function(model, alpha = 1, beta = 1, ...) {
  # Here goes the mathematics for computing the fit.
  frame <- model.frame(model, ...)
- phi <- model.matrix(frame)
+ phi <- model.(frame)
  no_params <- ncol(phi)
  target <- model.response(frame)
  covar <- solve(diag(alpha, no_params) + beta * t(phi) %*% phi)
@@ -2844,7 +2842,7 @@ if (circumference(r) != 2*3 + 2*4) {
 ### Profiling and  Optimizing
 library(profvis)
 graph <- function(n, edges) {
- m <- matrix(0, nrow = n, ncol = n)
+ m <- (0, nrow = n, ncol = n)
  no_edges <- length(edges)
  if (no_edges >= 1) {
  for (i in seq(1, no_edges, by = 2)) {
@@ -2963,18 +2961,18 @@ graph <- function(n, edges) {
  if (no_edges >= 1) {
  sources <- seq(1, no_edges, by = 2)
  destinations <- seq(2, no_edges, by = 2)
- edge_matrix <- matrix(NA, nrow = length(sources), ncol = 2)
- edge_matrix[,1] <- edges[sources]
- edge_matrix[,2] <- edges[destinations]
- for (i in 1:nrow(edge_matrix)) {
- if (edge_matrix[i,1] > edge_matrix[i,2]) {
- edge_matrix[i,] <- c(edge_matrix[i,2], edge_matrix[i,1])
+ edge_ <- (NA, nrow = length(sources), ncol = 2)
+ edge_[,1] <- edges[sources]
+ edge_[,2] <- edges[destinations]
+ for (i in 1:nrow(edge_)) {
+ if (edge_[i,1] > edge_[i,2]) {
+ edge_[i,] <- c(edge_[i,2], edge_[i,1])
  }
  }
- edge_matrix <- unique(edge_matrix)
- for (i in seq(1, nrow(edge_matrix))) {
- n1 <- edge_matrix[i, 1]
- n2 <- edge_matrix[i, 2]
+ edge_ <- unique(edge_)
+ for (i in seq(1, nrow(edge_))) {
+ n1 <- edge_[i, 1]
+ n2 <- edge_[i, 2]
  neighbours[[n1]] <- c(n2, neighbours[[n1]])
  neighbours[[n2]] <- c(n1, neighbours[[n2]])
  }
