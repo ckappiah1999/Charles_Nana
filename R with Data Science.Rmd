@@ -884,7 +884,7 @@ pie(table(mo), col = c ("red", "green", "blue", "black")) # creating a pie chart
 pie(prop.table(table(mo)), col = c("purple", "green", "red", "blue")) # creating a pie chart of mo
 ```
 
-### Contingency 
+### Contingency
 
 `A contingency` is used to visualize the relationship between two categorical variables. A contingency is a two-dimensional table that shows the frequency of each combination of categories in the two variables. A contingency is used to visualize the relationship between two categorical variables.
 

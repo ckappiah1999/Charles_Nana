@@ -796,73 +796,82 @@ iris %>% gather(key = Attribute, value = Measurement, Petal.Length, Petal.Width)
 
 ### Visualizing Data
 
-```{r}
+Visualizing data is a very important part of data science. It helps us
+to understand the data better and also helps us to communicate our
+findings to others. In this chapter, we will learn how to visualize data
+using R.
 
+```{r}
+library(ggplot2)
 library(graphics)
-x = rnorm(100)
-y = rnorm(100)
-plot(x,y, type="p", main ="X against Y", col = "red")
+x = rnorm(100) # random 100 points
+y = rnorm(100) # random 100 points
+plot(x,y, type="p", main ="X against Y", col = "lightgreen")
 ```
 
 ```{r}
-data(cars)
-cars %$% plot(speed, dist, main = "Cars data",
- xlab = "Speed", ylab = "Stopping distance")
+data(cars) # initiating cars dataset
 
-cars %>% plot(dist ~ speed, data = ., main ="Cars data", col = "red")
+cars %$% plot(speed, dist, main = "Cars data datasets", xlab = "Speed", ylab = "Stopping distance")
+
+cars %>% plot(dist ~ speed, data = ., main ="Cars data datasets", col = "red")
 ```
 
 ```{r}
-cars %$% plot(speed, dist, main = "Cars data", type = "h",
- xlab = "Speed", ylab = "Stopping Distance")
+cars %$% plot(speed, dist, main = "Cars data datasets", type = "h",
+ xlab = "Speed", ylab = "Stopping Distance") # histogram 
 
-cars %$% plot(speed, dist, main = "Cars data", type = "s",
- xlab = "Speed", ylab = "Stopping Distance")
+cars %$% plot(speed, dist, main = "Cars data datasets", type = "s",
+ xlab = "Speed", ylab = "Stopping Distance") # ste
 
-cars %$% hist(speed, col = "orange")
-cars %$% hist(dist, col= "blue")
+cars %$% hist(speed, col = "orange", bins = 5) # Histogram of speed
 
-cars %>% lm(dist ~ speed, data = .) %>% plot ### Plotting Linear Models
+cars %$% hist(dist, col= "blue", bins = 6) # Histogram of distance 
+
+cars %>% lm(dist ~ speed, data = .) %>% plot # Plotting Linear Models
 ```
 
 ```{r}
-data = longley
-data
-longley %>% plot(Unemployed ~ Year, data = ., type = 'l')
-longley %>% lines(Armed.Forces ~ Year, data = ., col = "blue")
+(data = longley) # initiating longley dataset
+#data
+
+longley %>% plot(Unemployed ~ Year, data = ., type = 'l') # plotting the longley dataset
+longley %>% lines(Armed.Forces ~ Year, data = ., col = "blue") # adding lines to the plot
 
 longley %$% plot(Unemployed ~ Year, type = 'l',
- ylim = range(c(Unemployed, Armed.Forces)))
-longley %>% lines(Armed.Forces ~ Year, data = ., col = "green")
+ ylim = range(c(Unemployed, Armed.Forces))) # plotting the longley dataset
+longley %>% lines(Armed.Forces ~ Year, data = ., col = "green") # adding lines to the plot
 
-as_tibble(longley)
+#as_t(longley)
 ```
 
 ```{r}
-cars %>% plot(dist ~ speed, data = ., xlab="Speed", ylab="Stopping Distance")
-cars %>% lm(dist ~ speed, data = .) %>% abline(col = "red")
+cars %>% plot(dist ~ speed, data = ., xlab = "Speed", ylab = "Stopping Distance") # plotting the cars dataset
+cars %>% lm(dist ~ speed, data = .) %>% abline(col = "red") # fitting a line to the plot 
 ```
 
 ```{r}
-shape_map <- c("setosa" = 1, "versicolor" = 2,  "virginica" = 3) 
+shape_map <- c("setosa" = 1, "versicolor" = 2,  "virginica" = 3) # encoding the shape of the species
 
-iris %$% plot(Petal.Length ~ Petal.Width, pch = shape_map[Species], col = Species)
+iris %$% plot(Petal.Length ~ Petal.Width, pch = shape_map[Species], col = Species) # plotting the iris dataset
 
-iris %$% plot(Sepal.Length ~ Sepal.Width, pch = shape_map[Species], col = Species)
+iris %$% plot(Sepal.Length ~ Sepal.Width, pch = shape_map[Species], col = Species) # plotting the iris dataset
 
 #cars %>% qplot(speed, dist, data = .)
 ```
 
 ```{r}
-iris %>% qplot(Petal.Width, Petal.Length, color = Species, data = .)
+iris %>% qplot(Petal.Width, Petal.Length, color = Species, data = .)  # plotting the iris dataset
 
-iris %>% qplot(Sepal.Width, Sepal.Length, color = Species, data = .)
+iris %>% qplot(Sepal.Width, Sepal.Length, color = Species, data = .)  # plotting the iris dataset
 
-cars %>% qplot(speed, data = ., bins = 10) 
+cars %>% qplot(speed, data = ., bins = 10) # Histogram of speed
 ```
 
-```{r}
 ### Geometries
+
+```{r}
+
 cars %>% qplot(speed, data = ., geom = "density")
 
 cars %>% qplot (dist, data = ., geom = "density")
@@ -879,40 +888,37 @@ ggplot(cars) + geom_point(aes(x = speed, y = dist))
 ```{r Col.Species}
 iris %>% ggplot + geom_point(aes(x = Petal.Width, y = Petal.Length, color = Species))
 
-iris %>% ggplot +
- geom_point(aes(x = Sepal.Width, y = Sepal.Length,
+iris %>% ggplot + geom_point(aes(x = Sepal.Width, y = Sepal.Length,
  color = Species))
 ```
 
 ```{r without.Species}
-iris %>% ggplot +
- geom_point(aes(x = Petal.Width, y = Petal.Length),
- color = "black") 
+iris %>% ggplot + geom_point(aes(x = Petal.Width, y = Petal.Length),
+ color = "black")
+
+iris %>% ggplot + geom_point(aes(x = Sepal.Width, y = Sepal.Length), col = "brown")
 ```
 
 ```{r Cars}
-cars %>% ggplot + geom_histogram(aes(x = speed), bins = 10)
+cars %>% ggplot + geom_histogram(aes(x = speed), bins = 10, col = "blue")
 
 cars %>% ggplot + geom_density(aes(x = speed))
 
-cars %>% ggplot + geom_histogram(aes(x=dist), bins = 10)
+cars %>% ggplot + geom_histogram(aes(x=dist), bins = 10, col = "pink")
 
 cars %>% ggplot + geom_density(aes(x=dist))
 ```
 
 ```{r}
-cars %>% ggplot(aes(x = speed, y = after_stat(count))) +
- geom_histogram(bins = 10) + geom_density()
+cars %>% ggplot(aes(x = speed, y = after_stat(count))) + geom_histogram(bins = 10) + geom_density()
 
 cars %>% ggplot(aes(x = dist, y = after_stat(count))) + geom_histogram(bins = 10) + geom_density()
 ```
 
 ```{r Linear models}
-cars %>% ggplot(aes(x = speed, y = dist)) +
- geom_point() + geom_smooth(method = "lm", formula =  y ~ x)
+cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x)
 
-cars %>% ggplot(aes(x = speed, y = dist)) +
- geom_point() + geom_smooth( method = "loess",formula =  y ~ x) 
+cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth( method = "loess",formula =  y ~ x) 
 ```
 
 ```{r Longley}
@@ -929,93 +935,69 @@ longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
 
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value)) + geom_line() +
- facet_grid(key ~ .)  #### Facet row-wise with lines
+ facet_grid(key ~ .)  # Facet row-wise with lines
 
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value)) + geom_point() +
- facet_grid(key ~ .) #### Facet row-wise with points
+ facet_grid(key ~ .) # Facet row-wise with points
 
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value)) + geom_line() +
- facet_grid(. ~ key  ) #### Facet column-wise with lines
+ facet_grid(. ~ key  ) # Facet column-wise with lines
 
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value)) + geom_point() +
- facet_grid(. ~ key) #### Facet column-wise with points
+ facet_grid(. ~ key) # Facet column-wise with points
 ```
 
 ```{r Legend.2}
-iris %>% gather(Measurement, Value, -Species) %>%
- ggplot(aes(x = Species, y = Value)) + geom_boxplot() +
- facet_grid(Measurement ~ .) # row-wise 
+# row-wise 
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value)) + geom_boxplot() + facet_grid(Measurement ~ .) 
 
-iris %>% gather(Measurement, Value, -Species) %>%
- ggplot(aes(x = Species, y = Value)) + geom_boxplot() +
- facet_grid(. ~ Measurement ) # Column wise
+# Column wise
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value)) + geom_boxplot() + facet_grid(. ~ Measurement ) 
 ```
 
 ```{r Mapped}
-iris %>% gather(Measurement, Value, -Species) %>%
- ggplot(aes(x = Species, y = Value)) +geom_boxplot() +
- facet_grid(Measurement ~ ., scale = "free_y") 
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value)) +geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y") 
 
-label_map <- c(Petal.Width = "Petal Width",
- Petal.Length = "Petal Length",
- Sepal.Width = "Sepal Width",
- Sepal.Length = "Sepal Length")
+label_map <- c(Petal.Width = "Petal Width",Petal.Length = "Petal Length", Sepal.Width = "Sepal Width", Sepal.Length = "Sepal Length")
  
-iris %>% gather(Measurement, Value, -Species) %>%
- ggplot(aes(x = Species, y = Value)) +
- geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map))
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value)) + geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map))
 ```
 
+### Scaling
+
 ```{r Continuous }
-### Scaling 
 cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_continuous("Speed") + scale_y_continuous("Stopping Distance") 
  
-longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
- ggplot(aes(x = Year, y = value)) + geom_line() + geom_point() + scale_x_continuous(breaks = 1947:1962) +
- facet_grid(key ~ .)
+longley %>% gather(key, value, Unemployed, Armed.Forces) %>% ggplot(aes(x = Year, y = value)) + geom_line() + geom_point() +scale_x_continuous(breaks = 1947:1962) + facet_grid(key ~ .)
 ```
 
 ```{r Reverse}
-cars %>% ggplot(aes(x = speed, y = dist)) +
- geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_reverse("Speed") + scale_y_continuous("Stopping Distance") 
+cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_reverse("Speed") + scale_y_continuous("Stopping Distance") 
 
 cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_continuous("speed") + scale_y_reverse("Stopping Distance")
 ```
 
 ```{r Species.Modify}
-iris %>% ggplot(aes(x = Species, y = Petal.Length)) +
- geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) 
+iris %>% ggplot(aes(x = Species, y = Petal.Length)) + geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) 
 
-iris %>% ggplot(aes(x = Species, y = Petal.Length)) +
- geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) +
- scale_x_discrete(labels = c("setosa" = "Setosa",
- "versicolor" = "Versicolor", "virginica" = "Virginica")) 
+iris %>% ggplot(aes(x = Species, y = Petal.Length)) + geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) 
 
-iris %>% ggplot(aes(x = Species, y = Sepal.Length)) +
- geom_boxplot() + geom_jitter(width = 0.001, height = 0.001) + scale_x_discrete(labels = c("setosa" = "Setosa",
- "versicolor" = "Versicolor", "virginica" = "Virginica")) 
+iris %>% ggplot(aes(x = Species, y = Sepal.Length)) + geom_boxplot() + geom_jitter(width = 0.001, height = 0.001) + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) 
 
 #??geom_jitter
 ```
 
 ```{r Color.Species}
-iris %>% gather(Measurement, Value, -Species) %>%
- ggplot(aes(x = Species, y = Value, fill = Species)) +
- geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map))
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value, fill = Species)) + geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map))
 
-iris %>% gather(Measurement, Value, -Species) %>%
- ggplot(aes(x = Species, y = Value, fill = Species)) +
- geom_boxplot() + scale_fill_manual(values = c("red", "green", "blue")) + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map)) 
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value, fill = Species)) + geom_boxplot() + scale_fill_manual(values = c("red", "green", "blue")) + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map)) 
 ```
 
 ```{r Greens}
-iris %>% gather(Measurement, Value, -Species) %>%
- ggplot(aes(x = Species, y = Value, fill = Species)) +
- geom_boxplot() + scale_fill_brewer(palette = "Greens") +
- facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map)) 
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value, fill = Species)) + geom_boxplot() + scale_fill_brewer(palette = "Greens") + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map)) 
 
 #theme_set(theme_bw(2)) 
 
@@ -1059,15 +1041,12 @@ iris %>% gather(Measurement, Value, -Species) %>%
  theme(legend.position="bottom") 
 ```
 
-```{r}
 ### Figures with Multiple Plots
-petal <- iris %>% ggplot() +
- geom_point(aes(x = Petal.Width, y = Petal.Length,
- color = Species)) + theme(legend.position = "none")
+
+```{r}
+petal <- iris %>% ggplot() + geom_point(aes(x = Petal.Width, y = Petal.Length, color = Species)) + theme(legend.position = "none")
  
-sepal <- iris %>% ggplot() +
- geom_point(aes(x = Sepal.Width, y = Sepal.Length,
- color = Species)) + theme(legend.position = "none")
+sepal <- iris %>% ggplot() + geom_point(aes(x = Sepal.Width, y = Sepal.Length, color = Species)) + theme(legend.position = "none")
  
 library(gridExtra)
 grid.arrange(petal, sepal, nrow = 2, ncol = 1)
@@ -1075,16 +1054,24 @@ grid.arrange(petal, sepal, nrow = 2, ncol = 1)
 grid.arrange(petal, sepal, nrow = 1, ncol= 2)
 
 library(cowplot)
-plot_grid(petal, sepal, labels = c("A", "B"))
+plot_grid(petal, sepal, labels = c("Petal", "Sepal"))
 ```
 
-```{r}
-## **Chapter 5** 
-### Working With Larges Data sets
-iris %>% sample_n(size = 10)
-iris %>% sample_frac(size = 0.02) 
+## **Chapter Five**
 
-library(pryr) 
+### Working With Larges Data sets
+
+```{r}
+iris %>% sample_n(size = 10) # Randomly sample 10 of iris dataset
+
+iris %>% sample_frac(size = 0.02) # Randomly sample 2% of iris dataset
+
+cars %>% sample_n(size = 25) # Randomly sample 25 of cars dataset
+
+cars %>% sample_frac(sixe = 0.25) %>% ggplot(aes(x = speed, y = dist)) + geom_point() # Randomly sample 25% of cars dataset
+
+library(pryr)
+
 mem_change(x <- rnorm(10000)) 
 mem_change(x[1] <- 0) 
 mem_change(y <- x) 
@@ -1105,6 +1092,7 @@ mem_change(d)
 
 ```{r}
 #install.packages("hexbin")
+library(hexbin)
 d %>% ggplot(aes(x = x, y = y)) + geom_hex() + scale_fill_gradient(low = "lightgray", high = "red") + geom_density2d(color = "black")
 
 d %>% ggplot(aes(x = x, y = y)) + geom_hex()
@@ -1120,7 +1108,7 @@ ffiris <- as.ffdf(iris)
 summary(ffiris)
 ```
 
-```{r warning=FALSE}
+```{r}
 library(biglm)
 
 model <- biglm(dist ~ speed, data = ffcars)
@@ -1130,14 +1118,19 @@ iris_db <- src_sqlite("iris_db.sqlite3", create = TRUE)
 
 iris_sqlite <- tbl(iris_db, "iris", temporary = FALSE)
 
-iris_sqlite %>% group_by(Species) %>%
- summarise(mean.Petal.Length = mean(Petal.Length))
+iris_sqlite %>% group_by(Species) %>% summarise(mean.Petal.Length = mean(Petal.Length),mean.Sepal.Length = mean(Sepal.Length))
 ```
 
-```{r Regression}
-## **Chapter 6** 
+## **Chapter Six**
+
 ## **Supervise Machine Learning**
+
 ### Linear Regression
+
+```{r Regression}
+library(tidyverse) # 
+library( magrittr)
+
 cars %>% head()
 cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula = y ~ x) 
 cars %>% lm(dist ~ speed, data = .) %>% summary 
@@ -1169,19 +1162,18 @@ fitting_error <- Vectorize(function(theta)
 data.frame(thetas = thetas, errors = fitting_error(thetas)) %>%
  ggplot(aes(x = thetas, y = errors)) +
  geom_line() +
- xlab(expression(theta[1])) + ylab("") 
+ xlab(expression(theta[1])) + ylab("error") 
 ```
 
 ```{r without y_intercept}
 cars %>% lm(dist ~ speed - 1, data = .) %>% coefficients
  
-cars %>% ggplot(aes(x = speed, y = dist)) +
- geom_point() +
- geom_smooth(method = "lm", formula = y ~ x - 1)
+cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula = y ~ x - 1)
 ```
 
-```{r jitter}
 ### Logistic Regression
+
+```{r jitter}
 data("BreastCancer")
 BreastCancer %>% head
 BreastCancer %>% ggplot(aes(x = Cl.thickness, y = Class)) +
@@ -1194,13 +1186,7 @@ geom_jitter(height = 0.05, width = .3, alpha = 0.4)
 ```
 
 ```{r height}
-BreastCancer %>%
- mutate(Cl.thickness.numeric =
- as.numeric(as.character(Cl.thickness))) %>%
- mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- ggplot(aes(x = Cl.thickness.numeric, y = IsMalignant)) + geom_jitter(height = 0.05, width = 0.3, alpha=0.4) +
- geom_smooth(method = "glm", formula = y ~ x, 
- method.args = list(family = "binomial")) 
+BreastCancer %>% mutate(Cl.thickness.numeric = as.numeric(as.character(Cl.thickness))) %>% mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>% ggplot(aes(x = Cl.thickness.numeric, y = IsMalignant)) + geom_jitter(height = 0.05, width = 0.3, alpha = 0.4) + geom_smooth(method = "glm", formula = y ~ x, method.args = list(family = "binomial")) 
 
 BreastCancer %>% mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness))) %>%
@@ -1209,123 +1195,80 @@ BreastCancer %>% mutate(Cl.thickness.numeric =
  family = "binomial", data = .) 
 ```
 
-```{r Model.M}
 ### Model Matrice and Formula
-cars %>% model.(dist ~ speed, data = .) %>% head(5)
 
-cars %>% model.(dist ~ speed - 1, data = .) %>% head(5) 
+```{r Model.M}
+cars %>% model.matrix(dist ~ speed, data = .) %>% head()
+
+cars %>% model.matrix(dist ~ speed - 1, data = .) %>% head() # without intercept
 ```
 
 ```{r Size + Thickness} }
-BreastCancer %>%
- mutate(Cl.thickness.numeric =
- as.numeric(as.character(Cl.thickness)),
- Cell.size.numeric =
- as.numeric(as.character(Cell.size))) %>%
- mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric,
- data = .) %>% head() 
+BreastCancer %>% mutate(Cl.thickness.numeric = as.numeric(as.character(Cl.thickness)), Cell.size.numeric = as.numeric(as.character(Cell.size))) %>% mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>% model.matrix(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric, data = .) %>% head() 
 ```
 
 ```{r without intercept}
-BreastCancer %>%
- mutate(Cl.thickness.numeric =
- as.numeric(as.character(Cl.thickness)),
- Cell.size.numeric =
- as.numeric(as.character(Cell.size))) %>%
- mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric - 1,
- data = .) %>% head() 
+BreastCancer %>% mutate(Cl.thickness.numeric = as.numeric(as.character(Cl.thickness)), Cell.size.numeric = as.numeric(as.character(Cell.size))) %>% mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
+ model.matrix(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric - 1, data = .) %>% head() # without intercept
 ```
 
 ```{r without_inercept}
-BreastCancer %>%
- mutate(Cl.thickness.numeric =
- as.numeric(as.character(Cl.thickness)),
- Cell.size.numeric =
- as.numeric(as.character(Cell.size))) %>%
- mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- glm(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric - 1, family = "binomial", data = .)
+BreastCancer %>% mutate(Cl.thickness.numeric = as.numeric(as.character(Cl.thickness)), Cell.size.numeric = as.numeric(as.character(Cell.size))) %>% mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
+ glm(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric - 1, family = "binomial", data = .) # with intercept
 ```
 
 ```{r with_intercept}
- BreastCancer %>%
- mutate(Cl.thickness.numeric =
- as.numeric(as.character(Cl.thickness)),
- Cell.size.numeric =
- as.numeric(as.character(Cell.size))) %>%
- mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- glm(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric,
- family = "binomial", data = .) 
+ BreastCancer %>% mutate(Cl.thickness.numeric = as.numeric(as.character(Cl.thickness)), Cell.size.numeric = as.numeric(as.character(Cell.size))) %>% mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>% glm(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric, family = "binomial", data = .) # without intercept
 ```
 
 ```{r Bare.nuclei}
-BreastCancer %>%
- mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.(IsMalignant ~ Bare.nuclei, data = .) %>%
- head() 
+BreastCancer %>% mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>% model.matrix(IsMalignant ~ Bare.nuclei, data = .) %>% head() 
 ```
 
 ```{r Cl}
-BreastCancer %>%
- mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.(IsMalignant ~ Cl.thickness, data = .) %>%
- head() 
+BreastCancer %>% mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>% model.matrix(IsMalignant ~ Cl.thickness, data = .) %>% head() 
 ```
 
 ```{r thickness*size}
-BreastCancer %>%
- mutate(Cl.thickness.numeric =
- as.numeric(as.character(Cl.thickness)),Cell.size.numeric =
- as.numeric(as.character(Cell.size))) %>%
- mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.(IsMalignant ~ Cl.thickness.numeric * Cell.size.numeric, data = .) %>% head() 
+BreastCancer %>% mutate(Cl.thickness.numeric = as.numeric(as.character(Cl.thickness)),Cell.size.numeric = as.numeric(as.character(Cell.size))) %>% mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
+ model.matrix(IsMalignant ~ Cl.thickness.numeric * Cell.size.numeric, data = .) %>% head() 
 ```
 
 ```{r thickness* nuclei}
-BreastCancer %>%
- mutate(Cl.thickness.numeric =
- as.numeric(as.character(Cl.thickness))) %>%
- mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.(IsMalignant ~ Cl.thickness.numeric * Bare.nuclei, data = .) %>% head() 
+BreastCancer %>% mutate(Cl.thickness.numeric = as.numeric(as.character(Cl.thickness))) %>% mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>% model.matrix(IsMalignant ~ Cl.thickness.numeric * Bare.nuclei, data = .) %>% head() 
 ```
 
 ```{r benign}
-BreastCancer %>%
- mutate(Cl.thickness.numeric =
- as.numeric(as.character(Cl.thickness))) %>%
- mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- model.(IsMalignant ~ Cl.thickness.numeric : Bare.nuclei, data = .) %>% head() 
+BreastCancer %>% mutate(Cl.thickness.numeric = as.numeric(as.character(Cl.thickness))) %>% mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>% model.matrix(IsMalignant ~ Cl.thickness.numeric : Bare.nuclei, data = .) %>% head() 
 ```
 
 ```{r poly}
-cars %>% model.(dist ~ speed + speed^2, data = .) %>% head 
+cars %>% model.matrix(dist ~ speed + speed^2, data = .) %>% head 
 ```
 
-```{r poly.1}
 ### Polynomial function
-cars %>% model.(dist ~ speed + I(speed^2), data = .) %>% head 
- 
-cars %>% lm(dist ~ speed + I(speed^2), data = .) %>%
- summary
 
-cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() +
- geom_smooth(method = "lm", formula = y ~ x + I(x^2))
+```{r poly.1}
+cars %>% model.matrix(dist ~ speed + I(speed^2), data = .) %>% head 
+ 
+cars %>% lm(dist ~ speed + I(speed^2), data = .) %>% summary
+
+cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula = y ~ x + I(x^2))
 ```
 
 ```{r}
-iris %>% model.(Sepal.Width ~ Sepal.Length, data = .) %>% head
+iris %>% model.matrix(Sepal.Width ~ Sepal.Length, data = .) %>% head
 
-iris %>% model.(Sepal.Width ~ Sepal.Length + I(Sepal.Length^2), data=.) %>% head()
+iris %>% model.matrix(Sepal.Width ~ Sepal.Length + I(Sepal.Length^2), data=.) %>% head()
 
 iris %>% lm(Sepal.Width ~ Sepal.Length + I(Sepal.Length^2), data = .) %>% summary
 
-iris %>% ggplot(aes(x = Sepal.Width, y = Sepal.Length)) + geom_point( color = "lightgreen") +
- geom_smooth(method = "lm", formula = y ~ x + I(x^2))
+iris %>% ggplot(aes(x = Sepal.Width, y = Sepal.Length, col = Species)) + geom_point( ) + geom_smooth(method = "lm", formula = y ~ x + I(x^2))
 ```
 
-```{r Mod}
 ### Validating Models
+
+```{r Mod}
 line <- cars %>% lm(dist ~ speed, data = .)
 
 poly <- cars %>% lm(dist ~ speed + I(speed^2), data = .)
@@ -1335,10 +1278,14 @@ predict(line, cars) %>% head
 predict(poly, cars) %>% head 
 ```
 
-```{r rmse}
 ### Evaluating Regression Models
+
+```{r rmse}
+# checking for root mean square error
 rmse <- function(x,t) sqrt(mean(sum((t - x)^2)))
+
 rmse(predict(line, cars), cars$dist)
+
 rmse(predict(poly, cars), cars$dist)
 ```
 
@@ -1347,42 +1294,44 @@ training_data <- cars[1:25,]
 test_data <- cars[26:50,] 
 line <- training_data %>% lm(dist ~ speed, data = .)
 poly <- training_data %>% lm(dist ~ speed + I(speed^2), data = .) 
+
 rmse(predict(line, test_data), test_data$dist) 
 rmse(predict(poly, test_data), test_data$dist) 
 
-sampled_cars <- cars %>% mutate(training = sample(0:1, nrow(cars), replace = TRUE))
+sampled_cars <- cars %>% mutate(training = sample(0:1, nrow(cars), replace = TRUE)) # 0 = not replace , 1 = replace
 sampled_cars %>% head 
 ```
 
 ```{r}
 training_data <- sampled_cars %>% filter(training == 1)
 test_data <- sampled_cars %>% filter(training == 0)
+
 training_data %>% head 
 test_data %>% head 
 
 line <- training_data %>% lm(dist ~ speed, data = .)
 poly <- training_data %>% lm(dist ~ speed + I(speed^2), data = .) 
+
 rmse(predict(line, test_data), test_data$dist) 
 rmse(predict(poly, test_data), test_data$dist) 
 ```
 
-```{r response}
 ### Evaluating Classification Models
-formatted_data <- BreastCancer %>%
- mutate(Cl.thickness.numeric =
- as.numeric(as.character(Cl.thickness)),
- Cell.size.numeric =
- as.numeric(as.character(Cell.size))) %>%
- mutate(IsMalignant = ifelse(Class == "benign", 0, 1))
+
+```{r response}
+formatted_data <- BreastCancer %>% mutate(Cl.thickness.numeric =
+ as.numeric(as.character(Cl.thickness)), Cell.size.numeric =
+ as.numeric(as.character(Cell.size))) %>% mutate(IsMalignant = ifelse(Class == "benign", 0, 1))
  
- fitted_model <- formatted_data %>%
- glm(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric, data = .)
+fitted_model <- formatted_data %>% glm(IsMalignant ~ Cl.thickness.numeric + Cell.size.numeric, data = .)
 
 predict(fitted_model, formatted_data, type = "response") %>% head 
 ```
 
+### Confusion Matrix
+
 ```{r }
-### Confusion 
+
 classify <- function(probability) ifelse(probability < 0.5, 0, 1)
 classified_malignant <- classify(predict(fitted_model, formatted_data)) 
 table(formatted_data$IsMalignant, classified_malignant) 
@@ -1392,15 +1341,16 @@ table(formatted_data$IsMalignant, classified_malignant)
 table(formatted_data$IsMalignant, classified_malignant,
  dnn = c("Data", "Predictions"))
 
-classify <- function(probability)
- ifelse(probability < 0.5, "benign", "malignant")
+classify <- function(probability) ifelse(probability < 0.5, "benign", "malignant")
 
 classified <- classify(predict(fitted_model, formatted_data))
 table(formatted_data$Class, classified, dnn = c("Data", "Predictions")) 
 ```
 
-```{r acc}
 ### Accuracy
+
+```{r acc}
+
 confusion_ <- table(formatted_data$Class, classified,dnn = c("Data", "Predictions"))
 
 (accuracy <- sum(diag(confusion_))/sum(confusion_))
@@ -1419,13 +1369,15 @@ mbl["malignant"] / sum(mbl)
 ```{r Random_sampling}
 table(BreastCancer$Class, sample(BreastCancer$Class)) # random sampling
 
-#replicate(8, acc(table(BreastCancer$Class,sample(BreastCancer$Class))))
+#replicate(8, accuracy(table(BreastCancer$Class,sample(BreastCancer$Class))))
 
 #(accuracy(table(BreastCancer$Class,sample(BreastCancer$Class))))
 ```
 
-```{r Neg.Pos}
 ### Sensitivity and Specificity
+
+```{r Neg.Pos}
+
 (specificity <- confusion_[1,1]/
  (confusion_[1,1] + confusion_[1,2])) # negative class
 
@@ -1434,11 +1386,11 @@ table(BreastCancer$Class, sample(BreastCancer$Class)) # random sampling
 ```
 
 ```{r random_prediction}
-specificity <- function(confusion_)
- confusion_[1,1]/(confusion_[1,1] + confusion_[1,2])
+specificity <- function(confusion_) 
+  confusion_[1,1]/(confusion_[1,1] + confusion_[1,2])
  
-sensitivity <- function(confusion_)
- confusion_[2,2]/(confusion_[2,1] + confusion_[2,2])
+sensitivity <- function(confusion_) 
+  confusion_[2,2]/(confusion_[2,1] + confusion_[2,2])
  
 prediction_summary <- function(confusion_)
  c("accuracy" = accuracy(confusion_),
@@ -1452,8 +1404,10 @@ random_prediction_summary <- function()
 #replicate(3, random_prediction_summary())
 ```
 
-```{r Mease}
 ### Other Measures
+
+```{r Mease}
+
 confusion_[2,1] / sum(confusion_[,1])
 confusion_[1,1] / sum(confusion_[,1]) 
 
@@ -1461,8 +1415,9 @@ confusion_[2,2] / sum(confusion_[,2])
 confusion_[1,2] / sum(confusion_[,2]) 
 ```
 
-```{r Perm}
 ### Random Permutation of Data
+
+```{r Perm}
 permuted_cars <- cars[sample(1:nrow(cars)),]
 permuted_cars %>% head()
 
@@ -1481,8 +1436,7 @@ grouped_cars <- cars %>% permute_rows %>% group_data(5)
 grouped_cars[[1]] 
 grouped_cars[1] 
 
-(grouped_cars[[1]] %>%
- lm(dist ~ speed, data = .) %>%.$coefficients)
+(grouped_cars[[1]] %>% lm(dist ~ speed, data = .) %>%.$coefficients)
  
 qplot(grouped_cars[[1]] %>%lm(dist ~ speed, data = .) %>%.$coefficients)
 ```
@@ -1514,8 +1468,10 @@ estimates <- grouped_cars %>%
 estimates
 ```
 
-```{r valid}
 ### Cross Validation
+
+```{r valid}
+
 cross_validation_groups <- function(grouped_df) {
  result <- vector(mode = "list", length = length(grouped_df))
  for (i in seq_along(grouped_df)) {
