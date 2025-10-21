@@ -26,10 +26,10 @@ knitr::opts_chunk$set(
 
 # Data Types
 
-Data types are used to represent different types of data in R. R has several built-in data types, such as `numeric`, `character`, `integer`, `complex`, and `logical`. Data types are used to store different types of data, such as numbers, text, and logical values.
+Data types are used to represent different types of data in R. R has several built-in data types, such as `numeric`, `character`, `integer`, `complex`, and `logical`. Data types are used to store different types of data, such as numbers, text, and logical values. Below are examples for your learning.
 
 ```{r}
-x <- "Hello Charles, I hope you're working hard to become who you are destined to be by God's purpose?"
+x <- "Hello Charles, I hope you're working hard to become who you were destined to be by God's purpose?"
 x
 class(x) # checking the class of variable x
 ```
@@ -66,12 +66,12 @@ length(x) # checking the length of the list x
 ```
 
 ```{r}
-kx <- data.frame(age = c(11,14,22), weight = c(30,33,32)) # creating a dataframe xk 
+kx <- data.frame(age = c(11,14,22), weight = c(30,33,32)) # creating a dataframe kx
 kx
 ```
 
 ```{r}
-d <- c("Charles Kwame Appiah is my name") # creating a vector
+d <- c("My name is Charles Kwame Appiah") # creating a vector
 d
 class(d) # checking the class of variable d
 length(d) # checking the length of variable d
@@ -89,6 +89,7 @@ class(f)# checking the class of variable f
 Integers in R are stored as numeric data type. To create an integer in R, you can use the `L` suffix or the `as.integer()` function.
 
 ```{python paged.print=TRUE}
+
 2 + 3
 
 import pandas as pd
@@ -122,6 +123,13 @@ x[1:3] <- TRUE # indexing the first to third element with TRUE
 x
 ```
 
+```{r}
+ve <- c(2,4,5,6,7,9)
+ve 
+
+class(ve)
+```
+
 ## Logical
 
 Logical vectors are created with the `c()` function. Logical vectors can be used to store TRUE or FALSE values. Logical vectors are used in R to represent binary data.Binary data is data that can take on one of two values, such as TRUE or FALSE.
@@ -134,7 +142,7 @@ as.logical(s) # converting the vector to logical
 
 ## List
 
-List is a collection of multiple objects. The objects can be of different classes. Lists are created with the `list()` function
+List is a collection of multiple objects. The objects can be of different classes. Lists are created with the `list()` function.
 
 ```{r}
 q <- list("Hello World",2015L, TRUE, 32.1) # creating a list
@@ -144,9 +152,32 @@ class(q[[4]]) # Checking the class of list 4
 class(q[[1]]) # Checking the class of list 1
 ```
 
-## 
+```{r}
+fo <- list("Hello","Hi","Hey") # creating a list
 
-is a two-dimensional array. It is created with the `()` function. The `()` function takes a vector as input and reshapes it into a . The `nrow` argument specifies the number of rows in the , and the `ncol` argument specifies the number of columns in the .
+unlist(fo)
+
+fo[c(1,2)] # for several elements
+
+fo[c(1,2,3)] # for several elements
+
+fo[[2]] # for only one element
+
+class(fo[[3]]) # checking the class of the third element
+```
+
+```{r}
+wi <- list(age = c(12,23,45), height = c(12.3,45.4, 34.5)) # creating a list
+
+wi
+
+class(wi) # checking the class of wi
+```
+
+
+## Matrix
+
+Matrix is a two-dimensional array. It is created with the `c()` function. The `c()` function takes a vector as input and reshapes it into a matrix . The `nrow` argument specifies the number of rows in the , and the `ncol` argument specifies the number of columns in the .
 
 ```{r}
 mat <- c(2,4,5,7) # creating a vector
@@ -161,18 +192,18 @@ mar
 
 ```{r}
 temp <- c(3,4,5,5.6,6,7) # creating a vector
-mati <- (temp, nrow = 2, ncol = 3,byrow = TRUE) # creating a  with 2 rows and 3 columns
+mati <- matrix(temp, nrow = 2, ncol = 3,byrow = TRUE) # creating a matrix  with 2 rows and 3 columns
 mati
 
 temp <- c(3,4,5,5.6,6,7, 8, 9, 10) # creating a vector
-mato <- (temp, nrow = 3, ncol = 3,byrow = TRUE) # creating a  with 3 rows and 3 columns
+mato <- matrix(temp, nrow = 3, ncol = 3,byrow = TRUE) # creating a matrix  with 3 rows and 3 columns
 mato
 ```
 
 ```{r}
 # Default byrow = FALSE
 temp <- c(3,4,5,5.6,6,7) # creating a vector
-mati <- (temp, nrow = 2, ncol = 3,byrow = FALSE) # creating a  with 2 rows and 3 columns
+mati <- matrix(temp, nrow = 2, ncol = 3,byrow = FALSE) # creating a matrix  with 2 rows and 3 columns
 mati
 ```
 
@@ -202,6 +233,9 @@ factor # use to encode vectors as factors
 
 f <- factor(c("Yes","No","No","Yes"), levels = c("Yes","No"), ordered = TRUE) # creating a factor
 f
+```
+```{r}
+(d <- factor (c("Yes", "No","Yes", "No"), levels = c("Yes", "No"), ordered = FALSE))
 ```
 
 ## Missing Values
@@ -238,9 +272,16 @@ dfr
 # First Row
 dfr[1,] # accessing row 1 of the dataframe
 
+# Second Row
+dfr[2,] # accessing row 2 of the dataframe
+
 # First Column
 dfr[,1] # accessing column 1 [Username] of the dataframe
 
+# Second Column
+dfr[,2] # accessing column 1 of the dataframe
+```
+```{r}
 # Selecting only Age Column
 dfr$Age
 
@@ -250,6 +291,28 @@ dfr$Username
 # Selecting only Adult Column
 dfr$Adult
 ```
+
+```{r}
+# creating a dataframe
+woo <- data.frame(age = c(12,23,45), height = c(12.3,45.4, 34.5)) 
+
+woo
+
+class(woo) # checking the class of woo
+
+woo$age # selecting only the age list
+
+woo$height # selecting only the height list
+
+woo[["age"]] # selecting only the age list
+
+woo[['h',exact = FALSE]] # partial matching
+
+class(woo$age) # checking the class of age list
+
+class(woo$height) # checking the class of height list
+```
+
 
 ## Reading Data From File
 
@@ -263,14 +326,22 @@ dat <- read.csv("C:/Users/HP/Desktop/Data Science/Machine learning/Training r.cs
 #print(dat, na.rm = TRUE)
 head(dat) # displaying the first few rows of the dataset
 
+tail(dat) # displaying the last few rows of the dataset
 
+```
+
+```{r}
 data <- read_xlsx("C:/Users/HP/Desktop/Data Science/Pandas/Copy of V1- UN Data on Refugees (AiCE __ Dataset).xlsx") # reading the dataset
- head(data) # displaying the first few rows of the dataset
+head(data) # displaying the first few rows of the dataset
+
+tail(data) # displaying the last few rows of the dataset
+
+data |> distinct(Year)
 ```
 
 ## Sequence Creation
 
-Sequence is a collection of numbers in a specific order. Sequences can be created in R using the `:` operator, the `seq()` function, and the `rep()` function. The `:` operator is used to create a sequence of numbers from a starting value to an ending value. The `seq()` function is used to create a sequence of numbers with a specified start, end, and step size. The `rep()` function is used to repeat a sequence of numbers a specified number of times.
+Sequence is a collection of numbers in a specific order. Sequences can be created in R using the semicolon`:` operator, the `seq()` function, and the `rep()` function. The `:` operator is used to create a sequence of numbers from a starting value to an ending value. The `seq()` function is used to create a sequence of numbers with a specified start, end, and step size. The `rep()` function is used to repeat a sequence of numbers a specified number of times.
 
 ```{r}
 v <- (10:20) # creating a sequence
@@ -301,54 +372,12 @@ we  # start from 1 and end at 15 with a step of 2
 we[1:5] # slicing from index 1 to 5
 
 class(we) # checking the class of we
-```
-
-```{r}
-fo <- list("Hello","Hi","Hey") # creating a list
-
-unlist(fo)
-
-fo[c(1,2)] # for several elements
-
-fo[c(1,2,3)] # for several elements
-
-fo[[2]] # for only one element
-
-class(fo[[3]]) # checking the class of the third element
-```
-
-```{r}
-wi <- list(age = c(12,23,45), height = c(12.3,45.4, 34.5)) # creating a list
-
-wi
-
-class(wi) # checking the class of wi
-```
-
-```{r}
-# creating a dataframe
-woo <- data.frame(age = c(12,23,45), height = c(12.3,45.4, 34.5)) 
-
-woo
-
-class(woo) # checking the class of woo
-
-woo$age # selecting only the age list
-
-woo$height # selecting only the height list
-
-woo[["age"]] # selecting only the age list
-
-woo[['h',exact = FALSE]] # partial matching
-
-class(woo$age) # checking the class of age list
-
-class(woo$height) # checking the class of height list
+class(eq)
 ```
 
 ```{r}
 # creating a  with 3 rows and 3 columns
-wr <- (1:9, nrow = 3, ncol = 3, by = TRUE) 
+wr <- matrix(1:9, nrow = 3, ncol = 3, by = TRUE) 
 
 wr # creating a  with 3 rows and 3 columns
 
@@ -397,7 +426,7 @@ proc.time()-start #  initiating the timer
 
 ## Control Structures
 
-Control structures are used to control the flow of a program. Control structures allow you to execute different code blocks based on conditions. Control structures include if-else statements, for loops, while loops, and repeat loops.
+Control structures are used to control the flow of a program. Control structures allow you to execute different code blocks based on conditions. Control structures include `if-else` statements, `for` loops, `while` loops, and `repeat` loops.
 
 ```{r}
 x <- 20 # assigning 20 to x
@@ -407,7 +436,7 @@ print("Negative!") # checking if x is negative
 }else if (x < 10) {
 print("Positive, less than 10!") # checking if x is less than 10
 }else {
-print("Number greater than 10!") # checking if x is greater than 10
+print("Number is greater than 10!") # checking if x is greater than 10
 }
 ```
 
@@ -418,7 +447,7 @@ print("Negative!") # checking if x is negative
 }else if (x < 10) {
 print("Positive, less than 10!") # checking if x is less than 10
 }else {
-print("Number greater than 10!") # checking if x is greater than 10
+print("Number is greater than 10!") # checking if x is greater than 10
 }
 ```
 
@@ -429,7 +458,7 @@ print("Negative!") # checking if x is negative
 }else if (x < 10) {
 print("Positive, less than 10!") # checking if x is less than 10
 }else {
-print("Number greater than 10!") # checking if x is greater than 10
+print("Number is greater than 10!") # checking if x is greater than 10
 }
 ```
 
@@ -456,6 +485,25 @@ cat(x)
 cat(" ") # inserting spaces between the letters
 }
 ```
+```{r}
+for (i in 1:100){
+# Over ride the first 80 iterations
+if (i <= 80){
+next 
+}
+print(i)
+}
+```
+```{r}
+for (i in 1:100){
+# Over ride the first 80 iterations
+if (i >= 7){
+next 
+}
+print(i)
+}
+```
+
 
 ### While loop
 
@@ -479,16 +527,16 @@ break
 x <- x + 1
 }
 ```
-
 ```{r}
-for (i in 1:100){
-# Over ride the first 80 iterations
-if (i <= 80){
-next 
+x <- 3
+repeat {
+print(x)
+if (x < 9){
+break
 }
-print(i)
 }
 ```
+
 
 # Functions
 
@@ -504,7 +552,7 @@ myPrinter(3)
 ```
 
 ```{r}
-volume <- function(x=3, y=3, z=3){
+volume <- function(x = 3, y = 3, z = 3){
   print(x*y*z)
 }
 volume(y=3,z=5,x=11)
@@ -517,7 +565,7 @@ myPrinter <- function(..., mes){
 print(sum(...))
 print(mes)
 }
-myPrinter (3, 5, 11, mes= "Hi! Richmond")
+myPrinter (3, 5, 11, mes = "Hi! Richmond")
 
 #ls() # displaying objects stored in R currently
 ```
@@ -560,15 +608,15 @@ sapply(xi, sd) # checking the standard deviation of xi
 
 ### Split
 
-split is used to split a data frame or vector into groups. split returns a list of vectors, where each vector contains the elements of the input data frame or vector that belong to a particular group.
+Split is used to split a data frame or vector into groups. split returns a list of vectors, where each vector contains the elements of the input data frame or vector that belong to a particular group.
 
 ```{r}
 dat <- data.frame(subject = 1:6,age = c(15, 17, 16,20,21,23),
 adult = c(FALSE,FALSE,FALSE,TRUE,TRUE,TRUE))
 
-s <- split(dat, dat$adult) # splitting based on the adult column 
+(s <- split(dat, dat$adult)) # splitting based on the adult column 
 
-s # split them according to True and False
+# split them according to True and False
 ```
 
 ```{r}
@@ -660,7 +708,7 @@ class(airquality) # checking the class of airquality
 
 airquality # displaying the airquality dataset
 
-select(airquality, (Ozone), Solar.R, Day) # selecting the Ozone, Solar.R and Day columns
+select(airquality, Ozone, Solar.R, Day) # selecting the Ozone, Solar.R and Day columns
 ```
 
 ```{r}
@@ -668,8 +716,11 @@ select(airquality, -(Wind:Month)) # offsetting Wind and Month from the airqualit
 
 filter(airquality, Month > 5| Month < 9, Day < 3) # filter values in Month greater than 5 and less than 9, Day values less than 3
 
-filter(airquality, Day == 1 | Day == 2) # filter values of Day = 1 or 2
+filter(airquality, Day == 1 | Day == 5) # filter values of Day = 1 or 2
 
+```
+
+```{r}
 arrange(airquality,Ozone) # arrange based on Ozone
 
 arrange(airquality, Solar.R) # arrange based on Solar.R
@@ -701,11 +752,11 @@ summarize (by_month, min(Wind), mean(Wind), max(Wind))
 library (tidyr)
 library(ggplot2)
 
-airquality %>% mutate(Month_Day = Month + Day, Temp_Wind = Temp + Wind)
+airquality |> mutate(Month_Day = Month + Day, Temp_Wind = Temp + Wind)
 
-airquality %>% transmute(Month_Day = Month + Day, Temp_Wind = Temp + Wind) %>% ggplot() + geom_point(aes(x = Month_Day, y = Temp_Wind))
+airquality |> transmute(Month_Day = Month + Day, Temp_Wind = Temp + Wind) |> ggplot() + geom_point(aes(x = Month_Day, y = Temp_Wind), col = "blue")
 
-airquality %>% transmute(Mean_wind = mean(Wind), Mean_Temp = mean(Temp)) %>% ggplot(aes(x = Mean_wind, y = Mean_Temp)) + geom_line()
+airquality |> transmute(Mean_wind = mean(Wind), Mean_Temp = mean(Temp)) |> ggplot() + geom_point(aes(x = Mean_wind, y = Mean_Temp))
 ```
 
 ```{r}
@@ -714,8 +765,10 @@ airquality %>% qplot (Ozone, data = ., geom = "density")
 airquality %>% qplot (Solar.R, data = ., geom = "density")
 
 airquality %>% qplot (Temp, data = ., geom = "density")
+```
 
-airquality %>% qplot (Month, data = ., geom = "density")
+```{r}
+airquality |> qplot (Month, data = ., geom = "density")
 
 airquality %>% qplot (Wind, data = ., geom = "density")
 
@@ -778,6 +831,8 @@ quantile(X,0.25,type = 7)
 
 quantile(X,0.75,type = 7)
 
+quantile(X, 0.4, type = 7)
+
 median(X)
 
 summary(X)
@@ -788,7 +843,7 @@ sd(X)
 
 ### Interquartile Range
 
-The interquartile range (IQR) is a measure of statistical dispersion, or how spread out the values in a dataset are. The IQR is calculated as the difference between the 75th percentile (Q3) and the 25th percentile (Q1) of the dataset. The IQR is used to identify outliers in a dataset.
+`The interquartile range (IQR)` is a measure of statistical dispersion, or how spread out the values in a dataset are. The IQR is calculated as the difference between the 75th percentile (Q3) and the 25th percentile (Q1) of the dataset. The IQR is used to identify outliers in a dataset.
 
 ```{r}
 # Interquartile Range
@@ -798,7 +853,7 @@ irq(X)
 
 ### Variance and Standard Deviation
 
-`Variance` and `standard deviation` are measures of statistical dispersion. Variance is the average of the squared differences between each value in the dataset and the mean of the dataset. Standard deviation is the square root of the variance. Variance and standard deviation are used to measure the spread of the values in a dataset.
+`Variance` and `Standard deviation` are measures of statistical dispersion. Variance is the average of the squared differences between each value in the dataset and the mean of the dataset. Standard deviation is the square root of the variance. Variance and Standard deviation are used to measure the spread of the values in a dataset.
 
 ```{r}
 # Variance and Standard Deviation
@@ -810,36 +865,33 @@ cf = c(course, 0, course)
 
 cf
 
-vw <- 2 * course + cf + 1
-vw
 ```
 
 ```{r}
 var(course)
 
-sum((course - mean(course)) ^ 2 / (length(course) - 1))
+#sum((course - mean(course)) ^ 2 / (length(course) - 1))
 
-sd(course)
+#sd(course)
 
-sqrt(var(course))
+#sqrt(var(course))
 
 std = function(x) sqrt(var(x))
+std(course)
 ```
 
 ```{r}
-std(course)
+sqrt(course) # square root of course
 
-sqrt(course)
+sum(course) # sum of course
 
-sum(course)
+prod(course) # product of course
 
-prod(course)
+sort(course) # sort values of course
 
-sort(course)
+order(course) # order values of course based on idexes
 
-order(course)
-
-sqrt(-14 + 9i)
+sqrt(-14 + 9i) # square root of complex number
 ```
 
 ### Coefficient of Variation
@@ -847,7 +899,7 @@ sqrt(-14 + 9i)
 `Coefficient of variation (CV)` is a measure of relative variability. The CV is calculated as the standard deviation divided by the mean of the dataset. The CV is used to compare the variability of datasets with different units of measurement.
 
 ```{r}
-cv = function(x) ( sd(x) / mean(x) )
+cv <- function(x) ( sd(x) / mean(x) )
 cv(course)
 ```
 
@@ -856,11 +908,11 @@ cv(course)
 `Visualization of qualitative data` is an important step in data analysis. Qualitative data is data that is categorical or non-numeric. Visualization of qualitative data can help identify patterns and trends in the data. Bar charts, pie charts, and contingency matrices are commonly used to visualize qualitative data.
 
 ```{r}
-mo = c("car","car","bus", "metro","metro","car","metro","metro","foot","car","foot","bus","bus","metro","metro","car","car","car","metro","car") # dataset of employee's 
+mo = c("car","car","bus","metro","metro","car","metro","metro","foot","car","foot","bus","bus","metro","metro","car","car","car","metro","car") # dataset of employee's 
 mo
 
 table(mo) # creating a table of mo
-prop.table(table(mo)) # creating a table of mo
+prop.table(table(mo)) # creating a table of mo based on proportion
 data.frame(mo)# creating a dataframe of mo
 ```
 
@@ -869,9 +921,9 @@ data.frame(mo)# creating a dataframe of mo
 `Bar charts` are used to visualize the frequency of categorical data. Bar charts are used to compare the frequency of different categories in a dataset. Bar charts are used to visualize the distribution of categorical data.
 
 ```{r}
-barplot(table(mo)) # creating a bar chart of mo
+barplot(table(mo), col = c("red", "blue", "black","green" )) # creating a bar chart of mo
 
-barplot(prop.table(table(mo))) # creating a bar chart of mo
+barplot(prop.table(table(mo)), col = c("orange", "pink", "purple","violet" )) # creating a bar chart of mo
 ```
 
 ### Pie Chart
@@ -897,8 +949,9 @@ mg
 
 gm = data.frame(mo,g) # creating a dataframe of mo and g
 gm
+```
 
-
+```{r}
 margin.table(mg, 1) # creating a margin table of mg
 
 margin.table(mg,2) # creating a margin table of mg
@@ -908,6 +961,7 @@ prop.table(mg)     # creating a table of mg
 prop.table(mg,1)   # creating a table of mg
 
 prop.table(mg,2)   # creating a table of mg
+
 ```
 
 ### Stacked Bar Charts and Grouped Bar Charts
@@ -915,25 +969,28 @@ prop.table(mg,2)   # creating a table of mg
 `Stacked bar charts` are used to visualize the relationship between two categorical variables. Stacked bar charts are used to compare the frequency of different categories in one variable for each category in another variable. Stacked bar charts are used to visualize the relationship between two categorical variables.
 
 ```{r}
-barplot(mg, col = c("red","blue", "pink","green")) # creating a bar chart of mg
+barplot(mg, col = c("orange","blue", "pink","green")) # creating a bar chart of mg
 
+barplot(mg,xlim=c(0,2), xlab="Gender", length =levels(mo), col = c("orange","blue", "pink","green")) # creating a bar chart of mg
 
-barplot(mg,xlim=c(0,2), xlab="Gender", length=levels(mo), col = c("red","blue", "pink","green")) # creating a bar chart of mg
+barplot(mg,xlim=c(0,2), xlab = "Transportation", length =levels(g), col = c("orange","blue", "pink","green")) # creating a bar chart of mg
 
-barplot(mg,xlim=c(0,2), xlab="Transportation", length=levels(g), col = c("red","blue", "pink","green")) # creating a bar chart of mg
-
-barplot(prop.table(mg,1), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Gender", legend=levels(mo), beside=T, col = c("red","blue", "pink","green")) # creating a bar chart of mg
+```
+```{r}
+barplot(prop.table(mg,1), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Gender", legend=levels(mo), beside=T, col = c("orange","green")) # creating a bar chart of mg
 
 mg = table(g,mo) # creating a contingency  of g and mo
-barplot(prop.table(mg,2), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Transportation", legend=levels(g), beside=T, col= c("red", "green")) # creating a bar chart of mg
+barplot(prop.table(mg,2), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Transportation", legend=levels(g), beside=T, col= c("orange", "green")) # creating a bar chart of mg
+
 ```
+
 
 ### Histograms
 
 `Histograms` are used to visualize the distribution of numerical data. Histograms are used to show the frequency of different values in a dataset. Histograms are used to visualize the distribution of numerical data.
 
 ```{r}
-xo = c(10, 10, 5, 9, 7, 6,8,6,5,8, 10, 7, 7,8, 5, 6,4,7,9,7, 4,8, 10,10, 7,4,9,5,8,9) # creating a vector
+xo = c(10, 10, 5, 9, 7, 6,8,6,5,8, 10, 7, 7,8, 5, 6,4,7,9,7, 4,8, 10,10, 7,4,9,5,8,9) # creating a vector of xo
 
 table(xo) # creating a table of xo
 
@@ -941,25 +998,32 @@ data.frame(xo) # creating a dataframe of xo
 
 prop.table(table(xo)) # creating a table of xo
 #?prop.table
+```
 
+```{r}
+hist(xo, col = c("orange","lightblue", "pink","lightgreen", "purple", "violet","brown")) # creating a histogram of xo
 
-hist(xo, col = c("red","blue", "pink","green")) # creating a histogram of xo
+hist(xo, nclass = 3, col = c("lightblue", "pink","lightgreen")) # creating a histogram of xo
 
-hist(xo, nclass = 3, col = c("red","blue", "pink","green")) # creating a histogram of xo
 ```
 
 ```{r}
 wo = c (1950, 2090, 2700, 3350, 4200, 3720, 4400, 2980, 3850, 4550, 3050, 2350, 1850, 2820, 3670, 2950, 3750, 1850, 2420, 3150, 3000, 3470, 3920, 3100, 2400, 2900, 2650, 3450, 3650, 4020, 4450, 3120, 3660, 3070, 3550, 2020, 3500, 2500, 3780, 3940, 3540, 2800, 4450, 1950, 3020, 2800, 3500, 1480, 4495,2850, 3100, 2250,3300, 4100, 3220, 3600,2130, 4020, 4075) # creating a vector
 
-hist(wo, col = c("red","blue", "pink","green")) # creating a histogram of wo
+table(wo)
 
-hist(wo, nclass=4, col = c("red","blue", "pink","green")) # creating a histogram of wo
+hist(wo, col = c("orange","black", "pink","lightgreen")) # creating a histogram of wo
 
-hist(wo, breaks= seq(from = 1000, to=5000, by=300), col = c("red","blue", "pink","green")) # creating a histogram of wo
+hist(wo, nclass=4, col = c("orange","black", "pink","lightgreen")) # creating a histogram of wo
+```
 
-hist(wo, probability=T, col = c("red","blue", "pink","green")) # creating a histogram of wo
+```{r}
+hist(wo, breaks= seq(from = 1000, to=5000, by=300), col = c("orange","lightblue", "pink","lightgreen")) # creating a histogram of wo
+
+hist(wo, probability=T, col = c("orange","lightblue", "pink","lightgreen")) # creating a histogram of wo
 
 rug(jitter(wo)) # creating a histogram of wo
+
 ```
 
 ### Frequency Polygon
@@ -967,7 +1031,7 @@ rug(jitter(wo)) # creating a histogram of wo
 `Frequency polygons` are used to visualize the distribution of numerical data. Frequency polygons are used to show the frequency of different values in a dataset. Frequency polygons are used to visualize the distribution of numerical data.
 
 ```{r}
-temp = hist(wo, col = c("red","blue", "purple","green")) # creating a histogram of wo
+temp = hist(wo, col = c("pink","lightblue", "purple","lightgreen")) # creating a histogram of wo
 temp
 
 lines(c(min(temp$breaks), (temp$mids),max(temp$breaks)), c(0,temp$counts,0),type="l") # creating a frequency polygon of wo
@@ -978,9 +1042,9 @@ lines(c(min(temp$breaks), (temp$mids),max(temp$breaks)), c(0,temp$counts,0),type
 `Boxplots` are used to visualize the distribution of numerical data. `Boxplots` are used to show the median, quartiles, and outliers in a dataset. `Boxplots` are used to visualize the distribution of numerical data.
 
 ```{r}
-boxplot(wo, horizontal = T, col = c("red")) # creating a boxplot of wo
+boxplot(wo, horizontal = T, col = c("orange")) # creating a boxplot of wo
 
-boxplot(wo, vertical = T, col = c("red")) # creating a boxplot of wo
+boxplot(wo, vertical = T, col = c("orange")) # creating a boxplot of wo
 
 fivenum(wo) # summary  of wo
 
@@ -998,7 +1062,7 @@ w2 = c(4450, 3120, 3660, 3070, 3550, 2020, 3500, 2500, 3780, 3940, 3340, 2800, 2
 
 fivenum(w2) # summary of w2
 
-boxplot(w1, w2, names = c("Sample 1", "Sample 2"), col = c("purple", "yellow" )) # creating a boxplot of w1 and w2
+boxplot(w1, w2, names = c("Sample 1", "Sample 2"), col = c("purple", "pink" )) # creating a boxplot of w1 and w2
 ```
 
 ## Classification and Prediction
@@ -1013,6 +1077,10 @@ return(1/(2*m) * sum((X%*%th - y)^2))
 
 computeCost(5,6,7) # computing the cost of 5,6,7
 
+#computeCost(9, 8,7)
+
+```
+```{r}
 grad_desc <- function(X, y, theta,alpha, lambda, num_iters){
 m <- length(y)
 F_history <- c(rep(0, num_iters)) # creating a vector of zeros
@@ -1028,6 +1096,7 @@ return(list("theta" = theta, "F_history" = F_history))
 }
 
 grad_desc(2,3,5,0.1,7.5,2) # computing the output
+
 ```
 
 ### Clustering
@@ -1045,7 +1114,8 @@ iris_new$Species <- NULL # assigning the species class to null
 kc <- kmeans(iris_new, 3) # creating a kmeans of iris_new
 
 table(iris$Species, kc$cluster) # creating a table of iris and kc
-
+```
+```{r}
 plot(iris_new[c("Sepal.Length", "Sepal.Width")], col = kc$cluster) # visualizing the  iris datasets 
 
 points(kc$centers[,c("Sepal.Length","Sepal.Width")], col = 1:3, pch = 8, cex = 2)
@@ -1053,6 +1123,7 @@ points(kc$centers[,c("Sepal.Length","Sepal.Width")], col = 1:3, pch = 8, cex = 2
 plot(iris_new[c("Petal.Length", "Petal.Width")], col = kc$cluster) # visualizing the iris dataset 
 
 points(kc$centers[,c("Petal.Length","Petal.Width")], col = 1:3, pch = 8, cex = 2)
+
 ```
 
 ```{r}

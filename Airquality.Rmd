@@ -1,0 +1,83 @@
+---
+title: "Airquality"
+author: "Charles"
+date: "`r Sys.Date()`"
+output: 
+ html_document:
+    df_print: paged
+    code_download: true
+    theme: sandstone
+    toc: true
+---
+
+```{r setup, include=FALSE, message= FALSE }
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# import R packages
+
+```{r}
+library(tidyverse)
+```
+
+# Import the Titanic dataset
+
+```{r}
+data(airquality)
+
+# converting it to dataframe
+as.data.frame(airquality)
+
+# remove  missing values
+clean_data <- na.omit(airquality)
+as.data.frame(clean_data)
+```
+
+# Summarize and Filtering
+
+```{r}
+summary(airquality)
+
+
+# filtering for values > 41 in Ozone column
+filter(clean_data, Ozone > 41)
+
+# filtering for values > 5 in Month column
+filter(clean_data, Month > 5)
+```
+
+# Visualization
+
+```{r warning=FALSE}
+clean_data %>% qplot (Ozone, Temp, data = ., geom =  "boxplot")
+
+clean_data %>% qplot (Ozone, Wind, data = ., col = "red", geom =  "boxplot")
+
+clean_data %>% qplot (Wind, data = ., geom =  "density")
+
+clean_data %>% qplot (Temp, data = ., geom =  "density")
+
+clean_data %>% qplot (Month, data = ., geom =  "density")
+
+clean_data %>% qplot (Day, data = ., geom =  "histogram", bins = 5)
+```
+
+```{r}
+# Selecting only Ozone and Wind from the dataset
+clean_data %>% select(Ozone, Wind)
+
+# Dividing Wind by 2 and Day by 5 to create new column
+clean_data %>% transmute(Wind_div = Wind / 2, Day_div = Day / 5)
+```
+
+```{r}
+line <- clean_data %>% lm(Ozone ~ Wind, data = .)
+
+predict(line, clean_data) %>% head
+
+# Calculating the root mean square error
+rmse <- function(x,t) sqrt(mean(sum((t - x)^2)))
+
+rmse(predict(line, clean_data), clean_data$Wind)
+rmse(predict(line, clean_data), clean_data$Ozone)
+```

@@ -1,0 +1,459 @@
+---
+title: "Data transformation Notebook"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code.
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*.
+
+```{r setup, include=FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+You can also add a new chunk by typing three backticks followed by `{r}` and pressing *Enter*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+```{r}
+data = cars
+
+data
+```
+
+### Summary
+Summarize the contents of a data frame. 
+
+```{r}
+summary(data)
+
+data |> count(speed)
+
+data |> count(dist)
+```
+
+### Group
+
+```{r}
+#mtcars
+
+mtcars |> group_by(cyl) |> summary(avg = mean(mpg))
+
+#mtcars |> group_by(mpg) |> summary(med = median(cyl))
+```
+
+```{r}
+g_mtcars <- mtcars |> group_by(cyl)
+
+ungroup(g_mtcars)
+```
+
+```{r}
+#starwars
+
+starwars %>% rowwise() %>% mutate(film_count = length(films))
+
+starwars |> rowwise() |> transmute(film_count = length(films))
+
+starwars |> rowwise() |> transmute(spe = length (species))
+
+```
+
+### Manipulate Cases
+
+#### Extract Cases
+
+```{r}
+#mtcars
+mtcars |> filter(mpg > 20 & 30)
+
+mtcars |> filter(cyl > 6)
+```
+
+```{r}
+mtcars |> filter(mpg < 20)
+```
+
+```{r}
+mtcars |> filter(disp > 120 & 360)
+```
+
+```{r}
+mtcars |> distinct(gear)
+
+mtcars |> distinct(cyl)
+```
+
+```{r}
+mtcars |> distinct(disp)
+```
+
+```{r}
+mtcars |> distinct(am)
+```
+
+```{r}
+mtcars |> slice(10:15)
+```
+
+```{r}
+mtcars |> slice(1:15)
+```
+
+```{r}
+mtcars |> slice_sample(n = 5, replace = TRUE)
+```
+
+```{r}
+mtcars |> slice_sample(n = 5, replace = FALSE)
+```
+
+```{r}
+mtcars |> slice_min(mpg, prop = 0.25)
+```
+
+```{r}
+mtcars |> slice_min(disp, prop = 0.25)
+```
+
+```{r}
+mtcars |> slice_head(n = 5)
+```
+
+```{r}
+mtcars |> slice_tail(n = 5)
+```
+```{r}
+mtcars |> slice_max(disp, prop = 0.30)
+```
+
+#### ARRANGE CASES
+
+```{r}
+mtcars |> arrange(mpg)
+
+mtcars |> arrange(desc(mpg))
+```
+
+#### Add Cases
+
+```{r}
+cars |> add_row(speed = c(19, 4, 5, 9, 10), dist = c(1, 4, 7, 39, 89))
+```
+
+```{r}
+#?base::Logic
+
+#?Comparison
+```
+
+### Manipulate Variables
+
+#### Extract Variables
+
+```{r}
+mtcars |> pull(wt)
+```
+
+```{r}
+mtcars |> pull(disp)
+```
+
+```{r}
+mtcars |> pull(mpg)
+```
+
+```{r}
+mtcars |> pull(gear)
+```
+
+```{r}
+mtcars |> select(mpg, wt)
+```
+
+```{r}
+mtcars |> select(am, disp)
+```
+
+```{r}
+mtcars |> relocate(mpg, cyl, .after = last_col())
+
+mtcars |> relocate (mpg, cyl, .before = last_col())
+```
+
+```{r}
+mtcars |> select(mpg:am)
+
+mtcars |> select(mpg: wt)
+```
+
+#### MANIPULATE MULTIPLE VARIABLES AT ONCE
+
+```{r}
+mtcars |> rowwise() |> mutate(x_total = sum(c_across(1:2)))
+
+mtcars |> rowwise() |> transmute(x_mean = mean(c_across(1:4)))
+```
+
+#### MAKE NEW VARIABLES
+
+```{r}
+mtcars |> mutate(gpm = 1 / mpg)
+
+mtcars |> mutate(gpm = 1 / mpg, .keep = "none")
+```
+
+```{r}
+mtcars |> rename(miles_per_gallon = mpg)
+```
+
+### Vectorized Functions
+
+#### TO USE WITH MUTATE ()
+
+##### OFFSET
+
+```{r}
+lag(mtcars) # shift row 1 down
+
+lead(mtcars) # shift last row up
+```
+
+##### CUMULATIVE AGGREGATE
+
+-   dplyr::cumall() - cumulative all()
+-   dplyr::cumany() - cumulative any()
+-   cummax() - cumulative max()
+-   dplyr::cummean() - cumulative mean()
+-   cummin() - cumulative min()
+-   cumprod() - cumulative prod()
+-   cumsum() - cumulative sum()
+
+```{r}
+cumall(1:12)
+cumany(1:12)
+cummax(1:12)
+cummean(1:12)
+cummin(1:12)
+cumprod(1:12)
+cumsum(1:12)
+```
+
+##### RANKING
+
+-   dplyr::cume_dist() - proportion of all values \<=
+-   dplyr::dense_rank() - rank w ties = min, no gaps
+-   dplyr::min_rank() - rank with ties = min
+-   dplyr::ntile() - bins into n bins
+-   dplyr::percent_rank() - min_rank scaled to [0,1]
+-   dplyr::row_number() - rank with ties = "first"
+
+```{r}
+cume_dist(1:12)
+dense_rank(1:12)
+min_rank(1:12)
+
+x <- c(5, 1, 3, 2, 2, NA)
+ntile(x, 2)
+ntile(x, 4)
+ntile(1:8, 3)
+
+percent_rank(1:5)
+
+row_number(1:12)
+```
+
+##### MATH
+
+-   +, - , \*, /, \^, %/%, %% - arithmetic ops
+-   log(), log2(), log10() - logs
+-   \<, \<=, \>, \>=, !=, == - logical comparisons
+-   dplyr::between() - x \>= left & x \<= right
+-   dplyr::near() - safe == for floating point numbers
+
+```{r}
+2 + 3
+3 - 7
+3 * 7
+4 / 8
+2 ^ 5
+4 %/% 8
+4 %% 8
+```
+
+```{r}
+log(10)
+log2(10)
+log10(100)
+```
+
+```{r}
+3 < 7
+4 > 8
+3 <= 4
+7 >= 8
+12 != 13
+4 == 4
+```
+
+```{r}
+between(13,12,14)
+near(29.9, 30)
+```
+
+##### MISCELLANEOUS
+
+```{r}
+starwars |> transmute(type = case_when(
+height > 200 | mass > 200 ~ "large",
+species == "Droid" ~ "robot",
+TRUE ~ "other"))
+
+pmax(5:1, pi)
+pmin(5:1, pi)
+```
+
+### Summary Functions
+
+##### COUNT
+
+-   dplyr::n() - number of values/rows
+-   dplyr::n_distinct() - \# of uniques
+-   sum(!is.na()) - \# of non-NAs
+
+```{r}
+#summary(n= n(mtcars))
+n_distinct(cars)
+sum(!is.na(airquality))
+```
+
+##### POSITION
+
+-   mean() - mean, also mean(!is.na())
+-   median() - median
+
+```{r}
+mean(12:30)
+median(12:30)
+```
+
+##### RANK
+
+-   quantile() - nth quantile
+-   min() - minimum value
+-   max() - maximum value
+
+```{r}
+quantile(1:3)
+min(1:30)
+max(1:30)
+```
+
+##### SPREAD
+
+-   IQR() - Inter-Quartile Range
+-   mad() - median absolute deviation
+-   sd() - standard deviation
+-   var() - variance
+
+```{r}
+IQR(1:30)
+mad(1:30)
+sd(1:30)
+var(1:30)
+```
+
+### Row Names
+
+Tidy data does not use row names, which store a variable outside of the columns. To work with the row names, first move them into a column.
+
+```{r}
+a<- mtcars |> rownames_to_column(var = "C")
+a
+
+```
+
+### Combine Tables
+
+#### COMBINE VARIABLES
+
+```{r}
+df <- data.frame(a = 1:4, b = letters[1:4]) # Create a data frame
+df
+
+df2 <- data.frame(a = 5:7, b = letters[5:7])
+rbind(df, df2) # Combine them using their rows
+
+df3 <- data.frame(c = 5:8, d = letters[5:8])
+cbind(df, df3) # Combine them using their columns
+
+```
+
+#### RELATIONAL DATA
+
+```{r}
+left_join(df, df2, by = NULL, copy = FALSE,
+keep = FALSE, na_matches = "na")
+
+right_join(df, df2, by = NULL, copy = FALSE,
+keep = FALSE, na_matches = "na")
+
+inner_join(df, df2, by = NULL, copy = FALSE,
+keep = FALSE, na_matches = "na")
+
+full_join(df, df2, by = NULL, copy = FALSE,
+keep = FALSE, na_matches = "na")
+```
+
+#### COLUMN MATCHING FOR JOINS
+
+```{r}
+left_join(df, df2, by = c("a" = "a", "b" = "b"), copy = FALSE)
+
+right_join(df, df2, by = c("a" = "a", "b" = "b"), copy = FALSE)
+
+inner_join(df, df2, by = c("a" = "a", "b" = "b"), copy = FALSE)
+
+full_join(df, df2, by = c("a" = "a", "b" = "b"), copy = FALSE)
+```
+
+#### COMBINE CASES
+
+```{r}
+bind_rows(df, df2, .id = "source")
+
+bind_cols(df, df3, .name_repair = "unique")
+
+semi_join(df, df2, by = NULL, copy = FALSE)
+
+#cross_join(df, df3, copy = FALSE)
+
+anti_join(df, df2, by = NULL, copy = FALSE)
+
+# Nesting and Unnesting
+nest_join(df, df2, by = NULL, copy = FALSE)
+```
+
+#### SET OPERATIONS
+
+```{r}
+intersect(df, df2)
+
+setdiff(df, df2)
+
+setequal(df, df2)
+
+union(df, df2)
+
+union_all(df, df2)
+```

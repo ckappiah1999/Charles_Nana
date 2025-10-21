@@ -23,15 +23,15 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 2 + 4 # Addition
 
 4 / 2 # Division
-```
 
-```{r}
 3 * 4 # Multiplication
 
 45 - 13 # Subtraction
 
 4L / 5L # Integer Division
+```
 
+```{r}
 4 %% 3 # for integer division with remainder
 
 2 ^ 5 # Exponential
@@ -120,9 +120,11 @@ mean <- function(x) sum(x) / length(x)
 mean(2:24)
 ```
 
-### **Controls loops** {#sec-controls-loops}
+### **Control loops** {#sec-controls-loops}
 
 ```{r}
+# if statement
+
 if (3 > 2) "true"
 
 if (2 < 3) "false" else "true"
@@ -137,8 +139,13 @@ if (2 > 3) {
 ```
 
 ```{r}
+# ifesle statement
+
 x <- 1:5
 ifelse(x > 3, "bar", "baz")
+
+c <- 2 : 7
+ifelse(c <- 6, "Nana", "Kwame")
 
 even_square <- function(x) {
  ifelse (x %% 2 == 0, x ** 2, x)
@@ -147,6 +154,8 @@ even_square(1:9)
 ```
 
 ```{r}
+# for loop
+
 xo <- 1:5 # Assigning values (1 to 5) to variable xo
 total <- 0
 for (element in xo) total <- total + element
@@ -165,6 +174,8 @@ total
 ```
 
 ```{r}
+# While loop
+
 x = -1:-5 # Assigning values (-1 to - 5) to variable x
 total <- 9
 index <- 1
@@ -174,17 +185,20 @@ while (index <= length(x)) {
  total <- total + element
 }
 total
+
 x
+
 summary(x)
 ```
 
 ### Factors
 
 ```{r}
-f <- factor(c("small", "small", "medium",
- "large", "small", "large"))
-f
+(f <- factor(c("small", "small", "medium",
+ "large", "small", "large")))
+
 ordered(f)
+
 summary(f)
 ```
 
@@ -192,8 +206,11 @@ summary(f)
 ff <- factor(c("small", "small", "medium",
  "large", "small", "large"),
  levels = c("small", "medium", "large")) # changing the levels of ff
+
 ff
+
 ordered(ff)
+
 summary(ff)
 ```
 
@@ -259,7 +276,7 @@ df4
 ### Missing Values
 
 ```{r}
-NA + 5
+(NA + 5)
 
 is.na(NA) # checking for a missing number
 
@@ -320,6 +337,10 @@ f <- function(x, y) {
 }
 
 f(2,4)
+
+f(8,9)
+
+f(4, 7)
 ```
 
 ```{r}
@@ -331,6 +352,7 @@ plot_and_fit <- function(d) {
 x <- rnorm(20)
 y <- x + rnorm(20)
 data.frame(x, y) %>% plot_and_fit
+
 ```
 
 ```{r}
@@ -404,7 +426,7 @@ lines[1:5]
 
 ```{r}
 raw_breast_cancer = read.csv("C:/Users/HP/Desktop/Data Science/Machine learning/breast+cancer+wisconsin+original/breast-cancer-wisconsin.data")
-raw_breast_cancer  %>% head(6)
+raw_breast_cancer  |> head(6)
 ```
 
 ```{r}
@@ -541,7 +563,7 @@ raw_breast_cancer %>% as.data.frame(head())
 library(tidyverse)
 
 iris %>% tibble::as_tibble()
-iris %>% tbl_df %>% select(Species,Petal.Width) %>% head()
+iris %>% tbl_df %>% select(Petal.Width,Species) %>% head()
 iris %>% tbl_df %>% select(Sepal.Width,Species) %>% head()
 iris %>% tbl_df %>% select(Species,Petal.Length) %>% head()
 iris %>% tbl_df %>% select(Species,Sepal.Length) %>% head()
@@ -549,57 +571,61 @@ iris %>% tbl_df %>% select(Species,Sepal.Length) %>% head()
 
 ```{r}
 iris %>% tbl_df %>%
-select(Sepal.Width, Petal.Width, Species) %>% head() ## Select Sepal.Width, Petal.Width and Species from iris
+select(Sepal.Width, Petal.Width, Species) %>% head(10) ## Select Sepal.Width, Petal.Width and Species from iris
 ```
 
 ```{r Excluding Petal.Width }
 # Select from Sepal.Width to Petal.length
-iris %>% tbl_df %>% select(Sepal.Length:Petal.Length) %>% head() 
+iris %>% tbl_df %>% select(Sepal.Length:Petal.Length) %>% head(10) 
 ```
 
 ```{r Petal only}
 # Select Petal.Length and Width only
-iris %>% tbl_df %>% select(starts_with("Petal")) %>% head() 
+iris %>% tbl_df %>% select(starts_with("Petal")) %>% head(10) 
 ```
 
 ```{r Length Only, warning=FALSE}
 # Select Petal.Length and Sepal.Length only
-iris %>% tbl_df %>% select(ends_with("Length")) %>% head()
+iris %>% tbl_df %>% select(ends_with("Length")) %>% head(10)
 ```
 
 ```{r etal Only}
 # Select columns containing etal only
-iris %>% tbl_df %>% select(contains("etal")) %>% head()
+iris %>% tbl_df %>% select(contains("etal")) %>% head(10)
+```
+
+```{r}
+iris |> select(Sepal.Length : Petal.Width)
 ```
 
 ```{r al Only}
 # Select columns containing al only
-iris %>% tbl_df %>% select(contains("al")) %>% head()
+iris %>% tbl_df %>% select(contains("al")) %>% head(10)
 ```
 
 ```{r Without Petal}
 # Select columns that matches with t
-iris %>% tbl_df %>% select(matches(".t.")) %>% head()
+iris %>% tbl_df %>% select(matches(".t.")) %>% head(10)
 
-#  selection
-iris %>% tbl_df %>% select(-starts_with("Petal")) %>% head() 
+#  selection without Petal
+iris %>% tbl_df %>% select(-starts_with("Petal")) %>% head(10) 
 ```
 
 ## Mutate
 
 ```{r Petal. (Width + Length)}
 # Creating a new column with Petal width and length
-iris %>% tbl_df %>% mutate(Petal.Width.plus.Length = Petal.Width + Petal.Length) %>%select(Species, Petal.Width.plus.Length) %>% head()
+iris %>% tbl_df %>% mutate(Petal.Width.plus.Length = Petal.Width + Petal.Length) %>% select(Species, Petal.Width.plus.Length) %>% head(100)
 ```
 
 ```{r Sepal. (Width + Length)}
 # Creating a new column with Sepal width and length
-iris %>% tbl_df %>% mutate(Sepal.Width.plus.Length = Sepal.Width + Sepal.Length) %>% select(Species, Sepal.Width.plus.Length) %>% head()
+iris %>% tbl_df %>% mutate(Sepal.Width.plus.Length = Sepal.Width + Sepal.Length) %>% select(Species, Sepal.Width.plus.Length) %>% head(30)
 ```
 
 ```{r Petal,Sepal.(Width + Length)}
 # Creating a new column with Petal.Sepal width and length
-iris %>% tbl_df %>% mutate(Petal.Width.plus.Length = Petal.Width + Petal.Length,Sepal.Width.plus.Length = Sepal.Width + Sepal.Length) %>% select(Species,Petal.Width.plus.Length, Sepal.Width.plus.Length) %>% head()
+iris %>% tbl_df %>% mutate(Petal.Width.plus.Length = Petal.Width + Petal.Length,Sepal.Width.plus.Length = Sepal.Width + Sepal.Length) %>% select(Species,Petal.Width.plus.Length, Sepal.Width.plus.Length) %>% head(30)
 ```
 
 ## Transmute
@@ -612,6 +638,8 @@ iris %>% tbl_df %>% transmute(Species, Petal.Width.plus.Length = Petal.Width + P
 ```{r}
 # Creating new column with transmute
 iris %>% tbl_df %>% transmute (Species, Sepal.Length.plus.Sepal.Width = Sepal.Width + Sepal.Length) %>% head()
+
+iris |> transmute (Species, Sepal.Length.plus.Sepal.Width = Sepal.Width + Sepal.Length) %>% head(20)
 ```
 
 ## Arrange
@@ -669,7 +697,7 @@ iris %>% summarise(Mean.Petal.Length = mean(Petal.Length),
 
 ```{r Std.Length}
 # Summarize (sd) using Petal and Sepal Length
-iris %>% summarise(Std.Petal.Length = sd(Petal.Length), Std.Sepal.Length = sd(Sepal.Length))
+iris |> summarise(Std.Petal.Length = sd(Petal.Length), Std.Sepal.Length = sd(Sepal.Length))
 ```
 
 ```{r Mean.Width}
@@ -680,7 +708,7 @@ iris %>% summarise(Mean.Petal.Width = mean(Petal.Width),
 
 ```{r Var.Width}
 # Summarize (var) using Petal and Sepal Width
-iris %>% summarise(Var.Petal.Width = var(Petal.Width), Var.Seapl.Width = var(Sepal.Width)) 
+iris %>% summarise(Var.Petal.Width = var(Petal.Width), Var.Sepal.Width = var(Sepal.Width)) 
 ```
 
 ```{r Mean.Species.Petal}
@@ -700,7 +728,7 @@ iris %>% group_by(Species) %>% summarise(Mean.Sepal.Length = mean(Sepal.Length))
 
 ```{r Median.Species.Petal}
 # Summarize (median) using Petal.Width base on the species column
-iris %>% group_by(Species) %>%
+iris |> group_by(Species) |>
  summarize(Median.Petal.Width = median(Petal.Width))
 ```
 
@@ -753,11 +781,10 @@ formatted_breast_cancer %>% group_by(Class) %>% summarise(mean.Cell.size = mean(
 # Arrange by Cell.size, group_by Cell.size and Call, summarize by ClassCount
 formatted_breast_cancer %>% arrange(Cell.size) %>% group_by(Cell.size, Class) %>% summarise(ClassCount = n()) 
  
-formatted_breast_cancer %>%
- group_by(Class, as.factor(Cell.size)) %>%
+formatted_breast_cancer %>% group_by(Class, as.factor(Cell.size)) %>%
  summarise(mean.Cl.thickness = mean(Cl.thickness))
 
-#formatted_breast_cancer %>%group_by(as.factor(Cell.size), Class) %>% summarise(mean.thickness = mean(Cl.thickness)) 
+formatted_breast_cancer %>%group_by(as.factor(Cell.size), Class) %>% summarise(mean.Cl.thickness = mean(Cl.thickness)) 
 ```
 
 ```{r Box_plot}
@@ -772,7 +799,7 @@ iris %>% select(Species, Petal.Length) %>% qplot(Species, Petal.Length, geom = "
 ## Gather
 
 ```{r Clean data}
-iris %>% gather(key = Attribute, value = Measurement,Sepal.Length, Sepal.Width) %>% select(Species, Attribute, Measurement) %>% head() 
+iris %>% gather(key = Attribute, value = Measurement,Sepal.Length, Sepal.Width) %>% select(Species, Attribute, Measurement) %>% head(20) 
 ```
 
 ```{r Plot_facet}
@@ -782,7 +809,7 @@ iris %>% gather(key = Attribute, value = Measurement, Sepal.Length, Sepal.Width)
 
 ```{r Clean_2}
 iris %>% gather(key = Attribute, value = Measurement,
- Petal.Length, Petal.Width) %>% select(Species, Attribute, Measurement) %>% head() 
+ Petal.Length, Petal.Width) %>% select(Species, Attribute, Measurement) %>% head(10) 
 ```
 
 ```{r Plot_facet_3}
@@ -806,7 +833,7 @@ library(ggplot2)
 library(graphics)
 x = rnorm(100) # random 100 points
 y = rnorm(100) # random 100 points
-plot(x,y, type="p", main ="X against Y", col = "lightgreen")
+plot(x,y, type ="p", main ="X against Y", col = "lightgreen")
 ```
 
 ```{r}
@@ -814,7 +841,7 @@ data(cars) # initiating cars dataset
 
 cars %$% plot(speed, dist, main = "Cars data datasets", xlab = "Speed", ylab = "Stopping distance")
 
-cars %>% plot(dist ~ speed, data = ., main ="Cars data datasets", col = "red")
+#cars %>% plot(dist ~ speed, data = ., main ="Cars data datasets", col = "red")
 ```
 
 ```{r}
@@ -847,7 +874,7 @@ longley %>% lines(Armed.Forces ~ Year, data = ., col = "green") # adding lines t
 
 ```{r}
 cars %>% plot(dist ~ speed, data = ., xlab = "Speed", ylab = "Stopping Distance") # plotting the cars dataset
-cars %>% lm(dist ~ speed, data = .) %>% abline(col = "red") # fitting a line to the plot 
+cars %>% lm(dist ~ speed, data = .) %>% abline(col = "pink") # fitting a line to the plot 
 ```
 
 ```{r}
@@ -865,7 +892,7 @@ iris %>% qplot(Petal.Width, Petal.Length, color = Species, data = .)  # plotting
 
 iris %>% qplot(Sepal.Width, Sepal.Length, color = Species, data = .)  # plotting the iris dataset
 
-cars %>% qplot(speed, data = ., bins = 10) # Histogram of speed
+#cars %>% qplot(speed, data = ., bins = 10) # Histogram of speed
 ```
 
 ### Geometries
@@ -900,11 +927,11 @@ iris %>% ggplot + geom_point(aes(x = Sepal.Width, y = Sepal.Length), col = "brow
 ```
 
 ```{r Cars}
-cars %>% ggplot + geom_histogram(aes(x = speed), bins = 10, col = "blue")
+cars %>% ggplot + geom_histogram(aes(x = speed), bins = 10, col = "lightblue")
 
 cars %>% ggplot + geom_density(aes(x = speed))
 
-cars %>% ggplot + geom_histogram(aes(x=dist), bins = 10, col = "pink")
+cars %>% ggplot + geom_histogram(aes(x=dist), bins = 10, col = "lightpink")
 
 cars %>% ggplot + geom_density(aes(x=dist))
 ```
@@ -918,15 +945,15 @@ cars %>% ggplot(aes(x = dist, y = after_stat(count))) + geom_histogram(bins = 10
 ```{r Linear models}
 cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x)
 
-cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth( method = "loess",formula =  y ~ x) 
+cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth( method = "loess", formula =  y ~ x) 
 ```
 
 ```{r Longley}
-longley %>% ggplot(aes(x = Year)) + geom_line(aes(y = Unemployed)) + geom_line(aes(y = Armed.Forces), color = "blue") 
+longley %>% ggplot(aes(x = Year)) + geom_line(aes(y = Unemployed), color = "green") + geom_line(aes(y = Armed.Forces), color = "blue") 
 ```
 
 ```{r Line.Point}
-longley %>% ggplot(aes(x = Year)) + geom_point(aes(y = Unemployed)) + geom_point(aes(y = Armed.Forces), color = "blue") + geom_line(aes(y = Unemployed)) + geom_line(aes(y = Armed.Forces), color = "blue") 
+longley %>% ggplot(aes(x = Year)) + geom_point(aes(y = Unemployed), color = "green") + geom_point(aes(y = Armed.Forces), color = "blue") + geom_line(aes(y = Unemployed)) + geom_line(aes(y = Armed.Forces), color = "orange") 
 ```
 
 ```{r Legend.1}
@@ -934,36 +961,33 @@ longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
  ggplot(aes(x = Year, y = value, color = key)) + geom_line() + geom_point()
 
 longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
- ggplot(aes(x = Year, y = value)) + geom_line() +
+ ggplot(aes(x = Year, y = value, color = key)) + geom_line() +
  facet_grid(key ~ .)  # Facet row-wise with lines
 
-longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
- ggplot(aes(x = Year, y = value)) + geom_point() +
- facet_grid(key ~ .) # Facet row-wise with points
+#longley %>% gather(key, value, Unemployed, Armed.Forces) %>% gplot(aes(x = Year, y = value, color = key)) + geom_point() + facet_grid(key ~ .) # Facet row-wise with points
 
-longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
- ggplot(aes(x = Year, y = value)) + geom_line() +
- facet_grid(. ~ key  ) # Facet column-wise with lines
+```
 
-longley %>% gather(key, value, Unemployed, Armed.Forces) %>%
- ggplot(aes(x = Year, y = value)) + geom_point() +
- facet_grid(. ~ key) # Facet column-wise with points
+```{r}
+longley %>% gather(key, value, Unemployed, Armed.Forces) %>% ggplot(aes(x = Year, y = value, color = key)) + geom_line() +facet_grid(. ~ key  ) # Facet column-wise with lines
+
+#longley %>% gather(key, value, Unemployed, Armed.Forces) %>% ggplot(aes(x = Year, y = value, color = key)) + geom_point() + facet_grid(. ~ key) # Facet column-wise with points
 ```
 
 ```{r Legend.2}
 # row-wise 
-iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value)) + geom_boxplot() + facet_grid(Measurement ~ .) 
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value, color = Measurement)) + geom_boxplot() + facet_grid(Measurement ~ .) 
 
 # Column wise
-iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value)) + geom_boxplot() + facet_grid(. ~ Measurement ) 
+#iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value,color = Measurement )) + geom_boxplot() + facet_grid(. ~ Measurement ) 
 ```
 
 ```{r Mapped}
-iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value)) +geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y") 
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value, color = Measurement)) +geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y") 
 
 label_map <- c(Petal.Width = "Petal Width",Petal.Length = "Petal Length", Sepal.Width = "Sepal Width", Sepal.Length = "Sepal Length")
  
-iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value)) + geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map))
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value, color = Measurement)) + geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map))
 ```
 
 ### Scaling
@@ -971,29 +995,31 @@ iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Va
 ```{r Continuous }
 cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_continuous("Speed") + scale_y_continuous("Stopping Distance") 
  
-longley %>% gather(key, value, Unemployed, Armed.Forces) %>% ggplot(aes(x = Year, y = value)) + geom_line() + geom_point() +scale_x_continuous(breaks = 1947:1962) + facet_grid(key ~ .)
+longley %>% gather(key, value, Unemployed, Armed.Forces) %>% ggplot(aes(x = Year, y = value, color = key)) + geom_line() + geom_point() + scale_x_continuous(breaks = 1947:1962) + facet_grid(key ~ .)
 ```
 
 ```{r Reverse}
-cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_reverse("Speed") + scale_y_continuous("Stopping Distance") 
+# Reverse the x axis 
+cars |> ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_reverse("Speed") + scale_y_continuous("Stopping Distance") 
 
-cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_continuous("speed") + scale_y_reverse("Stopping Distance")
+# Reverse the y axis
+cars |> ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = "lm", formula =  y ~ x) + scale_x_continuous("speed") + scale_y_reverse("Stopping Distance")
 ```
 
 ```{r Species.Modify}
-iris %>% ggplot(aes(x = Species, y = Petal.Length)) + geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) 
+iris |> ggplot(aes(x = Species, y = Petal.Length)) + geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) 
 
-iris %>% ggplot(aes(x = Species, y = Petal.Length)) + geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) 
+iris |> ggplot(aes(x = Species, y = Petal.Length)) + geom_boxplot() + geom_jitter(width = 0.1, height = 0.1) + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) 
 
-iris %>% ggplot(aes(x = Species, y = Sepal.Length)) + geom_boxplot() + geom_jitter(width = 0.001, height = 0.001) + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) 
+iris |> ggplot(aes(x = Species, y = Sepal.Length)) + geom_boxplot() + geom_jitter(width = 0.001, height = 0.001) + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) 
 
 #??geom_jitter
 ```
 
 ```{r Color.Species}
-iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value, fill = Species)) + geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map))
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value, fill = Species)) + geom_boxplot() + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map)) + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) 
 
-iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value, fill = Species)) + geom_boxplot() + scale_fill_manual(values = c("red", "green", "blue")) + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map)) 
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value, fill = Species)) + geom_boxplot() + scale_fill_manual(values = c("orange", "lightgreen", "lightblue")) + facet_grid(Measurement ~ ., scale = "free_y", labeller = labeller(Measurement = label_map)) + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) 
 ```
 
 ```{r Greens}
@@ -1007,10 +1033,7 @@ iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Va
 ```
 
 ```{r Reds}
-iris %>% gather(Measurement, Value, -Species) %>%
- ggplot(aes(x = Species, y = Value, fill = Species)) +
- geom_boxplot() + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) + scale_fill_brewer(palette = "Reds") +
- facet_grid(Measurement ~ ., switch = "y", labeller = labeller(Measurement = label_map)) + coord_flip() 
+iris %>% gather(Measurement, Value, -Species) %>% ggplot(aes(x = Species, y = Value, fill = Species)) + geom_boxplot() + scale_x_discrete(labels = c("setosa" = "Setosa", "versicolor" = "Versicolor", "virginica" = "Virginica")) + scale_fill_brewer(palette = "Reds") + facet_grid(Measurement ~ ., switch = "y", labeller = labeller(Measurement = label_map)) + coord_flip() 
 ```
 
 ```{r Blues}
