@@ -1091,7 +1091,7 @@ iris %>% sample_frac(size = 0.02) # Randomly sample 2% of iris dataset
 
 cars %>% sample_n(size = 25) # Randomly sample 25 of cars dataset
 
-cars %>% sample_frac(sixe = 0.25) %>% ggplot(aes(x = speed, y = dist)) + geom_point() # Randomly sample 25% of cars dataset
+cars %>% sample_frac(size = 0.25) %>% ggplot(aes(x = speed, y = dist)) + geom_point() # Randomly sample 25% of cars dataset
 
 library(pryr)
 
@@ -1110,6 +1110,9 @@ mem_change(d)
 
 d %>% ggplot(aes(x = x, y = y)) + geom_density_2d()
 
+mem_change(d)
+
+d |> ggplot(aes(x = x, y = y)) + geom_area()
 mem_change(d)
 ```
 
@@ -1151,7 +1154,7 @@ iris_sqlite %>% group_by(Species) %>% summarise(mean.Petal.Length = mean(Petal.L
 ### Linear Regression
 
 ```{r Regression}
-library(tidyverse) # 
+library(tidyverse) 
 library( magrittr)
 
 cars %>% head()
@@ -1183,9 +1186,7 @@ fitting_error <- Vectorize(function(theta)
 ) 
 
 data.frame(thetas = thetas, errors = fitting_error(thetas)) %>%
- ggplot(aes(x = thetas, y = errors)) +
- geom_line() +
- xlab(expression(theta[1])) + ylab("error") 
+ ggplot(aes(x = thetas, y = errors)) + geom_line() + xlab(expression(theta[1])) + ylab("error") 
 ```
 
 ```{r without y_intercept}
@@ -1199,12 +1200,12 @@ cars %>% ggplot(aes(x = speed, y = dist)) + geom_point() + geom_smooth(method = 
 ```{r jitter}
 data("BreastCancer")
 BreastCancer %>% head
-BreastCancer %>% ggplot(aes(x = Cl.thickness, y = Class)) +
+BreastCancer %>% ggplot(aes(x = Cl.thickness, y = Class, color = Class)) +
  geom_jitter(height = 0.05, width = 0.3, alpha = 0.4)
  
 #data("BreastCancer")
 #BreastCancer %>% sample_frac(0.4) %>% head
-BreastCancer %>% ggplot(aes(x = Cell.size, y = Class)) +
+BreastCancer %>% ggplot(aes(x = Cell.size, y = Class, color = Class)) +
 geom_jitter(height = 0.05, width = .3, alpha = 0.4)
 ```
 
@@ -1214,8 +1215,7 @@ BreastCancer %>% mutate(Cl.thickness.numeric = as.numeric(as.character(Cl.thickn
 BreastCancer %>% mutate(Cl.thickness.numeric =
  as.numeric(as.character(Cl.thickness))) %>%
  mutate(IsMalignant = ifelse(Class == "benign", 0, 1)) %>%
- glm(IsMalignant ~ Cl.thickness.numeric,
- family = "binomial", data = .) 
+ glm(IsMalignant ~ Cl.thickness.numeric, family = "binomial", data = .) 
 ```
 
 ### Model Matrice and Formula
