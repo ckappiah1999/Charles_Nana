@@ -143,3 +143,4 @@ head(random_numbers)  # Display first few numbers
 mean_random <- mean(random_numbers)
 mean_random  # Compute and display the mean
 ```
+

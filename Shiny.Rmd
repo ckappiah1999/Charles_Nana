@@ -1,0 +1,5 @@
+library(ellmer)
+chat <- chat_claude(
+  model = 'claude-3-7-sonnet-20250219',
+  system_prompt = 'You are a helpful AI bot'
+)
