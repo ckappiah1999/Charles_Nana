@@ -1394,27 +1394,37 @@ table(BreastCancer$Class)
 tbl <- table(BreastCancer$Class)
 tbl["benign"] / sum(tbl)
 
-mbl = table (BreastCancer$Class)
-mbl["malignant"] / sum(mbl)
+tbl = table (BreastCancer$Class)
+tbl["malignant"] / sum(tbl)
+```
+
+```{r}
+table(BreastCancer$Class, sample(BreastCancer$Class)) # random sampling
+
 ```
 
 ```{r Random_sampling}
-table(BreastCancer$Class, sample(BreastCancer$Class)) # random sampling
+accuracy <- function(confusion_matrix)
+  sum(diag(confusion_matrix))/sum(confusion_matrix)
 
-#replicate(8, accuracy(table(BreastCancer$Class,sample(BreastCancer$Class))))
+replicate(8,accuracy(table(BreastCancer$Class,sample(BreastCancer$Class))))
 
-#(accuracy(table(BreastCancer$Class,sample(BreastCancer$Class))))
+(accuracy(table(BreastCancer$Class,sample(BreastCancer$Class))))
 ```
 
 ### Sensitivity and Specificity
 
-```{r Neg.Pos}
+The `specificity` measure captures how often the model predicts a
+negative case
+correctly and `sensitivity` measure caputure how often the model
+predicts a positive case correctly.
 
+```{r Neg.Pos}
 (specificity <- confusion_[1,1]/
- (confusion_[1,1] + confusion_[1,2])) # negative class
+ (confusion_[1,1] + confusion_[1,2])) # true negative class
 
 (sensitivity <- confusion_[2,2]/
- (confusion_[2,1] + confusion_[2,2])) # positive class
+ (confusion_[2,1] + confusion_[2,2])) # true positive class
 ```
 
 ```{r random_prediction}
@@ -1433,18 +1443,17 @@ random_prediction_summary <- function()
  prediction_summary(table(BreastCancer$Class,
  sample(BreastCancer$Class)))
  
-#replicate(3, random_prediction_summary())
+replicate(3, random_prediction_summary())
 ```
 
 ### Other Measures
 
-```{r Mease}
+```{r Measure}
+confusion_[2,1] / sum(confusion_[,1]) # false negative
+confusion_[1,1] / sum(confusion_[,1]) # true negative
 
-confusion_[2,1] / sum(confusion_[,1])
-confusion_[1,1] / sum(confusion_[,1]) 
-
-confusion_[2,2] / sum(confusion_[,2]) 
-confusion_[1,2] / sum(confusion_[,2]) 
+confusion_[2,2] / sum(confusion_[,2]) # true positive
+confusion_[1,2] / sum(confusion_[,2]) # false positive
 ```
 
 ### Random Permutation of Data
@@ -1453,6 +1462,9 @@ confusion_[1,2] / sum(confusion_[,2])
 permuted_cars <- cars[sample(1:nrow(cars)),]
 permuted_cars %>% head()
 
+```
+
+```{r}
 permute_rows <- function(df) df[sample(1:nrow(df)),]
 permuted_cars <- cars %>% permute_rows
 
@@ -1470,17 +1482,14 @@ grouped_cars[1]
 
 (grouped_cars[[1]] %>% lm(dist ~ speed, data = .) %>%.$coefficients)
  
-qplot(grouped_cars[[1]] %>%lm(dist ~ speed, data = .) %>%.$coefficients)
+#qplot(grouped_cars[[1]] %>%lm(dist ~ speed, data = .) %>%.$coefficients)
 ```
 
 ```{r est}
-estimates <- grouped_cars[[1]] %>%
- lm(dist ~ speed, data = .) %>%.$coefficients
+estimates <- grouped_cars[[1]] %>% lm(dist ~ speed, data = .) %>%.$coefficients
 
 for (i in 2:length(grouped_cars)) {
- group_estimates <- grouped_cars[[i]] %>%
- lm(dist ~ speed, data = .) %>%
- .$coefficients
+ group_estimates <- grouped_cars[[i]] %>% lm(dist ~ speed, data = .) %>% .$coefficients
  estimates <- rbind(estimates, group_estimates)
 }
 estimates 
@@ -1489,13 +1498,11 @@ estimates
 ```{r esti}
 library(purrr) 
 
-estimates <- grouped_cars %>%
- map(. %>% lm(dist ~ speed, data = .) %>% .$coefficients)
+estimates <- grouped_cars %>% map(. %>% lm(dist ~ speed, data = .) %>% .$coefficients)
  
 estimates 
 
-estimates <- grouped_cars %>%
- map(. %>% lm(dist ~ speed, data = .) %>% .$coefficients) %>% do.call("rbind", .)
+estimates <- grouped_cars %>% map(. %>% lm(dist ~ speed, data = .) %>% .$coefficients) %>% do.call("rbind", .)
  
 estimates
 ```
@@ -1503,7 +1510,6 @@ estimates
 ### Cross Validation
 
 ```{r valid}
-
 cross_validation_groups <- function(grouped_df) {
  result <- vector(mode = "list", length = length(grouped_df))
  for (i in seq_along(grouped_df)) {
@@ -1512,7 +1518,7 @@ cross_validation_groups <- function(grouped_df) {
  result
 } 
 
-cars %>% permute_rows %>% group_data(5) %>% cross_validation_groups %>% map(. %>% lm(dist ~ speed, data = .) %>% .$coefficients) %>% do.call("rbind", .)
+cars %>% permute_rows %>% group_data(5) %>% cross_validation_groups   %>% map(. %>% lm(dist ~ speed, data = .) %>% .$coefficients) %>% do.call("rbind", .)
 ```
 
 ```{r split}
@@ -1526,10 +1532,7 @@ cross_validation_split <- function(grouped_df) {
  result
 }
 
-cars %>%
- permute_rows %>%
- group_data(5) %>%
- cross_validation_split
+cars %>% permute_rows %>% group_data(2) %>% cross_validation_split
 ```
 
 ```{r}
@@ -1547,8 +1550,10 @@ prediction_accuracy_cars <- function(test_and_training) {
  result
 }
 
-cars %>%permute_rows %>%group_data(5) %>% cross_validation_split %>%prediction_accuracy_cars
+cars %>% permute_rows %>%group_data(2) %>% cross_validation_split %>% prediction_accuracy_cars
 ```
+
+### Selecting Random Training and Testing Data
 
 ```{r}
 random_group <- function(n, probs) {
@@ -1558,12 +1563,15 @@ random_group <- function(n, probs) {
  names(probs)[sample(g)]
 }
 
-random_group(8, c(training = 0.5, test = 0.5))
+random_group(8, c(training = 0.5, test = 0.5)) # 50/50
 
-random_group(8, c(training = 0.6, test = 0.4))
+random_group(8, c(training = 0.6, test = 0.4)) # 60/40
 
-random_group(8, c(training = 0.8, test = 0.2)) 
+random_group(8, c(training = 0.8, test = 0.2)) # 80/20
 
+```
+
+```{r}
 partition <- function(df, n, probs) {
  replicate(n, split(df, random_group(nrow(df), probs)), FALSE)
 }
@@ -1572,6 +1580,8 @@ random_cars <- cars %>% partition(4, c(training = 0.5, test = 0.5))
 
 random_cars %>% prediction_accuracy_cars 
 ```
+
+### Examples of Supervised Learning Packages
 
 ```{r Tree}
 ### Decision Tree
