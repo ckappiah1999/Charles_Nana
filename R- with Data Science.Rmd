@@ -1415,9 +1415,8 @@ replicate(8,accuracy(table(BreastCancer$Class,sample(BreastCancer$Class))))
 ### Sensitivity and Specificity
 
 The `specificity` measure captures how often the model predicts a
-negative case
-correctly and `sensitivity` measure caputure how often the model
-predicts a positive case correctly.
+negative case correctly and `sensitivity` measure capture how often the
+model predicts a positive case correctly.
 
 ```{r Neg.Pos}
 (specificity <- confusion_[1,1]/
@@ -1587,11 +1586,12 @@ random_cars %>% prediction_accuracy_cars
 ### Decision Tree
 library(rpart)
 
+# regression
 model <- cars %>% rpart(dist ~ speed, data = .)
 rmse(predict(model, cars), cars$dist) # root mean square
 
-model <- BreastCancer %>%
- rpart(Class ~ Cl.thickness, data = .) 
+# classification
+model <- BreastCancer %>%rpart(Class ~ Cl.thickness, data = .) 
 predict(model, BreastCancer) %>% head 
 
 predicted_class <- predict(model, BreastCancer) %>%
@@ -1603,14 +1603,31 @@ accuracy = sum(453,147) / sum(453,147,5,94)
 accuracy
 ```
 
+```{r}
+# regression
+model <- rock %>% rpart(shape ~ perm, data = .)
+rmse(predict(model, rock), rock$perm) # root mean square
+
+# regression
+model <- women %>%rpart(height ~ weight, data = .) 
+rmse(predict(model, women), women$weight)
+
+#require(graphics)
+pairs(quakes, main = "Fiji Earthquakes, N = 1000", cex.main = 1.2, pch = ".")
+
+model <- quakes %>%rpart(depth ~ mag, data = .) 
+rmse(predict(model, quakes), quakes$mag)
+```
+
 ```{r Part}
 #install.packages("party")
 library(party)
+# regression
 model <- cars %>% ctree(dist ~ speed, data = .)
 rmse(predict(model, cars), cars$dist) 
 
-model <- BreastCancer %>%
- ctree(Class ~ Cl.thickness, data = .) 
+# classification
+model <- BreastCancer %>% ctree(Class ~ Cl.thickness, data = .) 
 
 predict(model, BreastCancer) %>% head 
 
@@ -1620,14 +1637,16 @@ cars %>% ctree(dist ~ speed, data = .) %>% plot
 ```
 
 ```{r Forest}
-### Random Forests
+# Random Forests
 library(randomForest)
+# regression
 model <- cars %>% randomForest(dist ~ speed, data = .)
 rmse(predict(model, cars), cars$dist) # root mean square error
  
+# classification
 model <- BreastCancer %>% randomForest(Class ~ Cl.thickness, data = .)
  
-predict(model, BreastCancer) %>% head 
+predict(model, BreastCancer) %>% head() 
 
 table(BreastCancer$Class, predict(model, BreastCancer))
 
@@ -1636,7 +1655,7 @@ accuracy
 ```
 
 ```{r Neural}
-### Neural Networks
+# Neural Networks
 library(nnet)
 model <- cars %>% nnet(dist ~ speed, data = ., size = 5)
 rmse(predict(model, cars), cars$dist)
@@ -1655,24 +1674,29 @@ accuracy
 ```
 
 ```{r Machines}
-### Support Vector Machines
+# Support Vector Machines
 #install.packages("kernlab")
 library(kernlab)
 
+# regression
 model <- cars %>% ksvm(dist ~ speed, data = .)
 rmse(predict(model, cars), cars$dist)
 
+# classification
 model <- BreastCancer %>% ksvm(Class ~ Cl.thickness, data = .)
 
 predict(model, BreastCancer) %>% head 
 
 table(BreastCancer$Class, predict(model, BreastCancer))
+
+(accuracy = sum(437,165)/ sum(437,165,21,76))
 ```
 
 ```{r Naive}
 ### Naive Bayes
 library(e1071)
 
+# classification
 model <- BreastCancer %>% naiveBayes(Class ~ Cl.thickness, data = .)
 
 predict(model, BreastCancer) %>% head
