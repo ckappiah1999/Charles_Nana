@@ -2358,15 +2358,16 @@ role_table <- list("Thomas" = "Instructor",
 
 map_to_role <- function(name) role_table[[name]]
 
-map_to_role("Thomas")
+# map_to_role("Thomas")
 
-map_to_role("Charles")
+# map_to_role("Charles")
 
 role_table[c("Thomas", "Henrik", "Randi","Charles")]
 
 map_to_role_2 <- function(names) unlist(role_table[names])
 x <- c("Thomas", "Henrik", "Randi","Charles")
 map_to_role_2(x)
+
 ```
 
 ```{r lis}
@@ -2378,7 +2379,7 @@ x[[c("first", "second")]]
 
 ```{r apply}
 ### apply
-m <- (1:6, nrow = 2, byrow = TRUE)
+m <- matrix(1:6, nrow = 2, byrow = TRUE)
 m
 
 apply(m, 1, function(x) paste(x, collapse = ":")) # row-wise
@@ -2407,10 +2408,15 @@ for (i in 1:n) {
 
 ```{r sumpow}
 sumpow <- function(x, n) sum(x) ** n
-apply(m, 1, sumpow,n = 2) # row - wise
-apply(m, 2, sumpow, n = 2) # column - wise
+apply(m, 1, sumpow,n = 2) # row-wise
+apply(m, 2, sumpow, n = 2) # column-wise
 ```
 
+```{r}
+cubepow <- function(x, n) cube(x) ** n
+apply(m, 1, cubepow, n = 3)
+apply(m, 2,cubepow, n = 3)
+```
 ```{r lapply}
 ### lapply
 l <- list(1, 2, 3)
@@ -2422,6 +2428,8 @@ lapply(l, function(x) x**2)
 lapply(1:5, function(x) x**4)
 
 lapply(list(a = 1:3, b = 4:6), function(x) x**2)
+
+lapply(list( cv = 1:8), function(x) x**3)
 ```
 
 ```{r sapply}
@@ -2451,6 +2459,9 @@ v
  x
 }
 
+```
+
+```{r}
 x <- list(foo = 1, bar = 2)
 x$foo 
 x$bar
@@ -2459,7 +2470,6 @@ x$foo
 bar(x) <- 3
 x$bar
 ```
-
 ```{r foo_bar}
 y <- x
 foo(x) <- 5
@@ -2505,7 +2515,7 @@ f(x)
 square <- function(x) (x**2 - x)
 square(5)
 
-m <- (1:6, nrow = 3)
+m <- matrix(1:6, nrow = 3)
 m
 
 sum_of_squares <- function(x) sum(x^2)
@@ -2547,6 +2557,9 @@ Filter(is_even, 1:8)
 Filter(is_even, unlist(1:8))
 Filter(is_even, as.list(1:8))
 
+```
+
+```{r}
 divi <- function(x) (x %% 3 == 0)
 Filter(divi, 1:12)
 
@@ -2579,7 +2592,7 @@ function(n) {
  print(paste("I have already computed the value for", n))
  table[[key]]
  } else {
- print(paste("Going to compute the value for", n))
+ print(paste("I'm going to compute the value for", n))
  res <- f(n)
  print(paste("That turned out to be", res))
  table[key] <<- res
@@ -2601,13 +2614,13 @@ factorial <- cached(factorial)
 
 factorial(4)
 
-factorial(1)
+# factorial(1)
 
-factorial(2)
+# factorial(2)
 
-factorial(3)
+# factorial(3)
 
-factorial(4)
+# factorial(4)
 
 factorial(5)
 ```
@@ -2635,7 +2648,7 @@ fibonacci(4)
 
 fibonacci(5)
 
-?fibonacci
+# ??fibonacci
 ```
 
 ```{r ellip}
@@ -2646,11 +2659,14 @@ g(a = 1, b = 2, c = 3)
 tolist <- function(...) list(...)
 tolist()
 
-tolist(a = 1)
+# tolist(a = 1)
 
-tolist(a = 1, b = 3)
+# tolist(a = 1, b = 3)
 tolist(a = 1, b = 3, c = 4,d = 12, e = 23)
 
+```
+
+```{r}
 ### System Timeout
 time_out <- function(f) {
  force(f)
@@ -2661,6 +2677,7 @@ time_out <- function(f) {
 
 ti_mean <- time_out(mean)
 ti_mean(runif(1e6))
+
 ```
 
 ```{r blm}
