@@ -1868,8 +1868,11 @@ rules %>% sort(by = "lift") %>% head %>% inspect(linebreak = FALSE)
 
 rules %>% subset(support > 0.5) %>% sort(by = "lift") %>% head %>% inspect(linebreak = FALSE)
 ```
+
 # **Chapter 8**
+
 ## **More on R Programming**
+
 ```{r More}
 
 3 %% 4
@@ -2017,6 +2020,7 @@ L[[1]]
 L[[2]]
 L[[3]]
 ```
+
 ```{r Named}
 ### Named Values
 v <- c(a = 1, b = 2, c = 3, d = 4)
@@ -2144,6 +2148,7 @@ pow(9,2)
 pow(8,0)
 
 ```
+
 ```{r safe}
 safer_div <- function(x, y) {
  if (y == 0) {
@@ -2177,11 +2182,17 @@ h <- function(x, y = x^2) { y; x <- 0; y + x }
 h(2)
 h(8)
 ```
+
 ### Scoping
-Scope in R is lexical. This means that if a variable is used in a function but not defined in the function or 
-part of the function’s parameters, then R will start searching outward in the code from where the function 
-was created. This essentially means searching outward and upward from the point in the code where the 
-function is specified, since a function is created when the code is executed where the function is defined.
+
+Scope in R is lexical. This means that if a variable is used in a
+function but not defined in the function or part of the function’s
+parameters, then R will start searching outward in the code from where
+the function was created. This essentially means searching outward and
+upward from the point in the code where the function is specified, since
+a function is created when the code is executed where the function is
+defined.
+
 ```{r scop_1}
 x <- "x"
 f <- function(y) {
@@ -2297,7 +2308,9 @@ merge_sort (10)
 ```
 
 # **Chapter 9**
+
 ### **Advance R Programming**
+
 ```{r prog}
 (x <- 2 / 3)
 
@@ -2417,6 +2430,7 @@ cubepow <- function(x, n) cube(x) ** n
 apply(m, 1, cubepow, n = 3)
 apply(m, 2,cubepow, n = 3)
 ```
+
 ```{r lapply}
 ### lapply
 l <- list(1, 2, 3)
@@ -2470,6 +2484,7 @@ x$foo
 bar(x) <- 3
 x$bar
 ```
+
 ```{r foo_bar}
 y <- x
 foo(x) <- 5
@@ -2680,22 +2695,26 @@ ti_mean(runif(1e6))
 
 ```
 
-```{r blm}
 # **Chapter 10**
-## **Object Oriented Programming**
+
+### **Object Oriented Programming**
+
 ### **Bayesian Linear Models**
+
+```{r}
 blm <- function(model, alpha = 1, beta = 1, ...) {
- # Here goes the mathematics for computing the fit.
- frame <- model.frame(model, ...)
- phi <- model.(frame)
- no_params <- ncol(phi)
- target <- model.response(frame)
- covar <- solve(diag(alpha, no_params) + beta * t(phi) %*% phi)
- mean <- beta * covar %*% t(phi) %*% target
- list(formula = model,
- frame = frame,
- mean = mean,
- covar = covar)
+   # Here goes the mathematics for computing the fit.
+    frame <- model.frame(model, ...)
+    phi <- model.matrix(frame)
+    no_params <- ncol(phi)
+    target <- model.response(frame)
+    covar <- solve(diag(alpha, no_params) +
+                   beta * t(phi) %*% phi)
+    mean <- beta * covar %*% t(phi) %*% target
+    list(formula = model,
+         frame = frame,
+         mean = mean,
+         covar = covar)
 }
 ```
 
@@ -2731,16 +2750,20 @@ blm <- function(model, alpha = 1, beta = 1, ...) {
  object
 }
 
+```
+
+```{r}
 blm <- function(model, alpha = 1, beta = 1, ...) {
- # stuff happens here...
- structure(list(formula = model,
- frame = frame,
- mean = mean,
- covar = covar),
- class = "blm")
+  # stuff happens here...
+  structure(list(formula = model,
+                 frame = frame,
+                 mean = mean,
+                 covar = covar),
+            class = "blm")
 }
 
 model
+
 ```
 
 ```{r morphic Function}
@@ -2794,16 +2817,17 @@ A <- function(f, b) structure(list(foo = f, bar = b), class ="A")
 foo.A <- function(object, ...) paste("A::foo ->", object$foo)
 bar.A <- function(object, ...) paste("A::bar ->", object$bar)
 
-a <- A("Charles", "Nana")
+a <- A("Charles", "Nana Kwame")
 foo(a)
 
 bar(a)
 
-baz <- function(object, ...) UseMethod("baz")
-baz.default <- function(object, ...) stop("baz not implemented")
 ```
 
 ```{r bar.baz}
+baz <- function(object, ...) UseMethod("baz")
+baz.default <- function(object, ...) stop("baz not implemented")
+
 B <- function(f, b, bb) {
  a <- A(f, b)
  a$baz <- bb
@@ -2836,6 +2860,7 @@ C <- function(f, b, bb) {
  class(b) <- c("C", "B", "A")
  b
 }
+
 c <- C("foo", "bar", "baz")
 foo(c)
 
@@ -2850,9 +2875,11 @@ C <- function(f, b, bb) {
 }
 ```
 
-```{r}
 # **Chapter 12**
+
 ## Testing R packages
+
+```{r}
 area <- function(x) UseMethod("area")
 
 circumference <- function(x) UseMethod("circumference")
@@ -2882,10 +2909,11 @@ if (circumference(r) != 2*3 + 2*4) {
 }
 ```
 
-```{r}
 ## **Chapter 14**
 ### Profiling and  Optimizing
+```{r}
 library(profvis)
+
 graph <- function(n, edges) {
  m <- (0, nrow = n, ncol = n)
  no_edges <- length(edges)
