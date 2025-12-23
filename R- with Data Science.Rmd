@@ -3182,7 +3182,9 @@ handle_i <- function(i) {
 }
 ```
 
-library(cluster) test_rmse \<- function(data) { model \<-
+```{r}
+library(cluster) 
+test_rmse <- function(data) { model \<-
 data$training %>% lm(dist ~ speed, data = .)
  predictions <- data$test %\>% predict(model, data = .)
 rmse(data$test$dist, predictions) } sample_rmse \<- function (n) {
@@ -3195,6 +3197,7 @@ microbenchmark( sample_rmse(10), sample_rmse_parallel(10), times = 5 )
 
 microbenchmark( sample_rmse(1000), sample_rmse_parallel(1000), times = 5
 )
+```
 
 ```{r}
 library(Rcpp)
