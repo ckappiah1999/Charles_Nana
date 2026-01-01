@@ -75,11 +75,11 @@ d <- c("My name is Charles Kwame Appiah") # creating a vector
 d
 class(d) # checking the class of variable d
 length(d) # checking the length of variable d
-nchar(d) # checking the number of characters in variable d
+nchar(d) # counting the number of characters in variable d
 ```
 
 ```{r}
-f<- c(1,3,4,6,7) # creating a vector
+f<- c(1,3,4,6,7) # creating a vector f
 f
 class(f)# checking the class of variable f
 ```
@@ -132,7 +132,7 @@ class(ve)
 
 ## Logical
 
-Logical vectors are created with the `c()` function. Logical vectors can be used to store TRUE or FALSE values. Logical vectors are used in R to represent binary data.Binary data is data that can take on one of two values, such as TRUE or FALSE.
+Logical vectors are created with the `c()` function. Logical vectors can be used to store `TRUE or FALSE` values. Logical vectors are used in R to represent binary data.Binary data is data that can take on one of two values, such as TRUE or FALSE.
 
 ```{r}
 s <- c(TRUE, FALSE,TRUE, 1) # creating a vector
@@ -155,7 +155,7 @@ class(q[[1]]) # Checking the class of list 1
 ```{r}
 fo <- list("Hello","Hi","Hey") # creating a list
 
-unlist(fo)
+unlist(fo) # unlisting fo
 
 fo[c(1,2)] # for several elements
 
@@ -167,13 +167,12 @@ class(fo[[3]]) # checking the class of the third element
 ```
 
 ```{r}
-wi <- list(age = c(12,23,45), height = c(12.3,45.4, 34.5)) # creating a list
+wi <- list(age = c(12,23,45), height = c(12.3,45.4, 34.5)) # creating a list 
 
 wi
 
 class(wi) # checking the class of wi
 ```
-
 
 ## Matrix
 
@@ -183,11 +182,12 @@ Matrix is a two-dimensional array. It is created with the `c()` function. The `c
 mat <- c(2,4,5,7) # creating a vector
 dim(mat) <- c(2,2) # creating a  with 2 rows and 2 columns
 mat
-solve(mat)
+solve(mat) # Solving the matrix 
 
-mar = c(2,4,5,7,8,9) # creating a vector
-dim(mar) <- c(3,2) # creating a  with 3 rows and 2 columns
+mar = c(2,4,5,7,8,9,0,1,3) # creating a vector
+dim(mar) <- c(3,3) # creating a  with 3 rows and 2 columns
 mar
+solve(mar) # Solving the matrix
 ```
 
 ```{r}
@@ -195,7 +195,7 @@ temp <- c(3,4,5,5.6,6,7) # creating a vector
 mati <- matrix(temp, nrow = 2, ncol = 3,byrow = TRUE) # creating a matrix  with 2 rows and 3 columns
 mati
 
-temp <- c(3,4,5,5.6,6,7, 8, 9, 10) # creating a vector
+temp <- c(3,4,5,5.6,6,7,8,9,10) # creating a vector
 mato <- matrix(temp, nrow = 3, ncol = 3,byrow = TRUE) # creating a matrix  with 3 rows and 3 columns
 mato
 ```
@@ -234,6 +234,7 @@ factor # use to encode vectors as factors
 f <- factor(c("Yes","No","No","Yes"), levels = c("Yes","No"), ordered = TRUE) # creating a factor
 f
 ```
+
 ```{r}
 (d <- factor (c("Yes", "No","Yes", "No"), levels = c("Yes", "No"), ordered = FALSE))
 ```
@@ -281,6 +282,7 @@ dfr[,1] # accessing column 1 [Username] of the dataframe
 # Second Column
 dfr[,2] # accessing column 1 of the dataframe
 ```
+
 ```{r}
 # Selecting only Age Column
 dfr$Age
@@ -312,7 +314,6 @@ class(woo$age) # checking the class of age list
 
 class(woo$height) # checking the class of height list
 ```
-
 
 ## Reading Data From File
 
@@ -485,6 +486,7 @@ cat(x)
 cat(" ") # inserting spaces between the letters
 }
 ```
+
 ```{r}
 for (i in 1:100){
 # Over ride the first 80 iterations
@@ -494,6 +496,7 @@ next
 print(i)
 }
 ```
+
 ```{r}
 for (i in 1:100){
 # Over ride the first 80 iterations
@@ -503,7 +506,6 @@ next
 print(i)
 }
 ```
-
 
 ### While loop
 
@@ -527,6 +529,7 @@ break
 x <- x + 1
 }
 ```
+
 ```{r}
 x <- 3
 repeat {
@@ -536,7 +539,6 @@ break
 }
 }
 ```
-
 
 # Functions
 
@@ -976,6 +978,7 @@ barplot(mg,xlim=c(0,2), xlab="Gender", length =levels(mo), col = c("orange","blu
 barplot(mg,xlim=c(0,2), xlab = "Transportation", length =levels(g), col = c("orange","blue", "pink","green")) # creating a bar chart of mg
 
 ```
+
 ```{r}
 barplot(prop.table(mg,1), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Gender", legend=levels(mo), beside=T, col = c("orange","green")) # creating a bar chart of mg
 
@@ -983,7 +986,6 @@ mg = table(g,mo) # creating a contingency  of g and mo
 barplot(prop.table(mg,2), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Transportation", legend=levels(g), beside=T, col= c("orange", "green")) # creating a bar chart of mg
 
 ```
-
 
 ### Histograms
 
@@ -1080,6 +1082,7 @@ computeCost(5,6,7) # computing the cost of 5,6,7
 #computeCost(9, 8,7)
 
 ```
+
 ```{r}
 grad_desc <- function(X, y, theta,alpha, lambda, num_iters){
 m <- length(y)
@@ -1115,6 +1118,7 @@ kc <- kmeans(iris_new, 3) # creating a kmeans of iris_new
 
 table(iris$Species, kc$cluster) # creating a table of iris and kc
 ```
+
 ```{r}
 plot(iris_new[c("Sepal.Length", "Sepal.Width")], col = kc$cluster) # visualizing the  iris datasets 
 

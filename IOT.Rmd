@@ -27,7 +27,7 @@ a = 0.07; b = 0.05; c = 1; d = 0.20; u = 15; t = 100
 mat <- c(0.07,.05,1,.2) # creating a vector
 mat <- matrix(mat,nrow=2, ncol=2, byrow = TRUE) # creating a matrix with 2 rows and 2 columns
 mat
-(s = solve(mat) %*% mat) # identify matrix
+(s = solve(mat) %*% mat) # identity matrix
 
 (a = solve(s - mat)) # inverse matrix
 
