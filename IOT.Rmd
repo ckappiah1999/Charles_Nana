@@ -50,3 +50,14 @@ s = c(15,100)
 ```
 
 
+2 + 3
+
+import pandas as pd
+
+df = pd.read_csv("C:/Users/HP/Desktop/Data Science/Machine learning/kyphosis.csv")
+
+df.info
+
+df.describe()
+
+df["Age"].head().plot()

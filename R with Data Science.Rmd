@@ -88,21 +88,6 @@ class(f)# checking the class of variable f
 
 Integers in R are stored as numeric data type. To create an integer in R, you can use the `L` suffix or the `as.integer()` function.
 
-```{python paged.print=TRUE}
-
-2 + 3
-
-import pandas as pd
-
-df = pd.read_csv("C:/Users/HP/Desktop/Data Science/Machine learning/kyphosis.csv")
-
-df.info
-
-df.describe()
-
-df["Age"].head().plot()
-```
-
 ```{r}
 fo<- c(1L,3L,4L,6L,7L) # creating a vector
 fo
@@ -223,6 +208,19 @@ t4 <- c(43, 54)
 cbind(t3,t4) # binding them by their columns
 ```
 
+```{r}
+# creating a  with 3 rows and 3 columns
+wr <- matrix(1:9, nrow = 3, ncol = 3, by = TRUE) 
+
+wr # creating a  with 3 rows and 3 columns
+
+class(wr) # checking the class of wr
+
+class(wr[1,1]) # checking the class of row 1 column 1
+
+class(wr[1,1, drop = FALSE]) # checking the class of row 1 column 1
+```
+
 ## Factors and Nominal Data
 
 Factors are used to represent categorical data in R. Factors are created with the `factor()` function. The `factor()` function takes a vector as input and converts it into a factor. Factors are used to represent nominal data, which is data that has no inherent order.
@@ -256,6 +254,18 @@ u
 class(u) # checking for the class of variable u
 ```
 
+```{r}
+ch <- c(1:9,NA,NA,NA) # creating a vector
+
+print(ch)
+
+i<- is.na(ch) # checking for missing numbers
+
+i
+
+ch[!i] # removing missing numbers
+```
+
 ## Dataframe
 
 Data frames are used to store tabular data in R. Data frames are created with the `data.frame()` function. The `data.frame()` function takes vectors as input and combines them into a data frame. Data frames are used to store data in a structured format.
@@ -284,13 +294,13 @@ dfr[,2] # accessing column 1 of the dataframe
 ```
 
 ```{r}
-# Selecting only Age Column
+# Select only Age Column
 dfr$Age
 
-# Selecting only Username Column
+# Select only Username Column
 dfr$Username
 
-# Selecting only Adult Column
+# Select only Adult Column
 dfr$Adult
 ```
 
@@ -302,11 +312,11 @@ woo
 
 class(woo) # checking the class of woo
 
-woo$age # selecting only the age list
+woo$age # select only the age list
 
-woo$height # selecting only the height list
+woo$height # select only the height list
 
-woo[["age"]] # selecting only the age list
+woo[["age"]] # select only the age list
 
 woo[['h',exact = FALSE]] # partial matching
 
@@ -324,14 +334,16 @@ Reading data from a file is a common task in data analysis. R provides functions
 library(readxl) # Importing the readxl package
 
 dat <- read.csv("C:/Users/HP/Desktop/Data Science/Machine learning/Training r.csv") # reading the dataset
-#print(dat, na.rm = TRUE)
-head(dat) # displaying the first few rows of the dataset
+print(dat, na.rm = TRUE)
+# head(dat) # displaying the first few rows of the dataset
 
-tail(dat) # displaying the last few rows of the dataset
+# tail(dat) # displaying the last few rows of the dataset
 
 ```
 
 ```{r}
+library("tidyverse") # import tidyverse package 
+
 data <- read_xlsx("C:/Users/HP/Desktop/Data Science/Pandas/Copy of V1- UN Data on Refugees (AiCE __ Dataset).xlsx") # reading the dataset
 head(data) # displaying the first few rows of the dataset
 
@@ -342,7 +354,7 @@ data |> distinct(Year)
 
 ## Sequence Creation
 
-Sequence is a collection of numbers in a specific order. Sequences can be created in R using the semicolon`:` operator, the `seq()` function, and the `rep()` function. The `:` operator is used to create a sequence of numbers from a starting value to an ending value. The `seq()` function is used to create a sequence of numbers with a specified start, end, and step size. The `rep()` function is used to repeat a sequence of numbers a specified number of times.
+Sequence is a collection of numbers in a specific order. Sequences can be created in R using the semicolon`:` operator, the `seq()` function, and the `rep()` function. The `:` operator is used to create a sequence of numbers from a starting value to an ending value. The `seq()` function is used to create a sequence of numbers with a specified start, end, and step size. The `rep()` function is used to repeat a sequence of numbers for a specified number of times.
 
 ```{r}
 v <- (10:20) # creating a sequence
@@ -365,7 +377,7 @@ repe <- rep(1:4,4) # creating a sequence
 repe # repeat from 1 to 4, 4 times
 
 eq <- rep("Hello Ann", 5) # creating a sequence
-eq # repeat from Hello Ann, 5 times
+eq # repeat Hello Ann, 5 times
 
 we <- seq(1,15, 2) # creating a sequence 
 we  # start from 1 and end at 15 with a step of 2
@@ -374,31 +386,6 @@ we[1:5] # slicing from index 1 to 5
 
 class(we) # checking the class of we
 class(eq)
-```
-
-```{r}
-# creating a  with 3 rows and 3 columns
-wr <- matrix(1:9, nrow = 3, ncol = 3, by = TRUE) 
-
-wr # creating a  with 3 rows and 3 columns
-
-class(wr) # checking the class of wr
-
-class(wr[1,1]) # checking the class of row 1 column 1
-
-class(wr[1,1, drop = FALSE]) # checking the class of row 1 column 1
-```
-
-```{r}
-ch <- c(1:9,NA,NA,NA) # creating a vector
-
-print(ch)
-
-i<- is.na(ch) # checking for missing numbers
-
-i
-
-ch[!i] # removing missing numbers
 ```
 
 ## Vectorization
@@ -423,6 +410,7 @@ proc.time()-start # initiating the timer
 start <- proc.time() # starting the timer
 cv <- ew + er # adding the two vectors
 proc.time()-start #  initiating the timer
+# cv
 ```
 
 ## Control Structures
@@ -430,36 +418,36 @@ proc.time()-start #  initiating the timer
 Control structures are used to control the flow of a program. Control structures allow you to execute different code blocks based on conditions. Control structures include `if-else` statements, `for` loops, `while` loops, and `repeat` loops.
 
 ```{r}
-x <- 20 # assigning 20 to x
+x <- 20 # assign 20 to x
 
 if (x < 0) {
-print("Negative!") # checking if x is negative
+print("Negative!") # check if x is negative
 }else if (x < 10) {
-print("Positive, less than 10!") # checking if x is less than 10
+print("Positive, less than 10!") # check if x is less than 10
 }else {
-print("Number is greater than 10!") # checking if x is greater than 10
+print("Number is greater than 10!, Correct") # check if x is greater than 10
 }
 ```
 
 ```{r}
-x <- -20
+x <- -20 # asign -20 to x 
 if (x < 0) {
-print("Negative!") # checking if x is negative
+print("Negative!, Correct") # check if x is negative
 }else if (x < 10) {
-print("Positive, less than 10!") # checking if x is less than 10
+print("Positive, less than 10!") # check if x is less than 10
 }else {
-print("Number is greater than 10!") # checking if x is greater than 10
+print("Number is greater than 10!") # check if x is greater than 10
 }
 ```
 
 ```{r}
-x <- 6 # assigning 6 to x
+x <- 6 # assign 6 to x
 if (x < 0) {
-print("Negative!") # checking if x is negative
+print("Negative!") # check if x is negative
 }else if (x < 10) {
-print("Positive, less than 10!") # checking if x is less than 10
+print("Positive, less than 10!, Correct") # check if x is less than 10
 }else {
-print("Number is greater than 10!") # checking if x is greater than 10
+print("Number is greater than 10!") # check if x is greater than 10
 }
 ```
 
@@ -475,11 +463,11 @@ cat(" ") # inserting spaces between the numbers
 ```
 
 ```{r}
-letters # lower case 
+# letters # lower case 
 
-LETTERS # upper case
+# LETTERS # upper case
 
-class(letters) # 
+# class(letters) # 
 
 for (x in letters){
 cat(x)
@@ -499,8 +487,8 @@ print(i)
 
 ```{r}
 for (i in 1:100){
-# Over ride the first 80 iterations
-if (i >= 7){
+# Over ride the first 20 iterations
+if (i <= 20){
 next 
 }
 print(i)
@@ -512,31 +500,32 @@ print(i)
 `While loops` are used to execute a block of code as long as a condition is true. `While loops` are used when you do not know the number of iterations in advance.
 
 ```{r}
-x <- -1 # assigning -1 to x
+x <- -1 # assign -1 to x
 while (x < 5){
-print(x) # 
+print(x)  
 x <- x + 1
 }
 ```
 
 ```{r}
-x<- 1
+x <- 1
 repeat{
 print(x)
 if (x > 7){
-break
+break    # break when x is greater than 7
 }
 x <- x + 1
 }
 ```
 
 ```{r}
-x <- 3
+x <- 8
 repeat {
 print(x)
-if (x < 9){
-break
+if (x <= 9){
+break # break when x is less than 9
 }
+x <- x + 1    
 }
 ```
 
