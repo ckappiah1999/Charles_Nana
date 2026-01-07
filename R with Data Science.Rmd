@@ -599,11 +599,11 @@ sapply(xi, sd) # checking the standard deviation of xi
 
 ### Split
 
-Split is used to split a data frame or vector into groups. split returns a list of vectors, where each vector contains the elements of the input data frame or vector that belong to a particular group.
+`Split` is used to split a data frame or vector into groups. Split returns a list of vectors, where each vector contains the elements of the input data frame or vector that belong to a particular group.
 
 ```{r}
-dat <- data.frame(subject = 1:6,age = c(15, 17, 16,20,21,23),
-adult = c(FALSE,FALSE,FALSE,TRUE,TRUE,TRUE))
+dat <- data.frame(subject = 1:6, age = c(15,17,16,20,21,23),
+adult = c(FALSE,TRUE,FALSE,TRUE,FALSE,TRUE))
 
 (s <- split(dat, dat$adult)) # splitting based on the adult column 
 
@@ -642,6 +642,8 @@ tapply(x, f, mean)
 tapply(x, f, var)
 
 tapply(x, f, sd)
+
+?gl
 ```
 
 ```{r}
@@ -653,7 +655,7 @@ tapply(x, f, sd)
 #?tapply
 ```
 
-# Types, Quality and Data preprocessing
+# Types, Quality and Data Preprocessing
 
 `Types`, `quality` and `data preprocessing` are important steps in data analysis. `Types` refer to the data types of the variables in the dataset. `Quality` refers to the quality of the data, such as missing values and outliers. `Data preprocessing` refers to the steps taken to clean and prepare the data for analysis.
 
@@ -687,7 +689,7 @@ wi
 `Dplyr` is a package for data manipulation in R. `Dplyr` provides a set of functions for manipulating data frames, such as selecting columns, filtering rows, and summarizing data. `Tidyr` is a package for data tidying in R. `Tidyr` provides functions for reshaping data frames, such as gathering columns into rows and spreading rows into columns.
 
 ```{r}
-library(dplyr) # Importing the dplyr package
+library(dplyr) # Import dplyr package
 
 data(airquality) # loading the airquality dataset
 
@@ -695,17 +697,19 @@ class(airquality) # checking the class of airquality
 
 airquality <- as_tibble(airquality) # converting airquality to a tibble
 
-class(airquality) # checking the class of airquality
+class(airquality) # check the class of airquality
 
-airquality # displaying the airquality dataset
+airquality # display airquality dataset
 
 select(airquality, Ozone, Solar.R, Day) # selecting the Ozone, Solar.R and Day columns
+
+# ?as_tibble
 ```
 
 ```{r}
 select(airquality, -(Wind:Month)) # offsetting Wind and Month from the airquality dataset
 
-filter(airquality, Month > 5| Month < 9, Day < 3) # filter values in Month greater than 5 and less than 9, Day values less than 3
+filter(airquality, Month > 5 | Month < 9, Day < 3) # filter values in Month greater than 5 or less than 9, Day values less than 3
 
 filter(airquality, Day == 1 | Day == 5) # filter values of Day = 1 or 2
 
@@ -729,13 +733,13 @@ airquality
 by_month <- group_by (airquality, Month) 
 by_month
 
-# Finding the minimum, mean and maximum value per Month
+# Finding the minimum, mean and maximum value by Ozone
 summarize (by_month, min(Ozone), mean(Ozone), max(Ozone))
 
-# Finding the minimum, mean and maximum value per Month
+# Finding the minimum, mean and maximum value by Month
 summarize (by_month, min(Day), mean(Day), max(Day))
 
-# Finding the minimum, mean and maximum value per Month
+# Finding the minimum, mean and maximum value by Wind
 summarize (by_month, min(Wind), mean(Wind), max(Wind))
 ```
 
@@ -743,7 +747,7 @@ summarize (by_month, min(Wind), mean(Wind), max(Wind))
 library (tidyr)
 library(ggplot2)
 
-airquality |> mutate(Month_Day = Month + Day, Temp_Wind = Temp + Wind)
+airquality |> transmute(Month_Day = Month + Day, Temp_Wind = Temp + Wind)
 
 airquality |> transmute(Month_Day = Month + Day, Temp_Wind = Temp + Wind) |> ggplot() + geom_point(aes(x = Month_Day, y = Temp_Wind), col = "blue")
 
@@ -759,7 +763,7 @@ airquality %>% qplot (Temp, data = ., geom = "density")
 ```
 
 ```{r}
-airquality |> qplot (Month, data = ., geom = "density")
+# airquality |> qplot (Month, data = ., geom = "density")
 
 airquality %>% qplot (Wind, data = ., geom = "density")
 
@@ -768,7 +772,7 @@ airquality %>% qplot (Day, data = ., geom = "density")
 
 ## Statistical Summary and Visualization
 
-`Statistical summary` and `visualization` are important steps in data analysis. Statistical summary provides a summary of the data, such as the mean, median, and standard deviation. Visualization provides a visual representation of the data, such as bar charts and histograms.
+`Statistical summary` and `visualization` are important steps in data analysis. Statistical summary provides a summary of the data, such as the mean, median, and standard deviation. Visualization provides a visual representation of the data, such as bar charts and histograms etc.
 
 ```{r}
 internet_usage = c(22,0, 7,12,5, 33, 14, 8, 0, 9)
@@ -780,11 +784,11 @@ net_usage = c(22,0,7,12,5,NA,33,14,8,NA,0,9)
 
 # net_usage
 mean(na.omit(net_usage)) # finding the mean of net_usage with missing numbers 
+
+median(net_usage, na.rm = TRUE)
 ```
 
 ```{r}
-median(net_usage, na.rm = TRUE)
-
 # Minimum, Maximum and Range
 A = c(49,33,63,48,54,62,52,64,71,68)
 
@@ -792,12 +796,13 @@ min(A)
 
 max(A)
 
-which.min(A)
+which.min(A) # index of maximum number
 
-which.max(A)
+which.max(A) # index of minimum number
 ```
 
 ```{r}
+# Find the range of A
 print(max(A) - min(A))
 
 range(A)
@@ -805,6 +810,7 @@ range(A)
 print(range(A)[2] - range(A)[1]) 
 
 summary(A)
+fivenum(A) # Omit the mean of the variable
 ```
 
 ### Percentile Values
@@ -850,23 +856,24 @@ irq(X)
 # Variance and Standard Deviation
 course = c(6, 2, 1, 9, 17, 4, 3, 2, 1, 5, 11 ,4, 3, 1, 2, 2, 5, 4, 3, 6)
 
-# 1 / course 
+1 / course 
 
-cf = c(course, 0, course)
+# cf = c(course, 0, course)
 
-cf
+# cf
 
 ```
 
 ```{r}
 var(course)
 
-#sum((course - mean(course)) ^ 2 / (length(course) - 1))
+# sum((course - mean(course)) ^ 2 / (length(course) - 1)) # Same as variance
 
-#sd(course)
+sd(course)
 
-#sqrt(var(course))
+# sqrt(var(course)) # Same as sd
 
+# Standard deviation function
 std = function(x) sqrt(var(x))
 std(course)
 ```
