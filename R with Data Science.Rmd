@@ -643,7 +643,7 @@ tapply(x, f, var)
 
 tapply(x, f, sd)
 
-?gl
+# ?gl
 ```
 
 ```{r}
@@ -912,6 +912,7 @@ mo
 table(mo) # creating a table of mo
 prop.table(table(mo)) # creating a table of mo based on proportion
 data.frame(mo)# creating a dataframe of mo
+# ?prop.table
 ```
 
 ### Bar Charts
@@ -967,19 +968,19 @@ prop.table(mg,2)   # creating a table of mg
 `Stacked bar charts` are used to visualize the relationship between two categorical variables. Stacked bar charts are used to compare the frequency of different categories in one variable for each category in another variable. Stacked bar charts are used to visualize the relationship between two categorical variables.
 
 ```{r}
-barplot(mg, col = c("orange","blue", "pink","green")) # creating a bar chart of mg
+barplot(mg, col = c("orange","blue", "pink","lightgreen")) # creating a bar chart of mg
 
-barplot(mg,xlim=c(0,2), xlab="Gender", length =levels(mo), col = c("orange","blue", "pink","green")) # creating a bar chart of mg
+barplot(mg,xlim=c(0,2), xlab ="Gender", length =levels(mo), col = c("orange","black", "pink","green")) # creating a bar chart of mg
 
-barplot(mg,xlim=c(0,2), xlab = "Transportation", length =levels(g), col = c("orange","blue", "pink","green")) # creating a bar chart of mg
+barplot(mg,xlim=c(0,2), xlab = "Transportation", length =levels(mo), col = c("orange","blue", "pink","green")) # creating a bar chart of mg
 
 ```
 
 ```{r}
-barplot(prop.table(mg,1), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Gender", legend=levels(mo), beside=T, col = c("orange","green")) # creating a bar chart of mg
+barplot(prop.table(mg,1), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Gender", legend=levels(mo), beside=T, col = c("orange","green")) # create a bar chart of mg
 
 mg = table(g,mo) # creating a contingency  of g and mo
-barplot(prop.table(mg,2), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Transportation", legend=levels(g), beside=T, col= c("orange", "green")) # creating a bar chart of mg
+barplot(prop.table(mg,2), width=0.25, xlim=c(0,3), ylim=c(0,1), xlab="Transportation", legend=levels(g), beside=T, col= c("pink", "purple")) # create a bar chart of mg
 
 ```
 
@@ -999,10 +1000,11 @@ prop.table(table(xo)) # creating a table of xo
 ```
 
 ```{r}
-hist(xo, col = c("orange","lightblue", "pink","lightgreen", "purple", "violet","brown")) # creating a histogram of xo
+hist(xo, col = c("orange","lightblue", "pink","lightgreen", "purple", "violet","brown")) # create a histogram of xo
 
-hist(xo, nclass = 3, col = c("lightblue", "pink","lightgreen")) # creating a histogram of xo
+hist(xo, nclass = 3, col = c("lightblue", "pink","lightgreen")) # create a histogram of xo
 
+hist(xo, nclass = 5, col = c("lightblue", "lightgreen", "purple", "pink", "orange"))
 ```
 
 ```{r}
@@ -1016,9 +1018,9 @@ hist(wo, nclass=4, col = c("orange","black", "pink","lightgreen")) # creating a 
 ```
 
 ```{r}
-hist(wo, breaks= seq(from = 1000, to=5000, by=300), col = c("orange","lightblue", "pink","lightgreen")) # creating a histogram of wo
+hist(wo, breaks= seq(from = 1000, to=5000, by=300), col = c("lightblue", "pink","lightgreen")) # creating a histogram of wo
 
-hist(wo, probability=T, col = c("orange","lightblue", "pink","lightgreen")) # creating a histogram of wo
+hist(wo, probability=T, col = c("lightblue", "pink","lightgreen")) # creating a histogram of wo
 
 rug(jitter(wo)) # creating a histogram of wo
 
@@ -1040,9 +1042,9 @@ lines(c(min(temp$breaks), (temp$mids),max(temp$breaks)), c(0,temp$counts,0),type
 `Boxplots` are used to visualize the distribution of numerical data. `Boxplots` are used to show the median, quartiles, and outliers in a dataset. `Boxplots` are used to visualize the distribution of numerical data.
 
 ```{r}
-boxplot(wo, horizontal = T, col = c("orange")) # creating a boxplot of wo
+boxplot(wo, horizontal = T, col = c("orange")) # create a boxplot of wo
 
-boxplot(wo, vertical = T, col = c("orange")) # creating a boxplot of wo
+boxplot(wo, vertical = T, col = c("lightblue")) # create a boxplot of wo
 
 fivenum(wo) # summary  of wo
 
@@ -1052,7 +1054,7 @@ summary(wo) # summary of wo
 ```
 
 ```{r}
-w1 = c(1950, 2090, 2700, 3350, 4200, 3720, 4400, 2980, 3850, 4550, 3050, 2350,1850, 2820, 3670, 2950, 3750, 1850, 2420,3150, 3000, 3470, 3920, 3100, 2400, 2900, 2650, 3450, 3650, 4020) # creating a vector of w1
+w1 = c(1950, 2090, 2700, 3350, 4200, 3720, 4400, 2980, 3850, 4550, 3050, 2350,1850, 2820, 3670, 2950, 3750, 1850, 2420,3150, 3000, 3470, 3920, 3100, 2400, 2900, 2650, 3450, 3650, 4020) # create a vector of w1
 
 fivenum(w1) # summary of w1
 
